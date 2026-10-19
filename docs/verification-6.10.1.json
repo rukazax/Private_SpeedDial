@@ -1,0 +1,46 @@
+{
+  "version": "6.10.1",
+  "date": "2026-10-19",
+  "scope": "Cross-client download links to the latest GitHub release page",
+  "downloadsPage": "https://github.com/rukazax/Private_SpeedDial/releases/latest",
+  "unitTests": 17,
+  "chromiumIntegrationSuites": 1,
+  "android": {
+    "environment": "Android 15 API 35 emulator",
+    "nativeReleaseChecks": {
+      "secureOrigin": true,
+      "noHorizontalOverflow": true,
+      "bookmarksLoaded": true,
+      "persistenceFromPreviousRun": true,
+      "sqliteWrite": true,
+      "largeRecordFromPreviousRun": true,
+      "largeSqliteRead": true,
+      "nativeBackgroundMessaging": true,
+      "passwordHashing": true,
+      "cryptoRoundtrip": true,
+      "secureFlag": true,
+      "notDebuggable": true,
+      "downloadMenuLabelTranslated": true,
+      "menuDownloadLinkOpensGitHubReleasePage": true,
+      "shareUsesNativeChooserAndPublicRepositoryOnly": true,
+      "releaseVersion6101": true,
+      "updateButtonOpensTrustedApkExternalIntent": true,
+      "allThreeGitHubLinksIssueExternalIntent": true,
+      "nativeMessagesAll13Languages": true
+    },
+    "nativeProcessRuns": 2,
+    "releaseDebuggable": false,
+    "secureFlag": true,
+    "physicalHonorMagicV3Tested": false,
+    "signingCertificateSha256": "c49e8f257a896ed66fa4b874a2c7cb1b6df4263beafaf65c49f271a5ea87f596"
+  },
+  "i18n": {
+    "languages": 13,
+    "androidKeysPerLanguage": 394
+  },
+  "artifacts": {
+    "Private-SpeedDial-Android.apk": "870a7900b94526071e42f1b786f16d860087e85d66023f075fce55382f20546b",
+    "Private-SpeedDial-Extension.zip": "cddbd24ce3bffadbe2b31ba124e1b40edd670f3ab9d402eb9eddd6e2a81d926e"
+  },
+  "previousFullRegression": "verification-6.10.0.json"
+}

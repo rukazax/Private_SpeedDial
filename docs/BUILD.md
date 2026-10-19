@@ -102,3 +102,5 @@ node verification/project-v6.mjs
 **Не публикуйте debug-webview APK**: этот режим разрешает отладку WebView и отключает FLAG_SECURE для тестовых скриншотов. После UI-тестов обязательно заново соберите `python3 android-app/build.py`, установите release APK и проверьте его нативной Instrumentation; итоговый опубликованный файл должен иметь DEBUG_WEBVIEW=false и FLAG_SECURE.
 
 Сценарии прошлых выпусков сохранены как история; актуальные команды и ограничения приведены здесь и в [отчёте](VERIFICATION.md).
+
+Для проверки перехода из Android-меню в GitHub Releases в выпуске 6.10.1 используется `SPEEDDIAL_TEST_TAG=v7 python3 verification/build-instrumentation.py`, затем установка `verification/test-build/test.apk` и запуск `python3 verification/native-release-v7.py`. Это проверяет настоящий исходящий Android Intent итоговой release APK.

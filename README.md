@@ -4,7 +4,7 @@
 
 **Ваши закладки и заметки — на ПК и Android, с синхронизацией в выбранное вами облако.**
 
-[![Version](https://img.shields.io/badge/version-6.10.0-35c2b5)](https://github.com/rukazax/Private_SpeedDial/releases/latest)
+[![Version](https://img.shields.io/badge/version-6.10.1-35c2b5)](https://github.com/rukazax/Private_SpeedDial/releases/latest)
 [![Android](https://img.shields.io/badge/Android-8.0%2B-3ddc84)](https://github.com/rukazax/Private_SpeedDial/releases/latest/download/Private-SpeedDial-Android.apk)
 [![Chrome](https://img.shields.io/badge/Chrome-MV3-4285f4)](https://github.com/rukazax/Private_SpeedDial/releases/latest/download/Private-SpeedDial-Extension.zip)
 
@@ -101,7 +101,7 @@ flowchart LR
 - [Сборка APK, расширения и запуск тестов](docs/BUILD.md)
 - [Обновления, релизы и стабильные ссылки загрузки](docs/UPDATES.md)
 - [Приватность, подпись APK и сообщение об ошибке безопасности](docs/SECURITY.md)
-- [Результаты проверки версии 6.10.0](docs/VERIFICATION.md)
+- [Результаты проверки версии 6.10.1](docs/VERIFICATION.md)
 - [Зависимости и их лицензии](THIRD_PARTY.md)
 - [История изменений](CHANGELOG.md)
 

@@ -56,7 +56,7 @@
         storage:{local:area('local'),sync:area('sync'),session:area('session'),onChanged:changed},
         runtime:{
             getURL:path=>new URL(path,location.origin+'/').href,
-            getManifest:()=>({name:'Private SpeedDial',version:'6.10.0',manifest_version:3}),
+            getManifest:()=>({name:'Private SpeedDial',version:'6.10.1',manifest_version:3}),
             onMessage:messages,onInstalled:installed,onStartup:startup,
             sendMessage(message,cb){
                 const id=String(++sequence);

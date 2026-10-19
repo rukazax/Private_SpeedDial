@@ -11,7 +11,8 @@ if not gh:raise SystemExit('Install GitHub CLI and run: gh auth login --hostname
 def run(*cmd,capture=False):
  r=subprocess.run([str(c) for c in cmd],check=True,text=True,capture_output=capture)
  return r.stdout.strip() if capture else None
-owner='rukazax';repo=owner+'/Private_SpeedDial';tag='v6.10.0'
+owner='rukazax';repo=owner+'/Private_SpeedDial'
+version=json.loads((root/'extension/manifest.json').read_text())['version'];tag='v'+version
 auth=subprocess.run([gh,'api','user','--jq','.login'],capture_output=True,text=True)
 if auth.returncode:raise SystemExit('GitHub login is incomplete. Finish gh auth login as rukazax, then rerun this script.')
 if auth.stdout.strip()!=owner:raise SystemExit('Authenticate as the repository owner rukazax.')
@@ -23,7 +24,7 @@ run('git','archive','--format=zip','--prefix=Private_SpeedDial/','-o','dist/Priv
 run('python3','tools/package-release.py','--checksums-only')
 artifacts=[root/'dist'/name for name in ['Private-SpeedDial-Android.apk','Private-SpeedDial-Extension.zip','Private-SpeedDial-Source.zip','SHA256SUMS.txt']]
 if not all(p.is_file() for p in artifacts):raise SystemExit('Build and verify the release APK first.')
-verified=json.loads((root/'docs/verification-6.10.0.json').read_text())
+verified=json.loads((root/('docs/verification-'+version+'.json')).read_text())
 for name,checksum in verified['artifacts'].items():
  if hashlib.sha256((root/'dist'/name).read_bytes()).hexdigest()!=checksum:raise SystemExit('Artifact differs from the committed verification report: '+name)
 probe=subprocess.run([gh,'api','repos/'+repo],capture_output=True,text=True)
@@ -41,7 +42,7 @@ if existing.returncode==0:
  if not json.loads(existing.stdout)['isDraft']:raise SystemExit('Release already published; verify it instead of overwriting assets.')
  run(gh,'release','upload',tag,'--repo',repo,'--clobber',*artifacts)
 else:
- run(gh,'release','create',tag,'--repo',repo,'--target',sha,'--draft','--title','Private SpeedDial 6.10.0 — Android + Chrome','--notes-file','docs/RELEASE-6.10.0.md',*artifacts)
+ run(gh,'release','create',tag,'--repo',repo,'--target',sha,'--draft','--title','Private SpeedDial '+version+' — Android + Chrome','--notes-file','docs/RELEASE-'+version+'.md',*artifacts)
 with tempfile.TemporaryDirectory(prefix='speeddial-release-check-') as directory:
  run(gh,'release','download',tag,'--repo',repo,'--dir',directory)
  for expected in artifacts:

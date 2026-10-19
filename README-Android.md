@@ -1,8 +1,8 @@
-# Private SpeedDial Android 6.10.0
+# Private SpeedDial Android 6.10.1
 
 [Скачать официальный APK](https://github.com/rukazax/Private_SpeedDial/releases/latest/download/Private-SpeedDial-Android.apk) · [Основная страница проекта](README.md)
 
-- Android 8.0+, пакет `su.econa.speeddial`, versionCode 6100000.
+- Android 8.0+, пакет `su.econa.speeddial`, versionCode 6100001.
 - Постоянная подпись для обновления поверх прежних официальных APK с сохранением данных.
 - [Установка и использование](docs/USER-GUIDE.md), [синхронизация](docs/SYNC.md), [сборка](docs/BUILD.md), [проверки и ограничения](docs/VERIFICATION.md).
 - Готовая локальная сборка: `dist/Private-SpeedDial-Android.apk`.

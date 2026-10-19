@@ -11,7 +11,8 @@
     "projectWeekly": "Updates are checked automatically on launch, at most once every 7 days.",
     "projectUpdateAvailable": "Private SpeedDial {version} is available. Download the update?",
     "projectSkip": "Skip release",
-    "projectUpdate": "Update"
+    "projectUpdate": "Update",
+    "projectDownloadExtension": "Download browser extension"
   },
   "ru": {
     "projectHeading": "О приложении и обновления",
@@ -22,7 +23,8 @@
     "projectWeekly": "Обновления проверяются автоматически при открытии, не чаще раза в 7 дней.",
     "projectUpdateAvailable": "Доступна версия Private SpeedDial {version}. Скачать обновление?",
     "projectSkip": "Пропустить релиз",
-    "projectUpdate": "Обновиться"
+    "projectUpdate": "Обновиться",
+    "projectDownloadExtension": "Скачать расширение для браузера"
   },
   "de": {
     "projectHeading": "Über die App und Updates",
@@ -33,7 +35,8 @@
     "projectWeekly": "Updates werden beim Öffnen automatisch geprüft, höchstens einmal alle 7 Tage.",
     "projectUpdateAvailable": "Private SpeedDial {version} ist verfügbar. Update herunterladen?",
     "projectSkip": "Version überspringen",
-    "projectUpdate": "Aktualisieren"
+    "projectUpdate": "Aktualisieren",
+    "projectDownloadExtension": "Browser-Erweiterung herunterladen"
   },
   "es": {
     "projectHeading": "Acerca de la aplicación y actualizaciones",
@@ -44,7 +47,8 @@
     "projectWeekly": "Las actualizaciones se comprueban al abrir, como máximo una vez cada 7 días.",
     "projectUpdateAvailable": "Private SpeedDial {version} está disponible. ¿Descargar la actualización?",
     "projectSkip": "Omitir versión",
-    "projectUpdate": "Actualizar"
+    "projectUpdate": "Actualizar",
+    "projectDownloadExtension": "Descargar extensión del navegador"
   },
   "fr": {
     "projectHeading": "À propos et mises à jour",
@@ -55,7 +59,8 @@
     "projectWeekly": "Les mises à jour sont recherchées à l’ouverture, au maximum une fois tous les 7 jours.",
     "projectUpdateAvailable": "Private SpeedDial {version} est disponible. Télécharger la mise à jour ?",
     "projectSkip": "Ignorer cette version",
-    "projectUpdate": "Mettre à jour"
+    "projectUpdate": "Mettre à jour",
+    "projectDownloadExtension": "Télécharger l’extension de navigateur"
   },
   "it": {
     "projectHeading": "Informazioni e aggiornamenti",
@@ -66,7 +71,8 @@
     "projectWeekly": "Gli aggiornamenti vengono cercati all’apertura, al massimo una volta ogni 7 giorni.",
     "projectUpdateAvailable": "È disponibile Private SpeedDial {version}. Scaricare l’aggiornamento?",
     "projectSkip": "Salta versione",
-    "projectUpdate": "Aggiorna"
+    "projectUpdate": "Aggiorna",
+    "projectDownloadExtension": "Scarica l’estensione del browser"
   },
   "pt": {
     "projectHeading": "Sobre e atualizações",
@@ -77,7 +83,8 @@
     "projectWeekly": "As atualizações são verificadas ao abrir, no máximo uma vez a cada 7 dias.",
     "projectUpdateAvailable": "Private SpeedDial {version} está disponível. Baixar a atualização?",
     "projectSkip": "Ignorar versão",
-    "projectUpdate": "Atualizar"
+    "projectUpdate": "Atualizar",
+    "projectDownloadExtension": "Baixar extensão do navegador"
   },
   "zh": {
     "projectHeading": "关于与更新",
@@ -88,7 +95,8 @@
     "projectWeekly": "打开应用时自动检查更新，每 7 天最多一次。",
     "projectUpdateAvailable": "Private SpeedDial {version} 已发布。是否下载更新？",
     "projectSkip": "跳过此版本",
-    "projectUpdate": "更新"
+    "projectUpdate": "更新",
+    "projectDownloadExtension": "下载浏览器扩展"
   },
   "ja": {
     "projectHeading": "アプリ情報と更新",
@@ -99,7 +107,8 @@
     "projectWeekly": "起動時に更新を自動確認します。確認は7日間に1回までです。",
     "projectUpdateAvailable": "Private SpeedDial {version} が利用可能です。更新をダウンロードしますか？",
     "projectSkip": "このバージョンをスキップ",
-    "projectUpdate": "更新"
+    "projectUpdate": "更新",
+    "projectDownloadExtension": "ブラウザー拡張機能をダウンロード"
   },
   "ko": {
     "projectHeading": "앱 정보 및 업데이트",
@@ -110,7 +119,8 @@
     "projectWeekly": "앱을 열 때 업데이트를 자동으로 확인하며, 7일에 한 번까지만 확인합니다.",
     "projectUpdateAvailable": "Private SpeedDial {version} 버전이 있습니다. 업데이트를 다운로드할까요?",
     "projectSkip": "이 버전 건너뛰기",
-    "projectUpdate": "업데이트"
+    "projectUpdate": "업데이트",
+    "projectDownloadExtension": "브라우저 확장 프로그램 다운로드"
   },
   "tr": {
     "projectHeading": "Hakkında ve güncellemeler",
@@ -121,7 +131,8 @@
     "projectWeekly": "Güncellemeler açılışta otomatik kontrol edilir; en fazla 7 günde bir.",
     "projectUpdateAvailable": "Private SpeedDial {version} kullanılabilir. Güncelleme indirilsin mi?",
     "projectSkip": "Sürümü atla",
-    "projectUpdate": "Güncelle"
+    "projectUpdate": "Güncelle",
+    "projectDownloadExtension": "Tarayıcı uzantısını indir"
   },
   "hi": {
     "projectHeading": "परिचय और अपडेट",
@@ -132,7 +143,8 @@
     "projectWeekly": "ऐप खोलने पर अपडेट अपने आप जाँचे जाते हैं, अधिकतम हर 7 दिन में एक बार।",
     "projectUpdateAvailable": "Private SpeedDial {version} उपलब्ध है। अपडेट डाउनलोड करें?",
     "projectSkip": "यह रिलीज़ छोड़ें",
-    "projectUpdate": "अपडेट करें"
+    "projectUpdate": "अपडेट करें",
+    "projectDownloadExtension": "ब्राउज़र एक्सटेंशन डाउनलोड करें"
   },
   "ar": {
     "projectHeading": "حول التطبيق والتحديثات",
@@ -143,7 +155,8 @@
     "projectWeekly": "يتم البحث عن التحديثات تلقائيًا عند الفتح، مرة واحدة كل 7 أيام كحد أقصى.",
     "projectUpdateAvailable": "يتوفر Private SpeedDial {version}. هل تريد تنزيل التحديث؟",
     "projectSkip": "تخطي الإصدار",
-    "projectUpdate": "تحديث"
+    "projectUpdate": "تحديث",
+    "projectDownloadExtension": "تنزيل إضافة المتصفح"
   }
 };
     for (const [language, values] of Object.entries(catalog)) Object.assign(translations[language], values);

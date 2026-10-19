@@ -9,7 +9,8 @@ for folder in ['extension','android-app/web']:
    text=p.read_text()
    assert not re.search(r'https?://(?:[\w-]+\.)?econa\.su',text),p
 manifest=json.loads((root/'extension/manifest.json').read_text())
-assert manifest['version']=='6.10.0'
+assert ('version: '+repr(manifest['version'])) in (root/'shared/project.js').read_text()
+assert ('android:versionName="'+manifest['version']+'"') in (root/'android-app/AndroidManifest.xml').read_text()
 assert manifest['homepage_url']=='https://github.com/rukazax/Private_SpeedDial'
 for p in list((root/'extension').rglob('*.js'))+list((root/'android-app/web').rglob('*.js'))+list((root/'android-app').glob('*.js')):
  subprocess.run([os.environ.get('NODE','node'),'--check',str(p)],check=True)
