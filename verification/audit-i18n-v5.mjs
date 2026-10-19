@@ -1,0 +1,8 @@
+import fs from 'node:fs';import vm from 'node:vm';
+const ctx={};ctx.self=ctx;ctx.window=ctx;vm.createContext(ctx);vm.runInContext(fs.readFileSync('android-app/web/translations.js','utf8'),ctx);const t=ctx.translations;
+let source='';for(const dir of ['android-app/web','android-app'])for(const file of fs.readdirSync(dir)){if(/\.(html|js)$/.test(file)&&file!=='translations.js')source+='\n'+fs.readFileSync(dir+'/'+file,'utf8');}
+const keys=new Set([...source.matchAll(/(?:\b(?:this\.)?t|\btbg|\btranslateKey|\btf)\(\s*['"]([^'"]+)['"]/g)].map(m=>m[1]));for(const m of source.matchAll(/data-i18n(?:-ph|-title|-aria)?=['"]([^'"]+)['"]/g))keys.add(m[1]);
+const union=new Set(Object.values(t).flatMap(d=>Object.keys(d)));const missing={};for(const lang of Object.keys(t))missing[lang]=[...union].filter(k=>!t[lang][k]);
+const placeholderIssues=[];const vars=s=>[...String(s).matchAll(/\{(\w+)\}/g)].map(m=>m[1]).sort().join(',');for(const [lang,dict] of Object.entries(t))for(const key of Object.keys(t.en))if(vars(dict[key])!==vars(t.en[key]))placeholderIssues.push({lang,key});
+if(Object.values(missing).some(a=>a.length)||placeholderIssues.length||[...keys].some(k=>!t.en[k]))throw Error('Translation coverage failed');
+console.log(JSON.stringify({languages:Object.keys(t),keyCount:union.size,usedKeys:keys.size,unknownUsed:[...keys].filter(k=>!t.en[k]),missingCounts:Object.fromEntries(Object.entries(missing).map(([l,ks])=>[l,ks.length]))},null,2));fs.writeFileSync('verification/v5-i18n-audit.json',JSON.stringify({keyCount:union.size,placeholderIssues,languages:Object.keys(t),usedKeys:[...keys],unknownUsed:[...keys].filter(k=>!t.en[k]),missing},null,2));

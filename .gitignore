@@ -1,0 +1,28 @@
+# Generated Android output and private signing material
+android-app/build/
+android-app/assets/
+verification/test-build/
+dist/
+*.apk
+*.aab
+*.p12
+*.jks
+*.keystore
+*.pem
+*.key
+password.txt
+.env
+.env.*
+__pycache__/
+*.pyc
+node_modules/
+.DS_Store
+# Workstation audit and historical, uncurated test output
+environment-check-*.md
+verification/*.json
+verification/*.txt
+verification/*.png
+verification/*.xml
+verification/*.html
+
+!verification/AndroidManifest.xml

@@ -1,0 +1,9 @@
+/* Distribution controls use the same theme and touch targets in both clients. */
+#projectSettings .project-links { display:flex; flex-wrap:wrap; align-items:center; gap:10px; }
+#projectSettings .project-links a { display:inline-flex; align-items:center; min-height:44px; padding:8px 12px; color:var(--accent,#35c2b5); border:1px solid var(--border,#46505c); border-radius:12px; text-decoration:none; font-size:14px; line-height:1.4; box-sizing:border-box; }
+#projectShare { min-height:44px; padding:12px 16px; border:0; border-radius:12px; background:var(--accent,#35c2b5); color:#08151d; font-family:inherit; font-weight:600; font-size:14px; line-height:1.4; cursor:pointer; white-space:normal; }
+#projectSettings p { line-height:1.5; font-size:14px; }
+#projectSettings .project-description { color:var(--text-dim,#99a5b4); margin:12px 0 0; }
+#projectSettings input[readonly] { width:100%; padding:10px; font:inherit; box-sizing:border-box; }
+#projectSettings a:focus-visible,#projectShare:focus-visible { outline:2px solid var(--accent,#35c2b5); outline-offset:3px; }
+.android-settings #projectShare { width:100%; }

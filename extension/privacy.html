@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy — Private SpeedDial</title>
+<style>
+  body { max-width: 800px; margin: 40px auto; padding: 0 20px;
+         font-family: -apple-system, Segoe UI, Roboto, sans-serif;
+         line-height: 1.6; color: #222; }
+  h1 { border-bottom: 1px solid #ddd; padding-bottom: 8px; }
+  h2 { margin-top: 32px; }
+  code { background: #f4f4f4; padding: 1px 5px; border-radius: 4px; }
+</style>
+</head>
+<body>
+<p style="font-size:12px;color:#666">Private SpeedDial</p>
+<h1>Privacy Policy — Private SpeedDial</h1>
+<p><strong>Last updated: October 12, 2026</strong></p>
+<h2>Overview</h2>
+<p>Private SpeedDial is a browser extension that provides a private start page with visual bookmarks (tiles), folders, and notes. The extension is designed around a single principle: <strong>your data belongs to you</strong>.</p>
+<h2>Data Collection</h2>
+<p><strong>The extension does not collect, transmit, sell, or share any personal data with the developer or any third party.</strong></p>
+<p>Specifically, the extension does NOT:
+- collect analytics or telemetry of any kind;
+- track your browsing activity;
+- use cookies for tracking;
+- contain advertising or advertising identifiers;
+- transfer your bookmarks, notes, settings, or any other data to the developer's servers (the developer operates no servers).</p>
+<h2>Data Storage</h2>
+<p>All data (bookmarks, folders, notes, settings) is stored <strong>locally on your device</strong> using the browser's built-in storage mechanisms (<code>chrome.storage.local</code>, <code>chrome.storage.sync</code>, IndexedDB, Cache API).</p>
+<ul>
+<li>If browser sign-in with synchronization is enabled, the browser vendor (e.g., Google) may sync extension settings (<code>chrome.storage.sync</code>) between your devices under your browser account — this is governed by the browser vendor's privacy policy, not by this extension.</li>
+<li>Local data is removed when the extension is uninstalled.</li>
+</ul>
+<h2>Optional Synchronization</h2>
+<p>At your explicit choice, the extension can synchronize your data with a <strong>server that you configure yourself</strong> (WebDAV / Nextcloud / Synology or a compatible cloud service: Dropbox, Box, OneDrive, pCloud, Yandex Disk, Mail.ru Cloud).</p>
+<ul>
+<li>Synchronization is disabled by default and works only after you enter your own server credentials.</li>
+<li>Data is sent exclusively to the server address you specify.</li>
+<li>You can enable end-to-end encryption (AES-GCM with a PBKDF2-derived key): in this case the sync server stores only encrypted data that cannot be read without your key.</li>
+<li>Your relationship with the chosen storage provider is governed by that provider's privacy policy.</li>
+</ul>
+<h2>Network Requests</h2>
+<p>The extension makes network requests only in the following cases:
+- <strong>Favicons</strong>: when adding a bookmark, the extension fetches the site's icon. You can choose the private mode, in which icons are fetched directly from the bookmarked site, or the Google favicon service (<code>google.com/s2/favicons</code>), which receives the bookmark's domain name.
+- <strong>Currency widget</strong> (optional, disabled by default): fetches public exchange rates.
+- <strong>Synchronization</strong>: requests only to the server you configured.</p>
+<p>No other network requests are made. The extension contains no remote code: all JavaScript is bundled in the extension package (<code>script-src 'self'</code>).</p>
+<h2>Permissions</h2>
+<p>All requested permissions are used solely for the features described above: local storage, optional sync scheduling, bookmark import/export on your explicit action, history search on your explicit action, context menu item, and optional notifications.</p>
+<h2>Changes to This Policy</h2>
+<p>Any changes to this policy will be published at this URL with an updated date.</p>
+<h2>Contact</h2>
+<p>If you have questions about this privacy policy, contact the developer via the website: <strong><a href="https://github.com/rukazax/Private_SpeedDial" target="_blank">GitHub</a></strong></p>
+<hr />
+<h1>Политика конфиденциальности — Private SpeedDial</h1>
+<p><strong>Дата обновления: 12 октября 2026 г.</strong></p>
+<h2>Общие положения</h2>
+<p>Private SpeedDial — расширение браузера, предоставляющее приватную стартовую страницу с визуальными закладками, папками и заметками. Главный принцип: <strong>ваши данные принадлежат вам</strong>.</p>
+<h2>Сбор данных</h2>
+<p><strong>Расширение не собирает, не передаёт и не продаёт никакие персональные данные разработчику или третьим лицам.</strong></p>
+<p>В частности, расширение НЕ:
+- собирает аналитику и телеметрию;
+- отслеживает действия в браузере;
+- использует cookies для отслеживания;
+- содержит рекламу;
+- передаёт закладки, заметки или настройки на серверы разработчика (серверов у разработчика нет).</p>
+<h2>Хранение данных</h2>
+<p>Все данные (закладки, папки, заметки, настройки) хранятся <strong>локально на вашем устройстве</strong> средствами браузера (<code>chrome.storage.local</code>, <code>chrome.storage.sync</code>, IndexedDB, Cache API).</p>
+<ul>
+<li>Если включён вход в браузерный аккаунт с синхронизацией, настройки расширения могут синхронизироваться между вашими устройствами средствами браузера — это регулируется политикой конфиденциальности производителя браузера.</li>
+<li>Локальные данные удаляются при удалении расширения.</li>
+</ul>
+<h2>Опциональная синхронизация</h2>
+<p>По вашему выбору расширение может синхронизировать данные с <strong>сервером, который вы настраиваете сами</strong> (WebDAV / Nextcloud / Synology или совместимый облачный сервис: Dropbox, Box, OneDrive, pCloud, Яндекс Диск, Облако Mail.ru).</p>
+<ul>
+<li>Синхронизация выключена по умолчанию и работает только после ввода ваших учётных данных.</li>
+<li>Данные отправляются исключительно на указанный вами адрес сервера.</li>
+<li>Доступно сквозное шифрование (AES-GCM с ключом, производным от PBKDF2): сервер хранит только зашифрованные данные, которые невозможно прочитать без вашего ключа.</li>
+<li>Ваши отношения с выбранным провайдером хранилища регулируются политикой конфиденциальности этого провайдера.</li>
+</ul>
+<h2>Сетевые запросы</h2>
+<p>Расширение выполняет сетевые запросы только в следующих случаях:
+- <strong>Favicon</strong>: при добавлении закладки загружается иконка сайта. Можно выбрать приватный режим (иконка загружается напрямую с сайта) или сервис Google favicon (ему передаётся домен закладки).
+- <strong>Виджет курсов валют</strong> (опционально, выключен по умолчанию): загрузка публичных курсов валют.
+- <strong>Синхронизация</strong>: запросы только к настроенному вами серверу.</p>
+<p>Других сетевых запросов нет. Удалённый код не используется: весь JavaScript находится в пакете расширения (<code>script-src 'self'</code>).</p>
+<h2>Разрешения</h2>
+<p>Все запрашиваемые разрешения используются исключительно для описанных выше функций: локальное хранение, планирование синхронизации, импорт/экспорт закладок по вашей явной команде, поиск по истории по вашей явной команде, пункт контекстного меню и опциональные уведомления.</p>
+<h2>Изменения политики</h2>
+<p>Любые изменения публикуются по этому же URL с обновлением даты.</p>
+<h2>Контакты</h2>
+<p>Вопросы по политике конфиденциальности — через сайт разработчика: <strong><a href="https://github.com/rukazax/Private_SpeedDial" target="_blank">GitHub</a></strong></p>
+<p>При открытии приложение проверяет последний стабильный релиз через публичный GitHub API не чаще раза в 7 дней. GitHub получает IP-адрес и обычные сетевые метаданные. Закладки, заметки, пароли и токены в этот запрос не передаются. Выбор «Пропустить релиз» хранится только на этом устройстве. / On launch, the app checks the public GitHub releases API at most once every 7 days. GitHub receives the IP address and standard request metadata, never your bookmarks, notes, passwords or tokens. Skipped releases are stored on this device only.</p>
+</body>
+</html>

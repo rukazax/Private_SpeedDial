@@ -1,0 +1,45 @@
+private-speeddial/
+├── manifest.json                    [6.7.0]
+├── background.js                    [v6.7.0]
+├── defaults.js                      [v6.7.0]
+├── common.js                        [v6.6.0]
+├── idb.js                           [v6.6.0]
+├── logger.js
+├── currency.js                      [v6.6.1]
+├── favicon-cache.js
+├── theme-init.js
+├── dialog.js
+├── translations.js
+├── parser-worker.js                 [v6.6.0]
+├── newtab.html                      [v6.6.0]
+├── newtab.css                       [v6.7.0 — редизайн]
+├── newtab.js                        [v6.6.6 — эта итерация]
+├── options.html
+├── options.css
+├── options.js                       [v6.6.6 — эта итерация]
+├── popup.html
+├── popup.js                         [v6.6.0]
+├── README.md
+├── .eslintrc.json
+│
+├── background/
+│   ├── tabs.js
+│   ├── alarms.js                    [v6.6.0]
+│   ├── profiles.js
+│   ├── sync.js                      [v6.6.6 — эта итерация]
+│   └── providers/
+│       ├── webdav.js                [v6.6.0]
+│       ├── dropbox.js
+│       ├── box.js
+│       ├── onedrive.js
+│       ├── pcloud.js                [v6.6.0]
+│       ├── yandex.js                [v6.6.0]
+│       └── mailru.js                [v6.6.0]
+│
+├── icons/
+│   ├── icon16.png
+│   ├── icon48.png
+│   └── icon128.png
+│
+└── backgrounds/
+    └── default-bg.jpg

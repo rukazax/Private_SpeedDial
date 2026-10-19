@@ -1,0 +1,36 @@
+{
+  "version": "6.10.0",
+  "date": "2026-10-19",
+  "android": {
+    "environment": "Android 15 API 35 emulator, WebView 124",
+    "checks": {
+      "home": 31,
+      "extended-home": 7,
+      "settings": 24,
+      "extra": 11,
+      "sync": 39,
+      "advanced-sync": 13,
+      "menu": 25,
+      "ui": 38,
+      "project": 22
+    },
+    "total": 210,
+    "physicalHonorMagicV3Tested": false,
+    "liveCloudAccountsTested": false,
+    "nativeReleaseChecks": 17,
+    "nativeProcessRuns": 2,
+    "releaseDebuggable": false,
+    "secureFlag": true,
+    "signingCertificateSha256": "c49e8f257a896ed66fa4b874a2c7cb1b6df4263beafaf65c49f271a5ea87f596"
+  },
+  "unitTests": 17,
+  "chromiumIntegrationSuites": 1,
+  "i18n": {
+    "languages": 13,
+    "androidKeysPerLanguage": 393
+  },
+  "artifacts": {
+    "Private-SpeedDial-Android.apk": "e7f1a8ba65a09ecf507799649d88fc0710b0ef036147ccaa2dafd63b2f412d98",
+    "Private-SpeedDial-Extension.zip": "dd56ae7ccd31aed9f582c03b4301173bf0c0544f7578b5a35e32dbdb30b7a476"
+  }
+}

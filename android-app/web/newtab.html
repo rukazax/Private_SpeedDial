@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Private SpeedDial</title>
+    <script src="theme-init.js"></script>
+    <link rel="stylesheet" href="newtab.css">
+<link rel="stylesheet" href="project.css">
+</head>
+<body>
+    <div id="bgLayer" class="bg-layer" aria-hidden="true"></div>
+
+    <div class="container">
+        <div class="main-content" id="mainContent">
+            <div class="content-area" id="contentArea">
+                <div class="folders-bar-wrap" id="foldersBarWrap">
+                    <div class="folders-bar" id="foldersBar"></div>
+                    </div>
+                <main class="speed-dial-grid" id="speedDialGrid"></main>
+                <div id="scrollSentinel" class="scroll-sentinel"></div>
+            </div>
+        </div>
+
+        <div class="context-menu" id="contextMenu" style="display:none">
+            <div class="context-menu-item" data-action="edit" data-i18n="ctxEdit">✏️ Редактировать</div>
+            <div class="context-menu-item" data-action="moveToFolder" data-i18n="ctxMove">📁 Переместить</div>
+            <div class="context-menu-item" data-action="delete" data-i18n="ctxDelete">🗑️ Удалить</div>
+        </div>
+        <div class="context-menu" id="folderContextMenu" style="display:none">
+            <div class="context-menu-item" data-action="editFolder" data-i18n="ctxEdit">✏️ Редактировать</div>
+            <div class="context-menu-item" data-action="setFolderPassword" data-i18n="ctxPassword">🔒 Пароль</div>
+            <div class="context-menu-item" data-action="deleteFolder" data-i18n="ctxDelete">🗑️ Удалить</div>
+        </div>
+        <div class="context-menu" id="noteContextMenu" style="display:none">
+            <div class="context-menu-item" data-action="editNote" data-i18n="ctxEdit">✏️ Редактировать</div>
+            <div class="context-menu-item" data-action="moveNoteToFolder" data-i18n="ctxMove">📁 Переместить</div>
+            <div class="context-menu-item" data-action="deleteNote" data-i18n="ctxDelete">🗑️ Удалить</div>
+        </div>
+        <div class="context-menu" id="noteFolderContextMenu" style="display:none">
+            <div class="context-menu-item" data-action="editNoteFolder" data-i18n="ctxEdit">✏️ Редактировать</div>
+            <div class="context-menu-item" data-action="deleteNoteFolder" data-i18n="ctxDelete">🗑️ Удалить</div>
+        </div>
+
+        <div class="context-menu" id="folderBarContextMenu" style="display:none">
+            <div class="context-menu-item" data-action="sortFolderManual" data-i18n="ctxSortManual">📋 Сортировка: вручную</div>
+            <div class="context-menu-item" data-action="sortFolderNameAsc" data-i18n="ctxSortAsc">🔤 По названию А→Я</div>
+            <div class="context-menu-item" data-action="sortFolderNameDesc" data-i18n="ctxSortDesc">🔤 По названию Я→А</div>
+            <div class="context-menu-separator"></div>
+            <div class="context-menu-item" data-action="sortFolderToggleEmpty" data-i18n="ctxShowEmpty">👁 Показать/скрыть пустые</div>
+            <div class="context-menu-item" data-action="sortFolderReset" data-i18n="ctxResetNesting">↩️ Сбросить вложенность</div>
+        </div>
+
+        <div class="context-menu" id="noteFolderBarContextMenu" style="display:none">
+            <div class="context-menu-item" data-action="sortNoteFolderManual" data-i18n="ctxSortManual">📋 Сортировка: вручную</div>
+            <div class="context-menu-item" data-action="sortNoteFolderNameAsc" data-i18n="ctxSortAsc">🔤 По названию А→Я</div>
+            <div class="context-menu-item" data-action="sortNoteFolderNameDesc" data-i18n="ctxSortDesc">🔤 По названию Я→А</div>
+        </div>
+
+        <div class="modal" id="tileModal">
+            <div class="modal-content">
+                <h3 id="modalTitle" data-i18n="addTileModal">Добавить закладку</h3>
+                <form id="tileForm">
+                    <input type="hidden" id="tileId">
+
+                    <div class="form-group">
+                        <label for="tileTitle" data-i18n="titleOptional">Название:</label>
+                        <div class="title-checkbox-row">
+                            <input type="text" id="tileTitle" placeholder="Название закладки" data-i18n-ph="tileTitlePh">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" id="tileShowTitle" checked>
+                                <span data-i18n="showTitle">Показывать название</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label data-i18n="url">URL:</label>
+                        <input type="text" id="tileUrl" required placeholder="example.com или https://example.com" data-i18n-ph="phExampleUrl">
+                        <small style="opacity:.6;font-size:11px;display:block;margin-top:4px;" data-i18n="protocolHint">
+                            Протокол можно не указывать — подставится автоматически
+                        </small>
+                    </div>
+
+                    <div class="form-group"><label data-i18n="folder">Папка:</label><select id="tileFolder"></select></div>
+                    <div class="form-group"><label data-i18n="iconUrl">Иконка URL:</label><input type="url" id="tileIcon"></div>
+
+                    <div class="form-group"><label data-i18n="bgType">Тип фона:</label>
+                        <select id="tileBgType">
+                            <option value="color" data-i18n="color">Цвет</option>
+                            <option value="image" data-i18n="image">Изображение</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="tileBgColorGroup">
+                        <div class="color-options-row color-options-row-3">
+                            <div class="color-option"><label data-i18n="bgColor">Цвет фона:</label><input type="color" id="tileBgColor" value="#4CAF50"></div>
+                            <div class="color-option"><label data-i18n="textColor">Цвет текста:</label><input type="color" id="tileTextColor" value="#ffffff"></div>
+                            <div class="color-option color-auto-option">
+                                <label class="checkbox-inline" title="Автоматически подобрать цвета по иконке" data-i18n-title="autoColorTitle">
+                                    <input type="checkbox" id="tileAutoColor" checked>
+                                    <span data-i18n="autoColorShort">Авто</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="tileBgImageGroup" style="display:none">
+                        <label data-i18n="bgImageUrl">URL изображения:</label>
+                        <input type="url" id="tileBgImageUrl">
+                        <label class="checkbox-inline" style="margin-top:8px">
+                            <input type="checkbox" id="tileAutoText">
+                            <span data-i18n="autoContrastText">Авто контрастный текст</span>
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="color-options-row">
+                            <div class="color-option">
+                                <label data-i18n="tileOpacity">Прозрачность закладки:</label>
+                                <div class="range-row">
+                                    <input type="range" id="tileOpacity" min="0" max="100" value="100">
+                                    <span id="tileOpacityValue">100%</span>
+                                </div>
+                            </div>
+                            <div class="color-option">
+                                <label data-i18n="iconOpacity">Прозрачность логотипа:</label>
+                                <div class="range-row">
+                                    <input type="range" id="tileIconOpacity" min="0" max="100" value="100">
+                                    <span id="tileIconOpacityValue">100%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-actions">
+                        <button type="submit" data-i18n="save">Сохранить</button>
+                        <button type="button" id="cancelButton" data-i18n="cancel">Отмена</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+
+        <div class="modal" id="folderModal">
+            <div class="modal-content">
+                <h3 id="folderModalTitle" data-i18n="createFolder">Создать папку</h3>
+                <form id="folderForm">
+                    <input type="hidden" id="folderId">
+                    <div class="form-group"><label data-i18n="folderName">Название:</label><input type="text" id="folderName" required></div>
+                    <div class="form-group color-options-row">
+                        <div class="color-option"><label data-i18n="bgColor">Цвет фона:</label><input type="color" id="folderColor" value="#667eea"></div>
+                        <div class="color-option"><label data-i18n="textColor">Цвет текста:</label><input type="color" id="folderTextColor" value="#ffffff"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="folderAutoText">
+                            <span data-i18n="autoContrastText">Авто контрастный текст</span>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="opacityLabel">Прозрачность:</label>
+                        <input type="range" id="folderOpacity" min="0" max="100" value="100">
+                        <span id="folderOpacityValue">100%</span>
+                    </div>
+                    <div class="form-group"><label data-i18n="folderPassword">Пароль:</label>
+                        <div class="password-wrap">
+                            <input type="password" id="folderPassword">
+                            <button type="button" class="toggle-pass" data-target="folderPassword">👁</button>
+                        </div>
+                    </div>
+                    <div class="form-group"><label data-i18n="folderParent">Родительская папка:</label><select id="folderParent"></select></div>
+                    <div class="form-actions">
+                        <button type="submit" data-i18n="save">Сохранить</button>
+                        <button type="button" id="cancelFolderButton" data-i18n="cancel">Отмена</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="modal" id="noteFolderModal">
+            <div class="modal-content">
+                <h3 id="noteFolderModalTitle" data-i18n="createNoteFolderTitle">Создать папку заметок</h3>
+                <form id="noteFolderForm">
+                    <input type="hidden" id="noteFolderId">
+                    <div class="form-group"><label data-i18n="folderName">Название:</label><input type="text" id="noteFolderName" required></div>
+                    <div class="form-group color-options-row">
+                        <div class="color-option"><label data-i18n="bgColor">Цвет фона:</label><input type="color" id="noteFolderColor" value="#667eea"></div>
+                        <div class="color-option"><label data-i18n="textColor">Цвет текста:</label><input type="color" id="noteFolderTextColor" value="#ffffff"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="noteFolderAutoText">
+                            <span data-i18n="autoContrastText">Авто контрастный текст</span>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="opacityLabel">Прозрачность:</label>
+                        <input type="range" id="noteFolderOpacity" min="0" max="100" value="100">
+                        <span id="noteFolderOpacityValue">100%</span>
+                    </div>
+                    <div class="form-group"><label data-i18n="folderPassword">Пароль:</label>
+                        <div class="password-wrap">
+                            <input type="password" id="noteFolderPassword">
+                            <button type="button" class="toggle-pass" data-target="noteFolderPassword">👁</button>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" data-i18n="save">Сохранить</button>
+                        <button type="button" id="cancelNoteFolderButton" data-i18n="cancel">Отмена</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="modal" id="noteModal">
+            <div class="modal-content">
+                <div class="android-note-heading"><h3 id="noteModalTitle" data-i18n="addNoteModal">Добавить заметку</h3><button id="noteSaveClose" type="submit" form="noteForm" data-i18n-aria="saveAndCloseNote" data-i18n-title="saveAndCloseNote">✕</button></div>
+                <form id="noteForm">
+                    <input type="hidden" id="noteId">
+                    <div class="form-group"><label data-i18n="noteTitle">Заголовок:</label><input type="text" id="noteTitle"></div>
+                    <div class="form-group"><label data-i18n="noteContentMd">Содержание (Markdown):</label><textarea id="noteContent" rows="4"></textarea></div>
+                    <div class="form-group"><label data-i18n="folder">Папка:</label><select id="noteFolder"></select></div>
+                    <div class="form-group color-options-row">
+                        <div class="color-option"><label data-i18n="textColor">Цвет текста:</label><input type="color" id="noteTextColor" value="#000000"></div>
+                        <div class="color-option"><label data-i18n="bgColor">Цвет фона:</label><input type="color" id="noteColor" value="#ffeb3b"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="noteAutoText">
+                            <span data-i18n="autoContrastText">Авто контрастный текст</span>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="opacityLabel">Прозрачность:</label>
+                        <input type="range" id="noteOpacity" min="0" max="100" value="100">
+                        <span id="noteOpacityValue">100%</span>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" data-i18n="save">Сохранить</button>
+                        <button type="button" id="cancelNoteButton" data-i18n="cancel">Отмена</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="modal" id="passwordModal">
+            <div class="modal-content">
+                <h3 data-i18n="enterPasswordTitle">Введите пароль</h3>
+                <div class="password-wrap">
+                    <input type="password" id="passwordInput" autofocus>
+                    <button type="button" class="toggle-pass" data-target="passwordInput">👁</button>
+                </div>
+                <div class="form-actions">
+                    <button type="button" id="confirmPassword" data-i18n="ok">ОК</button>
+                    <button type="button" id="cancelPassword" data-i18n="cancel">Отмена</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="loadingOverlay" class="loading-overlay" style="display:none;">
+        <div class="spinner"></div>
+    </div>
+    <div id="toast" class="toast" style="display:none;"></div>
+
+    <script src="defaults.js"></script>
+    <script src="translations.js"></script>
+    <script src="project-i18n.js"></script>
+    <script src="common.js"></script>
+    <script src="idb.js"></script>
+    <script src="logger.js"></script>
+    
+    <script src="favicon-cache.js"></script>
+    <script src="dialog.js"></script>
+    <script src="newtab.js"></script>
+<div id="androidStaging" hidden="hidden"><div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Поиск по закладкам и заметкам..." data-i18n-ph="searchBookmarks">
+                    <button type="button" id="clearSearch" class="clear-search" style="display:none">✕</button>
+                </div>
+                <aside class="notes-sidebar" id="notesSidebar">
+                <div class="notes-header">
+                    <h3 data-i18n="notes">Заметки</h3>
+                    <div class="notes-header-actions">
+                        <button type="button" id="addNote" class="icon-button">+</button>
+                    </div>
+                </div>
+                <div class="notes-content-wrapper">
+                    <div class="notes-folders-bar" id="notesFoldersBar"></div>
+                    <div class="notes-list" id="notesList"></div>
+                </div>
+                </aside>
+            </div><script src="project.js"></script>
+    <script src="project-ui.js"></script>
+</body>
+</html>

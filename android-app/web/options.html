@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Настройки Private SpeedDial</title>
+    <script src="theme-init.js"></script>
+    <link rel="stylesheet" href="options.css">
+<link rel="stylesheet" href="project.css">
+</head>
+<body>
+    <div class="container">
+        <div class="support-header">
+            <a href="https://github.com/rukazax/Private_SpeedDial" target="_blank" class="support-button" data-i18n="projectRepository">Проект на GitHub</a> <a href="https://github.com/rukazax/Private_SpeedDial" target="_blank" class="browser-extension-link" data-i18n="browserExtension">Расширение для браузера</a>
+        </div>
+
+        <h1><span data-i18n="settingsTitle">Настройки Private SpeedDial</span> <span id="appVersion" class="app-version"></span></h1>
+
+        <form id="settingsForm">
+
+            <details class="android-settings-section"><summary data-i18n="secSync">Настройки синхронизации</summary><div class="android-settings-content">
+                <div class="form-group">
+                    <label for="syncService" data-i18n="chooseService">Выберите сервис:</label>
+                    <select id="syncService">
+                        <option value="webdav">WebDAV (Synology)</option>
+                        <option value="nextcloud">Nextcloud</option>
+                        <option value="dropbox">Dropbox</option>
+                        <option value="box">Box (beta)</option>
+                        <option value="onedrive">OneDrive</option>
+                        <option value="pcloud">pCloud</option>
+                        <option value="yandex" data-i18n="yandexProvider">Яндекс.Диск</option>
+                        <option value="mailru" data-i18n="mailruProvider">Облако Mail.ru</option>
+                    </select>
+                </div>
+
+                <div class="sync-settings" id="webdavSettings">
+                    <div class="form-group"><label data-i18n="url">URL:</label><input type="url" id="webdavUrl" placeholder="https://your-synology:5006/webdav/"></div>
+                    <div class="form-group"><label data-i18n="loginLabel">Логин:</label><input type="text" id="webdavUsername"></div>
+                    <div class="form-group"><label data-i18n="folderPassword">Пароль:</label>
+                        <div class="password-wrap"><input type="password" id="webdavPassword"><button type="button" class="toggle-pass" data-target="webdavPassword">👁</button></div>
+                    </div>
+                </div>
+
+                <div class="sync-settings" id="nextcloudSettings" style="display:none">
+                    <div class="form-group"><label data-i18n="url">URL:</label><input type="url" id="nextcloudUrl"></div>
+                    <div class="form-group"><label data-i18n="loginLabel">Логин:</label><input type="text" id="nextcloudUsername"></div>
+                    <div class="form-group"><label data-i18n="folderPassword">Пароль:</label>
+                        <div class="password-wrap"><input type="password" id="nextcloudPassword"><button type="button" class="toggle-pass" data-target="nextcloudPassword">👁</button></div>
+                    </div>
+                </div>
+
+                <div class="sync-settings" id="dropboxSettings" style="display:none">
+                    <div class="form-group"><label data-i18n="accessTokenLabel">Access Token:</label>
+                        <div class="password-wrap"><input type="password" id="dropboxAccessToken"><button type="button" class="toggle-pass" data-target="dropboxAccessToken">👁</button></div>
+                    </div>
+                    <div class="form-group"><label data-i18n="folder">Папка:</label><input type="text" id="dropboxFolder" value="/Private-SpeedDial"></div>
+                </div>
+
+                <div class="sync-settings" id="boxSettings" style="display:none">
+                    <div class="form-group"><label data-i18n="accessTokenLabel">Access Token:</label>
+                        <div class="password-wrap"><input type="password" id="boxAccessToken"><button type="button" class="toggle-pass" data-target="boxAccessToken">👁</button></div>
+                    </div>
+                    <div class="form-group"><label data-i18n="fileIdLabel">File ID:</label><input type="text" id="boxFileId"></div>
+                    <small><span data-i18n="createEmptyFile">Создайте пустой файл</span> <code>private-speeddial.json</code> <span data-i18n="boxHint">в Box и укажите его ID. Box не создаёт файл автоматически.</span></small>
+                </div>
+
+                <div class="sync-settings" id="onedriveSettings" style="display:none">
+                    <div class="form-group"><label data-i18n="accessTokenLabel">Access Token:</label>
+                        <div class="password-wrap"><input type="password" id="onedriveAccessToken"><button type="button" class="toggle-pass" data-target="onedriveAccessToken">👁</button></div>
+                    </div>
+                    <div class="form-group"><label data-i18n="folder">Папка:</label><input type="text" id="onedriveFolder" value="/Private-SpeedDial"></div>
+                    <small data-i18n="bgSizeWarning">⚠️ Лимит 4 МБ на файл. При превышении — фоны не будут синхронизироваться.</small>
+                </div>
+
+                <div class="sync-settings" id="pcloudSettings" style="display:none">
+                    <div class="form-group"><label data-i18n="accessTokenLabel">Access Token:</label>
+                        <div class="password-wrap"><input type="password" id="pcloudAccessToken"><button type="button" class="toggle-pass" data-target="pcloudAccessToken">👁</button></div>
+                    </div>
+                    <div class="form-group"><label data-i18n="folder">Папка:</label><input type="text" id="pcloudFolder" value="/Private-SpeedDial"></div>
+                </div>
+
+                <div class="sync-settings" id="yandexSettings" style="display:none">
+                    <div class="form-group"><label data-i18n="oauthTokenLabel">OAuth токен:</label>
+                        <div class="password-wrap"><input type="password" id="yandexToken"><button type="button" class="toggle-pass" data-target="yandexToken">👁</button></div>
+                        <small><span data-i18n="getItAt">Получите на</span> <a href="https://oauth.yandex.ru/" target="_blank">oauth.yandex.ru</a><span data-i18n="yandexRights">. Права: cloud_api:disk.app_folder или read+write.</span></small>
+                    </div>
+                    <div class="form-group"><label data-i18n="folder">Папка:</label><input type="text" id="yandexFolder" value="Private-SpeedDial"></div>
+                </div>
+
+                <div class="sync-settings" id="mailruSettings" style="display:none">
+                    <div class="form-group"><label data-i18n="emailLabel">Email:</label><input type="email" id="mailruEmail"></div>
+                    <div class="form-group"><label data-i18n="folderPassword">Пароль:</label>
+                        <div class="password-wrap"><input type="password" id="mailruPassword"><button type="button" class="toggle-pass" data-target="mailruPassword">👁</button></div>
+                    </div>
+                    <div class="form-group"><label data-i18n="folder">Папка:</label><input type="text" id="mailruFolder" value="Private-SpeedDial"></div>
+                    <small data-i18n="mailruHint">Для Mail.ru может потребоваться пароль для внешних приложений.</small>
+                </div>
+
+                <div class="warning-box" id="plaintextWarning" style="display:none;">
+                    ⚠️ <strong data-i18n="encKeyNotSet">Ключ шифрования не задан.</strong> <span data-i18n="cloudPlaintextNote">Данные синхронизируются с облаком в открытом виде (JSON).
+                    Для сквозного шифрования заполните поле «Ключ шифрования синхронизации» ниже.</span>
+                </div>
+
+                <div class="form-group" style="margin-top:12px;">
+                    <label data-i18n="encKeyLabel">Ключ шифрования синхронизации:</label>
+                    <div class="password-wrap">
+                        <input type="password" id="encryptionKey" placeholder="AES-GCM">
+                        <button type="button" class="toggle-pass" data-target="encryptionKey">👁</button>
+                    </div>
+                    <small data-i18n="encKeyHint">Используйте тот же ключ на всех устройствах. При смене — данные придётся загрузить заново.</small>
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="syncModeLabel">Режим синхронизации:</label>
+                    <div class="sync-mode-buttons" id="syncModeButtons">
+                        <button type="button" class="sync-mode-btn" data-mode="merge" data-i18n="mergeBtn">🔀 Объединить (мульти-девайс)</button>
+                        <button type="button" class="sync-mode-btn" data-mode="upload" data-i18n="toServerBtn">📤 На сервер</button>
+                        <button type="button" class="sync-mode-btn" data-mode="download" data-i18n="fromServerBtn">📥 С сервера</button>
+                    </div>
+                    <input type="hidden" id="syncMode" value="merge">
+                    <small data-i18n="mergeExplain">«Объединить» — рекомендовано для синхронизации между несколькими компьютерами. Данные всех устройств будут слиты, включая корректное удаление элементов.</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="syncService2" data-i18n="secondServerLabel">Второй сервер (параллельная синхронизация):</label>
+                    <select id="syncService2">
+                        <option value="" data-i18n="secondServerOff">— выключено —</option>
+                        <option value="webdav">WebDAV (Synology)</option>
+                        <option value="nextcloud">Nextcloud</option>
+                        <option value="dropbox">Dropbox</option>
+                        <option value="box">Box (beta)</option>
+                        <option value="onedrive">OneDrive</option>
+                        <option value="pcloud">pCloud</option>
+                        <option value="yandex" data-i18n="yandexProvider">Яндекс.Диск</option>
+                        <option value="mailru" data-i18n="mailruProvider">Облако Mail.ru</option>
+                    </select>
+                    <small data-i18n="secondServerHint">Данные синхронизируются сразу с двумя серверами. Логин и пароль второго сервиса заполните в его секции выше, переключив основной сервис. Ключ шифрования общий.</small>
+                </div>
+
+                <div class="sync-actions-row">
+                    <button type="button" id="syncNowBtn" class="action-button sync-now-btn" data-i18n="syncNowBtn">⚡ Синхронизировать сейчас</button>
+                    <button type="button" id="testConnection" class="action-button" data-i18n="testConnBtn">🔌 Тест соединения</button>
+                    <button type="button" id="applySyncBtn" class="action-button apply-sync-btn" data-i18n="applyBtn">✔ Применить</button>
+                </div>
+
+                <div class="design-row" style="margin-top:15px;">
+                    <div class="form-group">
+                        <label><input type="checkbox" id="autoSync"> <span data-i18n="autoSync">Автоматическая синхронизация</span></label>
+                        <small data-i18n="autoSyncOnChangeNote">Синхронизация запускается автоматически при любом изменении закладок, папок, заметок и настроек.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="syncInterval" data-i18n="intervalMin">Интервал (мин):</label>
+                        <input type="number" id="syncInterval" min="5" max="120" value="60">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <h3 data-i18n="syncSummaryTitle">Сводка синхронизируемых элементов</h3>
+                    <table id="syncSummaryTable" class="data-table">
+                        <thead><tr><th data-i18n="elementWord">Элемент</th><th data-i18n="colServer">Сервер</th><th data-i18n="colBrowser">Браузер</th></tr></thead>
+                        <tbody>
+                            <tr><td data-i18n="tilesWord">Закладки</td><td id="serverTilesCount">0</td><td id="browserTilesCount">0</td></tr>
+                            <tr><td data-i18n="foldersWord">Папки</td><td id="serverFoldersCount">0</td><td id="browserFoldersCount">0</td></tr>
+                            <tr><td data-i18n="notes">Заметки</td><td id="serverNotesCount">0</td><td id="browserNotesCount">0</td></tr>
+                            <tr><td data-i18n="noteFoldersWord">Папки заметок</td><td id="serverNoteFoldersCount">0</td><td id="browserNoteFoldersCount">0</td></tr>
+                            <tr><td data-i18n="tombstonesWord">Tombstones (удаления)</td><td id="serverTombstonesCount">0</td><td id="browserTombstonesCount">0</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div></details><details class="android-settings-section"><summary data-i18n="secImportExport">Импорт/экспорт закладок</summary><div class="android-settings-content">
+                <div class="import-export-buttons">
+                    <button type="button" id="importBookmarksBtn" class="action-button" data-i18n="importFileBtn">📥 Импорт из файла</button>
+                    <button type="button" id="exportBookmarksBtn" class="action-button" data-i18n="exportFileBtn">📤 Экспорт в файл</button>
+                    <button type="button" id="exportHTMLBtn" class="action-button" data-i18n="exportHtmlBtn">📄 Экспорт в HTML</button>
+                    <button type="button" id="importHTMLBtn" class="action-button" data-i18n="importHtmlBtn">📥 Импорт из HTML</button>
+                    <button type="button" id="importCSVBtn" class="action-button" data-i18n="importCsvBtn">📥 Импорт из CSV</button>
+                    <button type="button" id="importFvdBtn" class="action-button" data-i18n="importFvdBtn">📥 Импорт из FVD Speed Dial</button>
+                    <button type="button" id="exportLogsBtn" class="action-button" data-i18n="exportLogsBtn">📋 Экспорт логов</button>
+                    <button type="button" id="exportDetailedLogsBtn" class="action-button" data-i18n="exportDetailedLogsBtn">🔬 Выгрузить подробные логи</button>
+                </div>
+            </div></details><details class="android-settings-section"><summary data-i18n="secLanguage">Язык интерфейса</summary><div class="android-settings-content">
+                <div class="form-group">
+                    <label for="forcedLanguage" data-i18n="chooseLanguage">Выберите язык:</label>
+                    <select id="forcedLanguage">
+                        <option value="auto" data-i18n="autoOption">Автоматически</option>
+                        <option value="en">English</option>
+                        <option value="ru">Русский</option>
+                        <option value="de">Deutsch</option>
+                        <option value="es">Español</option>
+                        <option value="fr">Français</option>
+                        <option value="it">Italiano</option>
+                        <option value="pt">Português</option>
+                        <option value="zh">中文</option>
+                        <option value="ja">日本語</option>
+                        <option value="ko">한국어</option>
+                        <option value="tr">Türkçe</option>
+                        <option value="hi">हिन्दी</option>
+                        <option value="ar">العربية</option>
+                    </select>
+                </div>
+            </div></details><details class="android-settings-section"><summary data-i18n="secSort">Сортировка и папки</summary><div class="android-settings-content">
+                <div class="design-row">
+                    <div class="form-group">
+                        <label for="tileSortMode" data-i18n="sortTilesLabel">Сортировка плиток:</label>
+                        <select id="tileSortMode">
+                            <option value="manual" data-i18n="manualDnd">Вручную (drag-and-drop)</option>
+                            <option value="title-asc" data-i18n="sortByNameAscP">По названию (А→Я)</option>
+                            <option value="title-desc" data-i18n="sortByNameDescP">По названию (Я→А)</option>
+                            <option value="domain-asc" data-i18n="sortByDomain">По домену</option>
+                            <option value="created-desc" data-i18n="sortNewest">Сначала новые</option>
+                            <option value="created-asc" data-i18n="sortOldest">Сначала старые</option>
+                            <option value="updated-desc" data-i18n="sortByDate">По дате изменения</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="noteSortMode" data-i18n="sortNotesLabel">Сортировка заметок:</label>
+                        <select id="noteSortMode">
+                            <option value="manual" data-i18n="manualOption">Вручную</option>
+                            <option value="title-asc" data-i18n="sortByNameAscP">По названию (А→Я)</option>
+                            <option value="title-desc" data-i18n="sortByNameDescP">По названию (Я→А)</option>
+                            <option value="created-desc" data-i18n="sortNewest">Сначала новые</option>
+                            <option value="created-asc" data-i18n="sortOldest">Сначала старые</option>
+                            <option value="updated-desc" data-i18n="sortByDate">По дате изменения</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="design-row">
+                    <div class="form-group">
+                        <label><input type="checkbox" id="tileSortFoldersFirst"> <span data-i18n="tileFoldersFirst">Закладки из папок — в начало</span></label>
+                    </div>
+                    <div class="form-group">
+                        <label><input type="checkbox" id="noteSortFoldersFirst"> <span data-i18n="noteFoldersFirst">Заметки из папок — в начало</span></label>
+                    </div>
+                </div>
+
+                <div class="design-row">
+                    <div class="form-group">
+                        <label for="folderSortMode" data-i18n="sortTileFoldersLabel">Сортировка папок плиток:</label>
+                        <select id="folderSortMode">
+                            <option value="manual" data-i18n="manualOption">Вручную</option>
+                            <option value="name-asc" data-i18n="sortByNameAscP">По названию (А→Я)</option>
+                            <option value="name-desc" data-i18n="sortByNameDescP">По названию (Я→А)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="noteFolderSortMode" data-i18n="sortNoteFoldersLabel">Сортировка папок заметок:</label>
+                        <select id="noteFolderSortMode">
+                            <option value="manual" data-i18n="manualOption">Вручную</option>
+                            <option value="name-asc" data-i18n="sortByNameAscP">По названию (А→Я)</option>
+                            <option value="name-desc" data-i18n="sortByNameDescP">По названию (Я→А)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="design-row">
+                    <div class="form-group">
+                        <label><input type="checkbox" id="folderShowEmpty"> <span data-i18n="showEmptyFolders">Показывать пустые папки</span></label>
+                    </div>
+                    <div class="form-group">
+                        <label for="folderMaxDepth" data-i18n="maxDepth">Макс. вложенность:</label>
+                        <input type="number" id="folderMaxDepth" min="1" max="10" value="5">
+                    </div>
+                    </div>
+
+                <div class="design-row">
+                    <div class="form-group">
+                        <label data-i18n="folderTileColor">Цвет папки плиток:</label>
+                        <input type="color" id="folderDefaultColor" value="#667eea">
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="folderNoteColor">Цвет папки заметок:</label>
+                        <input type="color" id="noteFolderDefaultColor" value="#667eea">
+                    </div>
+                </div>
+
+                </div></details><details class="android-settings-section"><summary data-i18n="secDesign">Дизайн</summary><div class="android-settings-content">
+                <div class="form-group">
+                    <label for="theme" data-i18n="themeLabel">Тема:</label>
+                    <select id="theme">
+                        <option value="auto" data-i18n="autoOption">Автоматически</option>
+                        <option value="dark" data-i18n="themeDark">Тёмная</option>
+                        <option value="light" data-i18n="themeLight">Светлая</option>
+                    </select>
+                </div>
+
+                <div class="design-row">
+                    <div class="form-group"><label data-i18n="accentColorLabel">Цвет акцента:</label><input type="color" id="accentColor" value="#667eea"></div>
+                    <div class="form-group"><label data-i18n="tileBgLabel">Фон плиток:</label><input type="color" id="tileBgDefault" value="#4caf50"></div>
+                    <div class="form-group"><label data-i18n="tileTextLabel">Текст плиток:</label><input type="color" id="tileTextDefault" value="#ffffff"></div>
+                </div>
+
+                <div class="design-row">
+                    <div class="form-group">
+                        <label data-i18n="uiOpacityLabel">Прозрачность интерфейса:</label>
+                        <input type="range" id="themeOpacity" min="0" max="100" value="100">
+                        <span id="themeOpacityValue">100%</span>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="modalOpacityLabel">Прозрачность модальных окон:</label>
+                        <input type="range" id="modalOpacity" min="0" max="100" value="75">
+                        <span id="modalOpacityValue">75%</span>
+                    </div>
+                </div>
+
+                <div class="design-row">
+                    <div class="form-group">
+                        <label for="fontFamily" data-i18n="fontLabel">Шрифт:</label>
+                        <select id="fontFamily">
+                            <option value="system" data-i18n="themeSystem">Системный</option>
+                            <option value="arial">Arial</option>
+                            <option value="verdana">Verdana</option>
+                            <option value="tahoma">Tahoma</option>
+                            <option value="georgia">Georgia</option>
+                            <option value="courier">Courier New</option>
+                            <option value="times">Times New Roman</option>
+                            <option value="segoe">Segoe UI</option>
+                            <option value="roboto">Roboto</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="fontSize" data-i18n="fontSizeLabel">Размер шрифта:</label>
+                        <select id="fontSize">
+                            <option value="small" data-i18n="sizeSmall">Мелкий</option>
+                            <option value="normal" selected data-i18n="sizeNormal">Нормальный</option>
+                            <option value="large" data-i18n="sizeLarge">Крупный</option>
+                            <option value="xlarge" data-i18n="sizeXLarge">Очень крупный</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="faviconSource" data-i18n="faviconSourceLabel">Источник favicon:</label>
+                        <select id="faviconSource">
+                            <option value="local" data-i18n="faviconLocal">Локально (с сайта, приватно)</option>
+                            <option value="google" data-i18n="faviconGoogle">Google (внешний сервис)</option>
+                        </select>
+                    </div>
+                </div>
+            </div></details><details class="android-settings-section"><summary data-i18n="secBgGallery">Галерея фонов</summary><div class="android-settings-content">
+                <div id="bgGallery" class="bg-gallery"></div>
+                <button type="button" id="addBackgroundBtn" class="action-button" style="margin-top:10px;" data-i18n="btnAddBackground">+ Добавить фон</button>
+
+                <div class="form-group" style="margin-top:15px;">
+                    <label><input type="checkbox" id="bgRotateEnabled"> <span data-i18n="bgRotate">Автоматическая смена фонов</span></label>
+                </div>
+
+                <div class="design-row">
+                    <div class="form-group">
+                        <label for="bgRotateInterval" data-i18n="intervalMin">Интервал (мин):</label>
+                        <input type="number" id="bgRotateInterval" min="5" value="30">
+                    </div>
+                    <div class="form-group">
+                        <label for="bgRotateMode" data-i18n="modeLabel">Режим:</label>
+                        <select id="bgRotateMode">
+                            <option value="sequential" data-i18n="sortSequential">По порядку</option>
+                            <option value="random" data-i18n="randomOption">Случайно</option>
+                        </select>
+                    </div>
+                </div>
+            </div></details><details class="android-settings-section"><summary data-i18n="secProfiles">Профили</summary><div class="android-settings-content">
+                <table id="profilesTable" class="data-table">
+                    <thead><tr><th data-i18n="colName">Имя</th><th style="width:80px;" data-i18n="activeWord">Активный</th><th style="width:220px;" data-i18n="secActions">Действия</th></tr></thead>
+                    <tbody id="profilesBody"></tbody>
+                </table>
+                <div class="form-group" style="margin-top:12px;">
+                    <label for="profileName" data-i18n="newProfileLabel">Новый профиль:</label>
+                    <div class="inline-row">
+                        <input type="text" id="profileName" placeholder="Имя профиля" data-i18n-ph="phProfileName">
+                        <button type="button" id="addProfileBtn" class="action-button" data-i18n="btnAdd">+ Добавить</button>
+                    </div>
+                </div>
+            </div></details><div class="form-actions">
+                <button type="button" id="applySettings" data-i18n="applyBtn">Применить</button>
+                <button type="submit" id="saveAndClose" data-i18n="doneBtn">Готово</button>
+            </div>
+        </form>
+
+        <div id="status" class="status"></div>
+
+        <footer class="footer">
+            <p data-i18n="footerAuthor">Приложение разработано Константином Ерёминым</p>
+            <a href="https://github.com/rukazax/Private_SpeedDial" target="_blank">https://github.com/rukazax/Private_SpeedDial</a>
+            <div class="footer-buttons">
+                <a href="https://github.com/rukazax/Private_SpeedDial" target="_blank" class="footer-support-link" data-i18n="projectRepository">Проект на GitHub</a> <a href="https://github.com/rukazax/Private_SpeedDial" target="_blank" class="browser-extension-link" data-i18n="browserExtension">Расширение для браузера</a>
+                <a href="privacy.html" target="_blank" class="footer-privacy-link" data-i18n="privacyPolicy">Политика конфиденциальности</a>
+            </div>
+        </footer>
+    </div>
+
+    <script src="defaults.js"></script>
+    <script src="translations.js"></script>
+    <script src="project-i18n.js"></script>
+    <script src="common.js"></script>
+    <script src="idb.js"></script>
+    <script src="logger.js"></script>
+    
+    <script src="dialog.js"></script>
+    <script src="options.js"></script>
+<script src="project.js"></script>
+    <script src="project-ui.js"></script>
+</body>
+</html>
