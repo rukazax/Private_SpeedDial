@@ -12,7 +12,9 @@ def run(*cmd,capture=False):
  r=subprocess.run([str(c) for c in cmd],check=True,text=True,capture_output=capture)
  return r.stdout.strip() if capture else None
 owner='rukazax';repo=owner+'/Private_SpeedDial';tag='v6.10.0'
-if run(gh,'api','user','--jq','.login',capture=True)!=owner:raise SystemExit('Authenticate as the repository owner rukazax.')
+auth=subprocess.run([gh,'api','user','--jq','.login'],capture_output=True,text=True)
+if auth.returncode:raise SystemExit('GitHub login is incomplete. Finish gh auth login as rukazax, then rerun this script.')
+if auth.stdout.strip()!=owner:raise SystemExit('Authenticate as the repository owner rukazax.')
 if run('git','status','--porcelain',capture=True):raise SystemExit('Commit the reviewed changes before publication.')
 sha=run('git','rev-parse','HEAD',capture=True)
 run('python3','tools/sync-shared.py','--check')
@@ -21,6 +23,9 @@ run('git','archive','--format=zip','--prefix=Private_SpeedDial/','-o','dist/Priv
 run('python3','tools/package-release.py','--checksums-only')
 artifacts=[root/'dist'/name for name in ['Private-SpeedDial-Android.apk','Private-SpeedDial-Extension.zip','Private-SpeedDial-Source.zip','SHA256SUMS.txt']]
 if not all(p.is_file() for p in artifacts):raise SystemExit('Build and verify the release APK first.')
+verified=json.loads((root/'docs/verification-6.10.0.json').read_text())
+for name,checksum in verified['artifacts'].items():
+ if hashlib.sha256((root/'dist'/name).read_bytes()).hexdigest()!=checksum:raise SystemExit('Artifact differs from the committed verification report: '+name)
 probe=subprocess.run([gh,'api','repos/'+repo],capture_output=True,text=True)
 if probe.returncode:
  if '404' not in probe.stderr:raise SystemExit('Unable to check repository: '+probe.stderr)
