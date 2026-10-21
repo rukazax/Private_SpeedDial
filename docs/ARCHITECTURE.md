@@ -50,8 +50,8 @@ flowchart TB
 | `android-app/bridge.js` | Chrome API → нативный мост, session/local/sync, fetch |
 | `android-app/src/su/econa/speeddial/MainActivity.java` | Activity, доверенные assets, SQLite, HTTP, Android UI |
 | `shared/project.js` | Публичные URL, страница Chrome Web Store, имена файлов, версия и недельный интервал |
-| `shared/project-updates.js` | Проверка/валидация релиза, кеш, skip, session claim |
-| `shared/project-ui.js` | Настройки проекта, кнопка share, предложение обновления |
+| `shared/project-updates.js` | Только Android: проверка/валидация релиза, кеш, skip, session claim |
+| `shared/project-ui.js` | Настройки проекта, share; Android — обновление, браузер — одноразовое приглашение скачать APK |
 | `shared/project-i18n.js` | Переводы новых функций для всех 13 языков |
 | `tools/sync-shared.py` | Копирование общих модулей в два клиента / проверка совпадения |
 | `android-app/build.py` | Подготовка assets, javac, D8, aapt2, zipalign, подпись |
@@ -67,3 +67,5 @@ flowchart TB
 ## Ограничения
 
 В мобильной ветке удалены настольные функции, поэтому её `web/` отличается от `extension/`. Эти каталоги нельзя бездумно заменять друг другом. Код синхронизации присутствует в обоих клиентах; изменения протокола требуют проверки обеих версий. Фоновая WebView Android живёт вместе с Activity и не заменяет системную службу.
+
+`extension/project-welcome.js` последовательно обрабатывает локальный захват первого показа. В расширении отсутствует модуль `project-updates.js`; `tools/sync-shared.py` копирует его только в Android.

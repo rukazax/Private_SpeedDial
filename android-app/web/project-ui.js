@@ -42,7 +42,7 @@
         install.dataset.i18n = 'projectInstallExtension'; install.textContent = tr('projectInstallExtension');
         const button = document.createElement('button'); button.type = 'button'; button.id = 'projectShare';
         button.dataset.i18n = 'projectShare'; button.textContent = tr('projectShare'); button.onclick = () => share(button);
-        const description = document.createElement('p'); description.className = 'project-description'; description.dataset.i18n = 'projectWeekly'; description.textContent = tr('projectWeekly');
+        const description = document.createElement('p'); description.className = 'project-description'; description.dataset.i18n = platform === 'android' ? 'projectWeekly' : 'projectBrowserUpdates'; description.textContent = tr(description.dataset.i18n);
         links.append(repo, downloads, install, button); section.append(heading, links, description);
         form.querySelector('.form-actions')?.before(section);
         if (!section.isConnected) form.append(section);
@@ -58,19 +58,30 @@
         settings();
         if (typeof DialogService === 'undefined') return;
         try {
-            const result = await send('projectCheckUpdates');
-            if (!result?.update) return;
-            const update = result.update;
+            const result = platform === 'android' ? await send('projectCheckUpdates') : null;
+            if (platform === 'android' && !result?.update) return;
+            const update = result?.update;
             // Never cover an edit dialog, locked profile or opened Android drawer.
-            let timer;
+            let timer, attempting = false;
             const attempt = async () => {
-                if (document.visibilityState === 'hidden' ||
+                if (attempting || document.visibilityState === 'hidden' ||
                     document.querySelector('.dialog-backdrop') || document.body.classList.contains('android-drawer-open') ||
                     [...document.querySelectorAll('.modal,.loading-overlay')].some(e => getComputedStyle(e).display !== 'none')) return;
+                attempting = true;
                 clearInterval(timer); document.removeEventListener('visibilitychange', attempt);
-                const claim = await send('projectClaimUpdate', { tag: update.tag });
+                const claim = platform === 'android'
+                    ? await send('projectClaimUpdate', { tag: update.tag })
+                    : await send('projectClaimMobileWelcome');
                 if (!claim?.claimed) return;
                 if (location.pathname.endsWith('/popup.html')) document.body.style.width = '380px';
+                if (platform === 'extension') {
+                    const choice = await DialogService.choice(tr('projectMobileWelcome'), [
+                        { label: tr('close'), value: 'close', variant: 'secondary' },
+                        { label: tr('mobileApp'), value: 'download', variant: 'primary' }
+                    ]);
+                    if (choice === 'download') open(P.latest);
+                    return;
+                }
                 const choice = await DialogService.choice(tr('projectUpdateAvailable', { version: update.tag }), [
                     { label: tr('projectSkip'), value: 'skip', variant: 'secondary' },
                     { label: tr('projectUpdate'), value: 'update', variant: 'primary' }

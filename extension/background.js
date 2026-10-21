@@ -22,7 +22,7 @@ const memoryCache = { settings: null };
 
 importScripts(
     'project.js',
-    'project-updates.js',
+    'project-welcome.js',
     'defaults.js',
     'translations.js',
     'common.js',
@@ -305,9 +305,7 @@ api.commands.onCommand.addListener(async (command) => {
 
 api.runtime.onMessage.addListener((request, sender, sendResponse) => {
     const handlers = {
-        projectCheckUpdates: req => ProjectUpdates.check(req.platform),
-        projectClaimUpdate: req => ProjectUpdates.claim(req.tag, req.platform),
-        projectSkipUpdate: req => ProjectUpdates.skip(req.tag),
+        projectClaimMobileWelcome: () => ProjectWelcome.claim(),
         syncNow: (req) => syncData(req?.syncType || 'merge', { manual: true }),
         testSyncConnection: (req) => testConnection(req.service, req.settings),
 

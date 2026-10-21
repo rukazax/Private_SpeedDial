@@ -1,0 +1,44 @@
+{
+  "version": "6.10.3",
+  "date": "2026-10-21",
+  "chromeWebStoreUrl": "https://chromewebstore.google.com/detail/private-speeddial/eakakaeklcgnlanmpbndhjdljppehdof",
+  "unitTests": 20,
+  "pcUiTestSuites": 2,
+  "apkLinkChecks": {
+    "apkVersion": "6.10.3",
+    "menuAndSettingsLinksPassed": 4,
+    "languages": 13,
+    "target": "https://chromewebstore.google.com/detail/private-speeddial/eakakaeklcgnlanmpbndhjdljppehdof",
+    "nativeHost": "mocked; PC Chromium; no device or ADB"
+  },
+  "i18n": {
+    "languages": 13,
+    "keys": 396
+  },
+  "android": {
+    "physicalDeviceTested": false,
+    "emulatorTested": false,
+    "nativeIntentTested": false,
+    "manifestDebuggable": false,
+    "signingCertificateSha256": "c49e8f257a896ed66fa4b874a2c7cb1b6df4263beafaf65c49f271a5ea87f596",
+    "apkSignatureSchemes": [
+      "v2",
+      "v3"
+    ]
+  },
+  "artifacts": {
+    "Private-SpeedDial-Android.apk": "5839ba32a75671ae76420b017620177ddf9534c5392cdafefd6decb9795f2b51",
+    "Private-SpeedDial-Extension.zip": "c2d23af14bd3690b3586968127a3e33cfa0cbbbd247b9eece116e29c31685200"
+  },
+  "previousNativeValidation": "verification-6.10.1.json",
+  "browser": {
+    "oneTimeWelcome": true,
+    "persistsAfterBrowserRestart": true,
+    "concurrentClaims": "one winner",
+    "githubApiRequests": 0,
+    "legacyUpdaterAbsent": true,
+    "downloadButtonUrl": "https://github.com/rukazax/Private_SpeedDial/releases/latest",
+    "navigationCheck": "captured chrome.tabs.create at UI boundary",
+    "closeAndEscapeConsumed": true
+  }
+}

@@ -1,7 +1,9 @@
-# Private SpeedDial — расширение Chrome 6.10.2
+# Private SpeedDial — расширение Chrome 6.10.3
 
 [Установить расширение из Chrome Web Store](https://chromewebstore.google.com/detail/private-speeddial/eakakaeklcgnlanmpbndhjdljppehdof). Магазинная версия публикуется отдельно и может отличаться от текущих исходников GitHub.
 
 Эта папка — готовое распакованное расширение Manifest V3. В Chrome: `chrome://extensions` → режим разработчика → загрузить распакованное расширение → выбрать эту папку. Открытие панели — через значок расширения или Ctrl+Shift+Y. Автоматической замены новой вкладки в манифесте нет.
 
 [Репозиторий, полная инструкция, Android APK и релизы](https://github.com/rukazax/Private_SpeedDial). Общие модули `project*.js` обновляются из `shared/` скриптом `tools/sync-shared.py`; их копии включены, чтобы загрузка этой папки работала без сборки.
+
+При первом открытии расширения один раз появляется окно «Скачать мобильное приложение» со ссылкой на [страницу релизов с APK](https://github.com/rukazax/Private_SpeedDial/releases/latest). Закрытое окно не повторяется после перезапуска или обновления. Проверка обновлений GitHub в расширении отсутствует; недельная проверка сохранена только в Android.

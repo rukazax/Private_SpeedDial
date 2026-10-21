@@ -12,7 +12,9 @@
     "projectUpdateAvailable": "Private SpeedDial {version} is available. Download the update?",
     "projectSkip": "Skip release",
     "projectUpdate": "Update",
-    "projectInstallExtension": "Install browser extension"
+    "projectInstallExtension": "Install browser extension",
+    "projectMobileWelcome": "Private SpeedDial is also available for Android. Download the mobile application from the project’s GitHub releases.",
+    "projectBrowserUpdates": "The browser manages Chrome Web Store updates. Unpacked extensions are updated manually."
   },
   "ru": {
     "projectHeading": "О приложении и обновления",
@@ -24,7 +26,9 @@
     "projectUpdateAvailable": "Доступна версия Private SpeedDial {version}. Скачать обновление?",
     "projectSkip": "Пропустить релиз",
     "projectUpdate": "Обновиться",
-    "projectInstallExtension": "Установить расширение для браузера"
+    "projectInstallExtension": "Установить расширение для браузера",
+    "projectMobileWelcome": "Private SpeedDial доступен и для Android. Скачайте мобильное приложение со страницы релизов проекта на GitHub.",
+    "projectBrowserUpdates": "Обновления из Chrome Web Store устанавливает браузер. Распакованное расширение обновляется вручную."
   },
   "de": {
     "projectHeading": "Über die App und Updates",
@@ -36,7 +40,9 @@
     "projectUpdateAvailable": "Private SpeedDial {version} ist verfügbar. Update herunterladen?",
     "projectSkip": "Version überspringen",
     "projectUpdate": "Aktualisieren",
-    "projectInstallExtension": "Browser-Erweiterung installieren"
+    "projectInstallExtension": "Browser-Erweiterung installieren",
+    "projectMobileWelcome": "Private SpeedDial ist auch für Android verfügbar. Laden Sie die mobile App von den GitHub-Releases des Projekts herunter.",
+    "projectBrowserUpdates": "Updates aus dem Chrome Web Store verwaltet der Browser. Entpackte Erweiterungen werden manuell aktualisiert."
   },
   "es": {
     "projectHeading": "Acerca de la aplicación y actualizaciones",
@@ -48,7 +54,9 @@
     "projectUpdateAvailable": "Private SpeedDial {version} está disponible. ¿Descargar la actualización?",
     "projectSkip": "Omitir versión",
     "projectUpdate": "Actualizar",
-    "projectInstallExtension": "Instalar extensión del navegador"
+    "projectInstallExtension": "Instalar extensión del navegador",
+    "projectMobileWelcome": "Private SpeedDial también está disponible para Android. Descarga la aplicación móvil desde los lanzamientos del proyecto en GitHub.",
+    "projectBrowserUpdates": "El navegador gestiona las actualizaciones de Chrome Web Store. Las extensiones descomprimidas se actualizan manualmente."
   },
   "fr": {
     "projectHeading": "À propos et mises à jour",
@@ -60,7 +68,9 @@
     "projectUpdateAvailable": "Private SpeedDial {version} est disponible. Télécharger la mise à jour ?",
     "projectSkip": "Ignorer cette version",
     "projectUpdate": "Mettre à jour",
-    "projectInstallExtension": "Installer l’extension de navigateur"
+    "projectInstallExtension": "Installer l’extension de navigateur",
+    "projectMobileWelcome": "Private SpeedDial est aussi disponible pour Android. Téléchargez l’application mobile depuis les versions du projet sur GitHub.",
+    "projectBrowserUpdates": "Le navigateur gère les mises à jour du Chrome Web Store. Les extensions décompressées sont mises à jour manuellement."
   },
   "it": {
     "projectHeading": "Informazioni e aggiornamenti",
@@ -72,7 +82,9 @@
     "projectUpdateAvailable": "È disponibile Private SpeedDial {version}. Scaricare l’aggiornamento?",
     "projectSkip": "Salta versione",
     "projectUpdate": "Aggiorna",
-    "projectInstallExtension": "Installa l’estensione del browser"
+    "projectInstallExtension": "Installa l’estensione del browser",
+    "projectMobileWelcome": "Private SpeedDial è disponibile anche per Android. Scarica l’app mobile dalle versioni del progetto su GitHub.",
+    "projectBrowserUpdates": "Il browser gestisce gli aggiornamenti del Chrome Web Store. Le estensioni decompresse si aggiornano manualmente."
   },
   "pt": {
     "projectHeading": "Sobre e atualizações",
@@ -84,7 +96,9 @@
     "projectUpdateAvailable": "Private SpeedDial {version} está disponível. Baixar a atualização?",
     "projectSkip": "Ignorar versão",
     "projectUpdate": "Atualizar",
-    "projectInstallExtension": "Instalar extensão do navegador"
+    "projectInstallExtension": "Instalar extensão do navegador",
+    "projectMobileWelcome": "O Private SpeedDial também está disponível para Android. Baixe o aplicativo móvel nas versões do projeto no GitHub.",
+    "projectBrowserUpdates": "O navegador gerencia as atualizações da Chrome Web Store. Extensões descompactadas são atualizadas manualmente."
   },
   "zh": {
     "projectHeading": "关于与更新",
@@ -96,7 +110,9 @@
     "projectUpdateAvailable": "Private SpeedDial {version} 已发布。是否下载更新？",
     "projectSkip": "跳过此版本",
     "projectUpdate": "更新",
-    "projectInstallExtension": "安装浏览器扩展"
+    "projectInstallExtension": "安装浏览器扩展",
+    "projectMobileWelcome": "Private SpeedDial 也提供 Android 版本。请从项目的 GitHub 发布页面下载移动应用。",
+    "projectBrowserUpdates": "Chrome 应用商店的更新由浏览器管理。解压的扩展需要手动更新。"
   },
   "ja": {
     "projectHeading": "アプリ情報と更新",
@@ -108,7 +124,9 @@
     "projectUpdateAvailable": "Private SpeedDial {version} が利用可能です。更新をダウンロードしますか？",
     "projectSkip": "このバージョンをスキップ",
     "projectUpdate": "更新",
-    "projectInstallExtension": "ブラウザー拡張機能をインストール"
+    "projectInstallExtension": "ブラウザー拡張機能をインストール",
+    "projectMobileWelcome": "Private SpeedDial は Android でも利用できます。プロジェクトの GitHub リリースページからモバイルアプリをダウンロードできます。",
+    "projectBrowserUpdates": "Chrome ウェブストアの更新はブラウザーが管理します。展開した拡張機能は手動で更新してください。"
   },
   "ko": {
     "projectHeading": "앱 정보 및 업데이트",
@@ -120,7 +138,9 @@
     "projectUpdateAvailable": "Private SpeedDial {version} 버전이 있습니다. 업데이트를 다운로드할까요?",
     "projectSkip": "이 버전 건너뛰기",
     "projectUpdate": "업데이트",
-    "projectInstallExtension": "브라우저 확장 프로그램 설치"
+    "projectInstallExtension": "브라우저 확장 프로그램 설치",
+    "projectMobileWelcome": "Private SpeedDial은 Android에서도 사용할 수 있습니다. 프로젝트의 GitHub 릴리스 페이지에서 모바일 앱을 다운로드하세요.",
+    "projectBrowserUpdates": "Chrome 웹 스토어 업데이트는 브라우저가 관리합니다. 압축을 푼 확장 프로그램은 수동으로 업데이트합니다."
   },
   "tr": {
     "projectHeading": "Hakkında ve güncellemeler",
@@ -132,7 +152,9 @@
     "projectUpdateAvailable": "Private SpeedDial {version} kullanılabilir. Güncelleme indirilsin mi?",
     "projectSkip": "Sürümü atla",
     "projectUpdate": "Güncelle",
-    "projectInstallExtension": "Tarayıcı uzantısını yükle"
+    "projectInstallExtension": "Tarayıcı uzantısını yükle",
+    "projectMobileWelcome": "Private SpeedDial Android için de kullanılabilir. Mobil uygulamayı projenin GitHub sürümleri sayfasından indirin.",
+    "projectBrowserUpdates": "Chrome Web Store güncellemelerini tarayıcı yönetir. Paketlenmemiş uzantılar elle güncellenir."
   },
   "hi": {
     "projectHeading": "परिचय और अपडेट",
@@ -144,7 +166,9 @@
     "projectUpdateAvailable": "Private SpeedDial {version} उपलब्ध है। अपडेट डाउनलोड करें?",
     "projectSkip": "यह रिलीज़ छोड़ें",
     "projectUpdate": "अपडेट करें",
-    "projectInstallExtension": "ब्राउज़र एक्सटेंशन इंस्टॉल करें"
+    "projectInstallExtension": "ब्राउज़र एक्सटेंशन इंस्टॉल करें",
+    "projectMobileWelcome": "Private SpeedDial Android के लिए भी उपलब्ध है। प्रोजेक्ट के GitHub रिलीज़ पेज से मोबाइल ऐप डाउनलोड करें।",
+    "projectBrowserUpdates": "Chrome Web Store के अपडेट ब्राउज़र प्रबंधित करता है। अनपैक किए गए एक्सटेंशन मैन्युअल रूप से अपडेट होते हैं।"
   },
   "ar": {
     "projectHeading": "حول التطبيق والتحديثات",
@@ -156,7 +180,9 @@
     "projectUpdateAvailable": "يتوفر Private SpeedDial {version}. هل تريد تنزيل التحديث؟",
     "projectSkip": "تخطي الإصدار",
     "projectUpdate": "تحديث",
-    "projectInstallExtension": "تثبيت إضافة المتصفح"
+    "projectInstallExtension": "تثبيت إضافة المتصفح",
+    "projectMobileWelcome": "يتوفر Private SpeedDial أيضًا لنظام Android. نزّل تطبيق الهاتف من صفحة إصدارات المشروع على GitHub.",
+    "projectBrowserUpdates": "يدير المتصفح تحديثات Chrome Web Store. تُحدَّث الإضافات غير المضغوطة يدويًا."
   }
 };
     for (const [language, values] of Object.entries(catalog)) Object.assign(translations[language], values);

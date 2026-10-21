@@ -25,7 +25,7 @@ test('APK menu and all settings installation links open the exact Chrome Web Sto
   });
   const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.goto('https://appassets.androidplatform.net/newtab.html');
-  assert.equal(await page.evaluate(()=>chrome.runtime.getManifest().version),'6.10.2');
+  assert.equal(await page.evaluate(()=>chrome.runtime.getManifest().version),'6.10.3');
   await page.locator('#androidMenuButton').click();
   assert.equal(await page.locator('#androidBrowserExtension').textContent(),'Установить расширение для браузера');
   await page.locator('#androidBrowserExtension').click();assert.equal(await page.evaluate(()=>__openedUrls.at(-1)),store);
@@ -39,7 +39,7 @@ test('APK menu and all settings installation links open the exact Chrome Web Sto
    assert.equal(await page.locator(selector).getAttribute('href'),store);await page.locator(selector).click();assert.equal(await page.evaluate(()=>__openedUrls.at(-1)),store);
   }
   assert.deepEqual(errors,[]);
-  const result={apkVersion:'6.10.2',menuAndSettingsLinksPassed:4,languages:languages.length,target:store,nativeHost:'mocked; PC Chromium; no device or ADB'};
+  const result={apkVersion:'6.10.3',menuAndSettingsLinksPassed:4,languages:languages.length,target:store,nativeHost:'mocked; PC Chromium; no device or ADB'};
   fs.writeFileSync(path.join(root,'dist/android-store-link-check.json'),JSON.stringify(result,null,2)+'\n');
  }finally{await browser.close()}
 });

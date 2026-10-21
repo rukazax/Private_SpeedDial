@@ -19,7 +19,7 @@ export JAVA_HOME="/path/to/jdk-17"
 export PATH="$JAVA_HOME/bin:$ANDROID_HOME/platform-tools:/path/to/node/bin:$PATH"
 python3 tools/sync-shared.py
 python3 tests/check-source.py
-node --test tests/updates.test.cjs tests/sync-privacy.test.cjs
+node --test tests/updates.test.cjs tests/sync-privacy.test.cjs tests/welcome.test.cjs
 python3 android-app/build.py
 ```
 
@@ -62,7 +62,7 @@ python3 tools/package-release.py --checksums-only
 ```bash
 python3 tools/sync-shared.py --check
 python3 tests/check-source.py
-node --test tests/updates.test.cjs tests/sync-privacy.test.cjs
+node --test tests/updates.test.cjs tests/sync-privacy.test.cjs tests/welcome.test.cjs
 node verification/audit-i18n-v6.mjs
 ```
 
@@ -72,7 +72,7 @@ node verification/audit-i18n-v6.mjs
 CHROMIUM=/path/to/chromium node --test tests/browser.test.cjs
 ```
 
-По умолчанию сценарий использует `/snap/bin/chromium`; профиль создаётся временно и удаляется. Проверяются загрузка unpacked extension, настройки, копирование ссылки, диалог обновления, пропуск и правильный файл загрузки. Будущие релизы имитируются внутри тестового worker, без публикации фиктивных релизов.
+По умолчанию сценарий использует `/snap/bin/chromium`; профиль создаётся временно и удаляется. Проверяются загрузка unpacked extension, настройки, копирование ссылки, одноразовое приглашение скачать APK, передача правильного URL страницы GitHub в chrome.tabs.create, закрытие и Escape, конкурентный захват, сохранение флага после перезапуска браузера и отсутствие запросов проверки GitHub. Проверки Android-обновлений выполняются отдельно в `tests/updates.test.cjs`.
 
 ## Android: расширенные проверки
 

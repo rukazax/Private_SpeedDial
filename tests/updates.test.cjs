@@ -39,7 +39,7 @@ test('stable releases must have exact trusted repository, tag and platform asset
  }
 });
 test('same or older installed version never prompts',async()=>{
- for(const tag of ['v6.10.2','v6.10.1','v6.10.0','v6.9.9']){const t=setup({fetch:async()=>({ok:true,text:async()=>JSON.stringify(metadata(tag))})});assert.equal((await t.u.check('android')).update,null);}
+ for(const tag of ['v6.10.3','v6.10.2','v6.10.1','v6.10.0','v6.9.9']){const t=setup({fetch:async()=>({ok:true,text:async()=>JSON.stringify(metadata(tag))})});assert.equal((await t.u.check('android')).update,null);}
 });
 test('prompt is claimed once per session even with concurrent pages',async()=>{
  const t=setup();await t.u.check('android');const results=await Promise.all(Array.from({length:20},()=>t.u.claim('v6.11.0','android')));assert.equal(results.filter(r=>r.claimed).length,1);
