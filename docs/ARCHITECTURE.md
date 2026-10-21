@@ -49,7 +49,7 @@ flowchart TB
 | `android-app/storage.js` | SQLite-адаптер и чтение старого IndexedDB |
 | `android-app/bridge.js` | Chrome API → нативный мост, session/local/sync, fetch |
 | `android-app/src/su/econa/speeddial/MainActivity.java` | Activity, доверенные assets, SQLite, HTTP, Android UI |
-| `shared/project.js` | Публичные URL, имена файлов, версия и недельный интервал |
+| `shared/project.js` | Публичные URL, страница Chrome Web Store, имена файлов, версия и недельный интервал |
 | `shared/project-updates.js` | Проверка/валидация релиза, кеш, skip, session claim |
 | `shared/project-ui.js` | Настройки проекта, кнопка share, предложение обновления |
 | `shared/project-i18n.js` | Переводы новых функций для всех 13 языков |

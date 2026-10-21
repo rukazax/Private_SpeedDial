@@ -40,7 +40,7 @@ if (typeof SpeedDial !== 'undefined') {
     item('androidProfile','profile',()=>AndroidHost.openUrl(chrome.runtime.getURL('options.html')+'#profilesTable'));
     item('androidTheme','switchTheme',sd=>sd.toggleTheme());
     item('androidBackground','appearanceMenu',sd=>sd.openBackgroundGallery());
-    item('androidBrowserExtension','projectDownloadExtension',()=>AndroidHost.openUrl('https://github.com/rukazax/Private_SpeedDial/releases/latest'));
+    item('androidBrowserExtension','projectInstallExtension',()=>AndroidHost.openUrl(SpeedDialProject.browserExtension));
     document.body.append(shade,drawer,top);
     document.getElementById('androidStaging')?.remove();
     document.querySelector('.web-search-container')?.remove();

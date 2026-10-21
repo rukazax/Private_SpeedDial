@@ -12,7 +12,7 @@
     "projectUpdateAvailable": "Private SpeedDial {version} is available. Download the update?",
     "projectSkip": "Skip release",
     "projectUpdate": "Update",
-    "projectDownloadExtension": "Download browser extension"
+    "projectInstallExtension": "Install browser extension"
   },
   "ru": {
     "projectHeading": "О приложении и обновления",
@@ -24,7 +24,7 @@
     "projectUpdateAvailable": "Доступна версия Private SpeedDial {version}. Скачать обновление?",
     "projectSkip": "Пропустить релиз",
     "projectUpdate": "Обновиться",
-    "projectDownloadExtension": "Скачать расширение для браузера"
+    "projectInstallExtension": "Установить расширение для браузера"
   },
   "de": {
     "projectHeading": "Über die App und Updates",
@@ -36,7 +36,7 @@
     "projectUpdateAvailable": "Private SpeedDial {version} ist verfügbar. Update herunterladen?",
     "projectSkip": "Version überspringen",
     "projectUpdate": "Aktualisieren",
-    "projectDownloadExtension": "Browser-Erweiterung herunterladen"
+    "projectInstallExtension": "Browser-Erweiterung installieren"
   },
   "es": {
     "projectHeading": "Acerca de la aplicación y actualizaciones",
@@ -48,7 +48,7 @@
     "projectUpdateAvailable": "Private SpeedDial {version} está disponible. ¿Descargar la actualización?",
     "projectSkip": "Omitir versión",
     "projectUpdate": "Actualizar",
-    "projectDownloadExtension": "Descargar extensión del navegador"
+    "projectInstallExtension": "Instalar extensión del navegador"
   },
   "fr": {
     "projectHeading": "À propos et mises à jour",
@@ -60,7 +60,7 @@
     "projectUpdateAvailable": "Private SpeedDial {version} est disponible. Télécharger la mise à jour ?",
     "projectSkip": "Ignorer cette version",
     "projectUpdate": "Mettre à jour",
-    "projectDownloadExtension": "Télécharger l’extension de navigateur"
+    "projectInstallExtension": "Installer l’extension de navigateur"
   },
   "it": {
     "projectHeading": "Informazioni e aggiornamenti",
@@ -72,7 +72,7 @@
     "projectUpdateAvailable": "È disponibile Private SpeedDial {version}. Scaricare l’aggiornamento?",
     "projectSkip": "Salta versione",
     "projectUpdate": "Aggiorna",
-    "projectDownloadExtension": "Scarica l’estensione del browser"
+    "projectInstallExtension": "Installa l’estensione del browser"
   },
   "pt": {
     "projectHeading": "Sobre e atualizações",
@@ -84,7 +84,7 @@
     "projectUpdateAvailable": "Private SpeedDial {version} está disponível. Baixar a atualização?",
     "projectSkip": "Ignorar versão",
     "projectUpdate": "Atualizar",
-    "projectDownloadExtension": "Baixar extensão do navegador"
+    "projectInstallExtension": "Instalar extensão do navegador"
   },
   "zh": {
     "projectHeading": "关于与更新",
@@ -96,7 +96,7 @@
     "projectUpdateAvailable": "Private SpeedDial {version} 已发布。是否下载更新？",
     "projectSkip": "跳过此版本",
     "projectUpdate": "更新",
-    "projectDownloadExtension": "下载浏览器扩展"
+    "projectInstallExtension": "安装浏览器扩展"
   },
   "ja": {
     "projectHeading": "アプリ情報と更新",
@@ -108,7 +108,7 @@
     "projectUpdateAvailable": "Private SpeedDial {version} が利用可能です。更新をダウンロードしますか？",
     "projectSkip": "このバージョンをスキップ",
     "projectUpdate": "更新",
-    "projectDownloadExtension": "ブラウザー拡張機能をダウンロード"
+    "projectInstallExtension": "ブラウザー拡張機能をインストール"
   },
   "ko": {
     "projectHeading": "앱 정보 및 업데이트",
@@ -120,7 +120,7 @@
     "projectUpdateAvailable": "Private SpeedDial {version} 버전이 있습니다. 업데이트를 다운로드할까요?",
     "projectSkip": "이 버전 건너뛰기",
     "projectUpdate": "업데이트",
-    "projectDownloadExtension": "브라우저 확장 프로그램 다운로드"
+    "projectInstallExtension": "브라우저 확장 프로그램 설치"
   },
   "tr": {
     "projectHeading": "Hakkında ve güncellemeler",
@@ -132,7 +132,7 @@
     "projectUpdateAvailable": "Private SpeedDial {version} kullanılabilir. Güncelleme indirilsin mi?",
     "projectSkip": "Sürümü atla",
     "projectUpdate": "Güncelle",
-    "projectDownloadExtension": "Tarayıcı uzantısını indir"
+    "projectInstallExtension": "Tarayıcı uzantısını yükle"
   },
   "hi": {
     "projectHeading": "परिचय और अपडेट",
@@ -144,7 +144,7 @@
     "projectUpdateAvailable": "Private SpeedDial {version} उपलब्ध है। अपडेट डाउनलोड करें?",
     "projectSkip": "यह रिलीज़ छोड़ें",
     "projectUpdate": "अपडेट करें",
-    "projectDownloadExtension": "ब्राउज़र एक्सटेंशन डाउनलोड करें"
+    "projectInstallExtension": "ब्राउज़र एक्सटेंशन इंस्टॉल करें"
   },
   "ar": {
     "projectHeading": "حول التطبيق والتحديثات",
@@ -156,7 +156,7 @@
     "projectUpdateAvailable": "يتوفر Private SpeedDial {version}. هل تريد تنزيل التحديث؟",
     "projectSkip": "تخطي الإصدار",
     "projectUpdate": "تحديث",
-    "projectDownloadExtension": "تنزيل إضافة المتصفح"
+    "projectInstallExtension": "تثبيت إضافة المتصفح"
   }
 };
     for (const [language, values] of Object.entries(catalog)) Object.assign(translations[language], values);

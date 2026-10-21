@@ -104,3 +104,7 @@ node verification/project-v6.mjs
 Сценарии прошлых выпусков сохранены как история; актуальные команды и ограничения приведены здесь и в [отчёте](VERIFICATION.md).
 
 Для проверки перехода из Android-меню в GitHub Releases в выпуске 6.10.1 используется `SPEEDDIAL_TEST_TAG=v7 python3 verification/build-instrumentation.py`, затем установка `verification/test-build/test.apk` и запуск `python3 verification/native-release-v7.py`. Это проверяет настоящий исходящий Android Intent итоговой release APK.
+
+Пользовательская установка расширения доступна через [Chrome Web Store](https://chromewebstore.google.com/detail/private-speeddial/eakakaeklcgnlanmpbndhjdljppehdof); ZIP из этой инструкции нужен для ручной установки и разработки.
+
+В версии 6.10.2 ссылки из ресурсов собранной APK проверяются на ПК без ADB: `node --test tests/android-store-links.test.cjs`. Тест загружает HTML, JavaScript и мост из APK в отдельный Chromium и подменяет нативные вызовы, хранилище и модели изолированными фикстурами. Он проверяет клики и переданный URL, но не подтверждает Android Intent на реальном устройстве.

@@ -12,6 +12,8 @@ def run(*cmd,capture=False):
  r=subprocess.run([str(c) for c in cmd],check=True,text=True,capture_output=capture)
  return r.stdout.strip() if capture else None
 owner='rukazax';repo=owner+'/Private_SpeedDial'
+store_url='https://chromewebstore.google.com/detail/private-speeddial/eakakaeklcgnlanmpbndhjdljppehdof'
+description='Private SpeedDial — закладки и заметки для Chrome и Android с синхронизацией. Расширение в Chrome Web Store: '+store_url
 version=json.loads((root/'extension/manifest.json').read_text())['version'];tag='v'+version
 auth=subprocess.run([gh,'api','user','--jq','.login'],capture_output=True,text=True)
 if auth.returncode:raise SystemExit('GitHub login is incomplete. Finish gh auth login as rukazax, then rerun this script.')
@@ -30,12 +32,12 @@ for name,checksum in verified['artifacts'].items():
 probe=subprocess.run([gh,'api','repos/'+repo],capture_output=True,text=True)
 if probe.returncode:
  if '404' not in probe.stderr:raise SystemExit('Unable to check repository: '+probe.stderr)
- run(gh,'repo','create',repo,'--public','--description','Private SpeedDial: Chrome extension and Android app with bookmarks, notes, encrypted cloud sync and GitHub updates')
+ run(gh,'repo','create',repo,'--public','--description',description)
 else:
  info=json.loads(probe.stdout)
  if info.get('private'):raise SystemExit('An existing private repository requires review; refusing to change its visibility.')
 run('git','push','origin','main')
-run(gh,'repo','edit',repo,'--description','Private SpeedDial: Chrome extension and Android app with bookmarks, notes, encrypted cloud sync and GitHub updates','--homepage','https://github.com/'+repo+'/releases/latest','--enable-issues')
+run(gh,'repo','edit',repo,'--description',description,'--homepage',store_url,'--enable-issues')
 # Existing published releases are never silently replaced.
 existing=subprocess.run([gh,'release','view',tag,'--repo',repo,'--json','isDraft'],capture_output=True,text=True)
 if existing.returncode==0:

@@ -38,10 +38,12 @@
         repo.dataset.i18n = 'projectRepository'; repo.textContent = tr('projectRepository');
         const downloads = document.createElement('a'); downloads.href = P.latest; downloads.target = '_blank'; downloads.rel = 'noopener noreferrer';
         downloads.dataset.i18n = 'projectDownloads'; downloads.textContent = tr('projectDownloads');
+        const install = document.createElement('a'); install.id = 'projectInstallExtension'; install.href = P.browserExtension; install.target = '_blank'; install.rel = 'noopener noreferrer';
+        install.dataset.i18n = 'projectInstallExtension'; install.textContent = tr('projectInstallExtension');
         const button = document.createElement('button'); button.type = 'button'; button.id = 'projectShare';
         button.dataset.i18n = 'projectShare'; button.textContent = tr('projectShare'); button.onclick = () => share(button);
         const description = document.createElement('p'); description.className = 'project-description'; description.dataset.i18n = 'projectWeekly'; description.textContent = tr('projectWeekly');
-        links.append(repo, downloads, button); section.append(heading, links, description);
+        links.append(repo, downloads, install, button); section.append(heading, links, description);
         form.querySelector('.form-actions')?.before(section);
         if (!section.isConnected) form.append(section);
         if (platform === 'android') {

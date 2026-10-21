@@ -4,11 +4,11 @@
 
 **Ваши закладки и заметки — на ПК и Android, с синхронизацией в выбранное вами облако.**
 
-[![Version](https://img.shields.io/badge/version-6.10.1-35c2b5)](https://github.com/rukazax/Private_SpeedDial/releases/latest)
+[![Version](https://img.shields.io/badge/version-6.10.2-35c2b5)](https://github.com/rukazax/Private_SpeedDial/releases/latest)
 [![Android](https://img.shields.io/badge/Android-8.0%2B-3ddc84)](https://github.com/rukazax/Private_SpeedDial/releases/latest/download/Private-SpeedDial-Android.apk)
-[![Chrome](https://img.shields.io/badge/Chrome-MV3-4285f4)](https://github.com/rukazax/Private_SpeedDial/releases/latest/download/Private-SpeedDial-Extension.zip)
+[![Chrome](https://img.shields.io/badge/Chrome-MV3-4285f4)](https://chromewebstore.google.com/detail/private-speeddial/eakakaeklcgnlanmpbndhjdljppehdof)
 
-[**Скачать APK для Android**](https://github.com/rukazax/Private_SpeedDial/releases/latest/download/Private-SpeedDial-Android.apk) · [**Скачать расширение Chrome**](https://github.com/rukazax/Private_SpeedDial/releases/latest/download/Private-SpeedDial-Extension.zip) · [Все релизы](https://github.com/rukazax/Private_SpeedDial/releases)
+[**Скачать APK для Android**](https://github.com/rukazax/Private_SpeedDial/releases/latest/download/Private-SpeedDial-Android.apk) · [**Установить расширение Chrome**](https://chromewebstore.google.com/detail/private-speeddial/eakakaeklcgnlanmpbndhjdljppehdof) · [Все релизы](https://github.com/rukazax/Private_SpeedDial/releases)
 
 ![Две версии Private SpeedDial и общая синхронизация](docs/images/overview.svg)
 
@@ -29,10 +29,13 @@ Private SpeedDial — панель быстрого доступа к сайта
 
 ### Chrome и другие совместимые браузеры
 
-1. [Скачайте ZIP расширения](https://github.com/rukazax/Private_SpeedDial/releases/latest/download/Private-SpeedDial-Extension.zip) и распакуйте его в постоянную папку.
-2. В Chrome откройте `chrome://extensions`, включите **Режим разработчика**, выберите **Загрузить распакованное расширение** и укажите папку с `manifest.json`.
-3. Закрепите Private SpeedDial на панели браузера и нажмите его значок → **Открыть Private SpeedDial**. Также доступно `Ctrl+Shift+Y` (`Command+Shift+Y` на macOS).
-4. Расширение **не заменяет новую вкладку автоматически**. Это соответствует его манифесту. ZIP не является подписанным пакетом Chrome Web Store; установка из магазина пока не опубликована.
+1. Откройте [Private SpeedDial в Chrome Web Store](https://chromewebstore.google.com/detail/private-speeddial/eakakaeklcgnlanmpbndhjdljppehdof) на компьютере и нажмите **«Установить» / «Добавить в Chrome»**.
+2. Подтвердите разрешения браузера, закрепите значок Private SpeedDial на панели и откройте его → **Открыть Private SpeedDial**. Также доступно `Ctrl+Shift+Y` (`Command+Shift+Y` на macOS).
+3. В Android откройте **☰ → Установить расширение для браузера** — откроется эта же страница магазина. Для установки расширения используйте совместимый настольный браузер.
+
+Альтернатива для ручной установки: [скачать ZIP из GitHub Releases](https://github.com/rukazax/Private_SpeedDial/releases/latest/download/Private-SpeedDial-Extension.zip), распаковать, открыть `chrome://extensions`, включить режим разработчика и выбрать папку с `manifest.json` через «Загрузить распакованное расширение».
+
+Версии в Chrome Web Store и GitHub могут отличаться: публикация обновления в магазине выполняется отдельно. Магазинную версию обновляет браузер; ZIP из GitHub устанавливается и обновляется вручную. Расширение из этого репозитория не заменяет новую вкладку автоматически.
 
 Полные инструкции, обновление без потери данных и решение проблем: **[Установка и использование](docs/USER-GUIDE.md)**.
 
@@ -101,7 +104,7 @@ flowchart LR
 - [Сборка APK, расширения и запуск тестов](docs/BUILD.md)
 - [Обновления, релизы и стабильные ссылки загрузки](docs/UPDATES.md)
 - [Приватность, подпись APK и сообщение об ошибке безопасности](docs/SECURITY.md)
-- [Результаты проверки версии 6.10.1](docs/VERIFICATION.md)
+- [Результаты проверки версии 6.10.2](docs/VERIFICATION.md)
 - [Зависимости и их лицензии](THIRD_PARTY.md)
 - [История изменений](CHANGELOG.md)
 

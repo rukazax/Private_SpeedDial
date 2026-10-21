@@ -3,7 +3,7 @@ const {test}=require('node:test');
 const assert=require('node:assert/strict');
 const fs=require('node:fs'),os=require('node:os'),path=require('node:path');
 const {chromium}=require('playwright');
-const root=path.resolve(__dirname,'..'),repo='https://github.com/rukazax/Private_SpeedDial';
+const root=path.resolve(__dirname,'..'),repo='https://github.com/rukazax/Private_SpeedDial',store='https://chromewebstore.google.com/detail/private-speeddial/eakakaeklcgnlanmpbndhjdljppehdof';
 test('unpacked extension: startup, settings, share, update dialog, skip and weekly cache',async()=>{
  const profile=fs.mkdtempSync(path.join(os.tmpdir(),'speeddial-browser-'));
  const context=await chromium.launchPersistentContext(profile,{headless:true,executablePath:process.env.CHROMIUM||'/snap/bin/chromium',args:['--no-sandbox','--disable-extensions-except='+root+'/extension','--load-extension='+root+'/extension']});
@@ -18,10 +18,16 @@ test('unpacked extension: startup, settings, share, update dialog, skip and week
  assert.equal(await page.locator('#projectSettings a').first().getAttribute('href'),repo);
  assert.equal(await page.locator('#projectShare').textContent(),'Поделиться приложением');
  assert.equal(await page.locator('a[href*="econa.su"]').count(),0);
+ assert.equal(await page.locator('#projectInstallExtension').getAttribute('href'),store);
+ // Capture the outgoing store URL without loading a synthetic privileged Web Store page.
+ // Chromium can SIGTRAP when that protected origin is replaced with a test HTML response.
+ await page.evaluate(()=>document.getElementById('projectInstallExtension').addEventListener('click',e=>{e.preventDefault();window.__storeClick={url:e.currentTarget.href,target:e.currentTarget.target}},{once:true}));
+ await page.locator('#projectInstallExtension').click();
+ assert.deepEqual(await page.evaluate(()=>__storeClick),{url:store,target:'_blank'});
  assert.equal(await page.locator('a[data-i18n="mobileApp"]').getAttribute('href'),repo+'/releases/latest');
  // Click the actual mobile-download link and intercept its navigation in this isolated test.
  await context.route(repo+'/releases/latest',route=>route.fulfill({status:200,contentType:'text/html',body:'<h1>GitHub release downloads test fixture</h1>'}));
- const downloadPagePromise=context.waitForEvent('page');await page.locator('a[data-i18n="mobileApp"]').click();const downloadPage=await downloadPagePromise;await downloadPage.waitForURL(repo+'/releases/latest');await downloadPage.waitForLoadState();assert.equal(await downloadPage.locator('h1').textContent(),'GitHub release downloads test fixture');await downloadPage.close();
+ const [downloadPage]=await Promise.all([context.waitForEvent('page'),page.locator('a[data-i18n="mobileApp"]').click()]);await downloadPage.waitForURL(repo+'/releases/latest');await downloadPage.waitForLoadState();assert.equal(await downloadPage.locator('h1').textContent(),'GitHub release downloads test fixture');await downloadPage.close();
  await page.evaluate(()=>{Object.defineProperty(navigator,'share',{value:undefined,configurable:true});navigator.clipboard.writeText=async s=>{window.__shared=s}});
  await page.locator('#projectShare').click();await page.waitForFunction(()=>window.__shared==='https://github.com/rukazax/Private_SpeedDial');
  assert.equal(await page.locator('#projectShare').textContent(),'Ссылка скопирована');
