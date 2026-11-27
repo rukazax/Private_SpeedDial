@@ -15,7 +15,7 @@
    ============================================================ */
 
 (function () {
-    const PRO = { version: '6.12.1' };
+    const PRO = { version: '6.12.2' };
     window.PSPro = PRO;
 
     const app = () => window._speedDial;

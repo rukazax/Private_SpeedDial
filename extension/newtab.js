@@ -1236,12 +1236,16 @@ class SpeedDial {
 
         const makeButton = (f, level) => {
             const isActive = this.currentFolder === f.id;
+            /* v6.12.2: если открыта подпапка, её корневая группа подсвечивается
+               как активная ветка — видно, где вы находитесь, в верхней строке */
+            const isBranch = !isActive && activeRootId === f.id;
             const b = document.createElement('button');
             b.type = 'button';
-            b.className = 'folder-tab' + (isActive ? ' active' : '');
+            b.className = 'folder-tab' + (isActive ? ' active' : '') + (isBranch ? ' active-branch' : '');
             b.textContent = (f.password ? '🔒 ' : '') + f.name;
             b.dataset.folderId = f.id;
             if (isActive) b.dataset.active = '1';
+            if (isBranch) b.title = 'Открыта папка внутри: ' + f.name;
 
             b.style.color = f.autoText ? this._pickContrastColor(f.color || '#667eea') : (f.textColor || '#ffffff');
             b.style.background = f.color;
@@ -1267,6 +1271,29 @@ class SpeedDial {
         const childrenOf = (id) => sortChildren(this.folders.filter(f => (f.parentId || '') === id))
             .filter(f => showEmpty || this._folderHasAnyContent(f.id));
 
+        /* v6.12.2: корневая группа открытой папки — по ней видно положение
+           в верхней строке, даже когда открыта подпапка глубже */
+        const rootOf = (id) => {
+            let cur = this.folders.find(f => f.id === id);
+            let guard = 0;
+            while (cur && cur.parentId && guard++ < 100) {
+                const parent = this.folders.find(f => f.id === cur.parentId);
+                if (!parent) break;
+                cur = parent;
+            }
+            return cur ? cur.id : null;
+        };
+        const activeRootId = this.currentFolder !== 'all' ? rootOf(this.currentFolder) : null;
+
+        const revealInBar = (barEl, el) => {
+            if (!barEl || !el) return;
+            const bl = barEl.getBoundingClientRect();
+            const r = el.getBoundingClientRect();
+            const pad = 12;
+            if (r.left < bl.left + pad) barEl.scrollLeft -= (bl.left + pad - r.left);
+            else if (r.right > bl.right - pad) barEl.scrollLeft += (r.right - bl.right + pad);
+        };
+
         if (vertical) {
             /* v6.11.0: в вертикальной панели остаётся вложенный список —
                вторая строка нужна только для горизонтальной полосы */
@@ -1277,9 +1304,14 @@ class SpeedDial {
                 });
             };
             buildTree();
+            revealInBar(bar, bar.querySelector('.folder-tab.active'));
         } else {
             /* строка 1: только папки верхнего уровня */
             childrenOf('').forEach(f => bar.appendChild(makeButton(f, 0)));
+            /* активная папка или её корневая группа должны быть видны в верхней
+               строке, даже если список прокручен */
+            revealInBar(bar, bar.querySelector('.folder-tab.active')
+                || bar.querySelector('.folder-tab.active-branch'));
 
             /* строка 2: подпапки открытой папки — появляются только тогда,
                когда открыта папка, у которой они есть; при открытии подпапки
@@ -1301,6 +1333,8 @@ class SpeedDial {
                 const lbl = document.getElementById('subfoldersBarLabel');
                 if (lbl) lbl.title = `Подпапки папки «${branch.name}»`;
                 subWrap.style.display = 'flex';
+                /* активная подпапка должна быть видна во второй строке */
+                revealInBar(subBar, subBar.querySelector('.folder-tab.active'));
                 /* v6.12.1: вторая строка закрепляется ровно под первой */
                 const mainWrap = document.getElementById('foldersBarWrap');
                 const mainH = mainWrap ? mainWrap.offsetHeight : 44;

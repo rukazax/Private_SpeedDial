@@ -1,0 +1,45 @@
+{
+  "version": "6.12.2",
+  "date": "2026-11-27",
+  "testedOn": "Edge 158.0.4370.45, Windows 10.0.26300",
+  "method": "isolated Edge profile with the unpacked build; checks over the DevTools protocol on the owner's real bookmark set",
+  "dataset": {
+    "tiles": 1936,
+    "folders": 44,
+    "topLevelFolders": 10
+  },
+  "checks": {
+    "manifestVersion": "6.12.2",
+    "activeBranchHighlight": {
+      "opened": "Домашняя сеть (подпапка «Серверы и сети»)",
+      "topRowBranch": "Серверы и сети",
+      "branchVisibleInTopRow": true,
+      "bottomRowActive": "Домашняя сеть"
+    },
+    "revealOnRender": "активная папка и подпапка прокручиваются в видимую область своей строки",
+    "stickyRows": "обе строки закреплены, смещение по высоте первой",
+    "folderBarVisibleByDefault": true,
+    "tagsFunctionality": "удалено",
+    "apkBinding": {
+      "assetName": "Private-SpeedDial-Android.apk",
+      "versionSource": "asset label (fallback: release tag)",
+      "extensionVersionSource": "release tag",
+      "stableLink": "https://github.com/rukazax/Private_SpeedDial/releases/latest/download/Private-SpeedDial-Android.apk",
+      "independentReleaseSupported": true
+    }
+  },
+  "repositoryChecks": {
+    "syncShared": "ok",
+    "nodeSyntaxFiles": 62,
+    "nodeSyntaxErrors": 0,
+    "unitTests": 20,
+    "unitTestsFailed": 0,
+    "versionConsistency": "extension, shared/project.js, extension/project.js, android-app/web/project.js, AndroidManifest"
+  },
+  "limits": {
+    "apkRebuilt": false,
+    "apkVersionInRelease": "6.10.3",
+    "reason": "ключ подписи проекта недоступен в этой среде; APK перенесён из предыдущего релиза с прежней меткой",
+    "localization": "новые строки интерфейса на русском"
+  }
+}

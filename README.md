@@ -9,16 +9,16 @@
 **RU** · [English](#english)
 
 [![автор](https://img.shields.io/badge/автор-rukazax-4b6bfb?style=flat-square)](https://github.com/rukazax)
-[![version](https://img.shields.io/badge/version-6.12.1-8a2be2?style=flat-square)](https://github.com/rukazax/Private_SpeedDial/releases/latest)
+[![version](https://img.shields.io/badge/version-6.12.2-8a2be2?style=flat-square)](https://github.com/rukazax/Private_SpeedDial/releases/latest)
 [![статус](https://img.shields.io/badge/статус-stable-8a2be2?style=flat-square)](https://github.com/rukazax/Private_SpeedDial/releases/latest)
 [![Chrome](https://img.shields.io/badge/Chrome-MV3-1f3a6e?style=flat-square)](https://chromewebstore.google.com/detail/private-speeddial/eakakaeklcgnlanmpbndhjdljppehdof)
-[![Android](https://img.shields.io/badge/Android-8.0%2B-1f3a6e?style=flat-square)](https://github.com/rukazax/Private_SpeedDial/releases/download/v6.10.3/Private-SpeedDial-Android.apk)
+[![Android](https://img.shields.io/badge/Android-8.0%2B-1f3a6e?style=flat-square)](https://github.com/rukazax/Private_SpeedDial/releases/latest/download/Private-SpeedDial-Android.apk)
 
 > **Закладки и заметки для Chrome и Android** — с папками, профилями и синхронизацией через ваше собственное облако (WebDAV/Nextcloud). Без центрального сервера проекта и регистрации: данные остаются у вас.
 
-[**Скачать APK для Android**](https://github.com/rukazax/Private_SpeedDial/releases/download/v6.10.3/Private-SpeedDial-Android.apk) · [**Установить расширение Chrome**](https://chromewebstore.google.com/detail/private-speeddial/eakakaeklcgnlanmpbndhjdljppehdof) · [Все релизы](https://github.com/rukazax/Private_SpeedDial/releases)
+[**Скачать APK для Android**](https://github.com/rukazax/Private_SpeedDial/releases/latest/download/Private-SpeedDial-Android.apk) · [**Установить расширение Chrome**](https://chromewebstore.google.com/detail/private-speeddial/eakakaeklcgnlanmpbndhjdljppehdof) · [Все релизы](https://github.com/rukazax/Private_SpeedDial/releases)
 
-> В выпусках 6.12.x меняется только расширение: APK не пересобирался, ссылка ведёт на последнюю собранную сборку 6.10.3. Исходники Android помечены 6.12.1 и будут собраны в следующем выпуске APK.
+> APK всегда берётся из **последнего** релиза (`releases/latest`), без привязки к номеру сборки. В выпусках 6.12.x APK не пересобирался, поэтому в последнем релизе лежит прежняя сборка — её версия указана в метке файла и проверяется приложением. Правила, которые держат эти ссылки живыми: [docs/RELEASING.md](docs/RELEASING.md).
 
 | Раздел | О чём |
 |---|---|
@@ -40,7 +40,7 @@ Private SpeedDial — панель быстрого доступа к сайта
 
 ### Android
 
-1. [Скачайте APK](https://github.com/rukazax/Private_SpeedDial/releases/download/v6.10.3/Private-SpeedDial-Android.apk) на телефон с Android 8.0 или новее.
+1. [Скачайте APK](https://github.com/rukazax/Private_SpeedDial/releases/latest/download/Private-SpeedDial-Android.apk) на телефон с Android 8.0 или новее.
 2. Откройте файл. При запросе Android разрешите установку из этого источника для браузера или файлового менеджера.
 3. Установите приложение и откройте Private SpeedDial. Чтобы добавить сайт, нажмите **☰ → Добавить закладку**. Для заметки: **☰ → Заметки → + Заметка**.
 4. При обновлении устанавливайте новый APK поверх старого. Не удаляйте приложение: удаление стирает локальные данные. Официальный APK подписан прежним ключом проекта.
@@ -138,9 +138,10 @@ flowchart LR
 - [Архитектура, структура исходников и потоки данных](docs/ARCHITECTURE.md)
 - [Сборка APK, расширения и запуск тестов](docs/BUILD.md)
 - [Обновления, релизы и стабильные ссылки загрузки](docs/UPDATES.md)
+- [Правила публикации релизов: APK и ZIP в одном latest](docs/RELEASING.md)
 - [Приватность, подпись APK и сообщение об ошибке безопасности](docs/SECURITY.md)
-- [Результаты проверки версии 6.12.1](docs/VERIFICATION.md) · [сводка в JSON](docs/verification-6.12.1.json)
-- [Что нового в 6.12.1](docs/RELEASE-6.12.1.md)
+- [Результаты проверки версии 6.12.2](docs/VERIFICATION.md) · [сводка в JSON](docs/verification-6.12.2.json)
+- [Что нового в 6.12.2](docs/RELEASE-6.12.2.md)
 - [Зависимости и их лицензии](THIRD_PARTY.md)
 - [История изменений](CHANGELOG.md)
 
@@ -170,15 +171,15 @@ Private SpeedDial is a quick-access panel for sites with folders, notes, profile
 
 The app author is **Konstantin Yeryomin**. The interface supports 13 languages: Russian, English, German, Spanish, French, Italian, Portuguese, Chinese, Japanese, Korean, Turkish, Hindi and Arabic.
 
-[**Download the Android APK**](https://github.com/rukazax/Private_SpeedDial/releases/download/v6.10.3/Private-SpeedDial-Android.apk) · [**Install the Chrome extension**](https://chromewebstore.google.com/detail/private-speeddial/eakakaeklcgnlanmpbndhjdljppehdof) · [All releases](https://github.com/rukazax/Private_SpeedDial/releases)
+[**Download the Android APK**](https://github.com/rukazax/Private_SpeedDial/releases/latest/download/Private-SpeedDial-Android.apk) · [**Install the Chrome extension**](https://chromewebstore.google.com/detail/private-speeddial/eakakaeklcgnlanmpbndhjdljppehdof) · [All releases](https://github.com/rukazax/Private_SpeedDial/releases)
 
-> Releases 6.12.x ship the extension only: the APK was not rebuilt, and the link points to the last built package, 6.10.3. Android sources are marked 6.12.1 and will be built in the next APK release.
+> The APK is always taken from the **latest** release (`releases/latest`), never pinned to a build number. Releases 6.12.x do not rebuild the APK, so the latest release carries the previous build — its version is stored in the asset label and is what the app compares. Rules that keep these links alive: [docs/RELEASING.md](docs/RELEASING.md).
 
 ### Install in minutes
 
 #### Android
 
-1. [Download the APK](https://github.com/rukazax/Private_SpeedDial/releases/download/v6.10.3/Private-SpeedDial-Android.apk) to a phone running Android 8.0 or newer.
+1. [Download the APK](https://github.com/rukazax/Private_SpeedDial/releases/latest/download/Private-SpeedDial-Android.apk) to a phone running Android 8.0 or newer.
 2. Open the file. When Android asks, allow installation from this source for your browser or file manager.
 3. Install the app and open Private SpeedDial. To add a site, tap **☰ → Add bookmark**. For a note: **☰ → Notes → + Note**.
 4. When updating, install the new APK over the old one. Do not uninstall the app: uninstalling wipes local data. The official APK is signed with the project's original key.
@@ -276,9 +277,10 @@ When a new version is available, an **“Update” / “Skip release”** window
 - [Architecture, source layout and data flows](docs/ARCHITECTURE.md)
 - [Building the APK and extension, running tests](docs/BUILD.md)
 - [Updates, releases and stable download links](docs/UPDATES.md)
+- [Release rules: APK and ZIP in one latest release](docs/RELEASING.md)
 - [Privacy, APK signature and the security disclosure](docs/SECURITY.md)
-- [Verification results for version 6.12.1](docs/VERIFICATION.md) · [JSON summary](docs/verification-6.12.1.json)
-- [What's new in 6.12.1](docs/RELEASE-6.12.1.md)
+- [Verification results for version 6.12.2](docs/VERIFICATION.md) · [JSON summary](docs/verification-6.12.2.json)
+- [What's new in 6.12.2](docs/RELEASE-6.12.2.md)
 - [Dependencies and their licenses](THIRD_PARTY.md)
 - [Changelog](CHANGELOG.md)
 

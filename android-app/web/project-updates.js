@@ -17,13 +17,23 @@
         if (!data || data.draft || data.prerelease || !version(data.tag_name)) return null;
         const tag = data.tag_name;
         if (data.html_url !== P.repository + '/releases/tag/' + tag) return null;
+        const list = Array.isArray(data.assets) ? data.assets : [];
         const assets = {};
+        let apkVersion = null;
         for (const name of [P.androidAsset, P.extensionAsset]) {
-            const asset = (Array.isArray(data.assets) ? data.assets : []).find(a => a.name === name && a.state === 'uploaded' && a.size > 0);
+            const asset = list.find(a => a.name === name && a.state === 'uploaded' && a.size > 0);
             const url = P.repository + '/releases/download/' + tag + '/' + name;
-            if (asset?.browser_download_url === url) assets[name] = url;
+            if (asset?.browser_download_url === url) {
+                assets[name] = url;
+                /* v6.12.2: версию APK берём из метки самого файла, а не из тега
+                   релиза — сборка расширения и сборка APK могут отличаться */
+                if (name === P.androidAsset) {
+                    const label = String(asset.label || '').trim();
+                    apkVersion = version(label) ? label.replace(/^v/, '') : null;
+                }
+            }
         }
-        return { tag, url: data.html_url, assets };
+        return { tag, url: data.html_url, assets, apkVersion };
     }
     const read = async () => (await chrome.storage.local.get(key))[key] || {};
     const write = state => chrome.storage.local.set({ [key]: state });
@@ -38,7 +48,11 @@
     }
     const candidate = (state, platform) => {
         const r = state.release, name = platform === 'android' ? P.androidAsset : P.extensionAsset;
-        if (!r || !newer(r.tag, P.version) || state.skippedTag === r.tag || !r.assets?.[name]) return null;
+        if (!r || state.skippedTag === r.tag || !r.assets?.[name]) return null;
+        /* Android сверяется с версией опубликованного APK (метка файла), расширение — с тегом релиза.
+           Без метки поведение прежнее: сравнение по тегу. */
+        const target = platform === 'android' ? (r.apkVersion || r.tag) : r.tag;
+        if (!newer(target, P.version)) return null;
         // Revalidate persisted metadata as strictly as the network response.
         if (r.url !== P.repository + '/releases/tag/' + r.tag ||
             r.assets[name] !== P.repository + '/releases/download/' + r.tag + '/' + name) return null;
