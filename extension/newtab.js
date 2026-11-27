@@ -866,6 +866,85 @@ class SpeedDial {
         window.addEventListener('resize', () => this.updateFolderScrollButtons());
     }
 
+    /* ---------- v6.12.3: стрелки прокрутки папок и заметок ---------- */
+
+    _notesScrollTargets() {
+        return [
+            {
+                bar: document.getElementById('notesFoldersBar'),
+                prev: document.getElementById('notesFoldersScrollPrev'),
+                next: document.getElementById('notesFoldersScrollNext')
+            },
+            {
+                bar: document.getElementById('notesList'),
+                prev: document.getElementById('notesScrollPrev'),
+                next: document.getElementById('notesScrollNext')
+            }
+        ];
+    }
+
+    updateNotesScrollButtons() {
+        for (const { bar, prev, next } of this._notesScrollTargets()) {
+            if (!bar || !prev || !next) continue;
+            const canScroll = bar.scrollHeight > bar.clientHeight + 1;
+            prev.style.display = canScroll ? '' : 'none';
+            next.style.display = canScroll ? '' : 'none';
+            if (!canScroll) continue;
+            prev.disabled = bar.scrollTop <= 1;
+            next.disabled = bar.scrollTop + bar.clientHeight >= bar.scrollHeight - 1;
+        }
+    }
+
+    _bindNotesScrollButtons() {
+        for (const { bar, prev, next } of this._notesScrollTargets()) {
+            if (!bar || !prev || !next) continue;
+            const step = () => Math.max(80, Math.round(bar.clientHeight * 0.8));
+            /* onclick вместо addEventListener: повторная привязка не плодит
+               дубликаты обработчиков и не зависит от порядка инициализации */
+            /* прокрутка шагом через scrollTop: smooth-анимация в этом контейнере
+               не срабатывает, а прямое присваивание работает предсказуемо */
+            prev.onclick = () => {
+                bar.scrollTop = Math.max(0, bar.scrollTop - step());
+                this.updateNotesScrollButtons();
+            };
+            next.onclick = () => {
+                bar.scrollTop = Math.min(bar.scrollHeight, bar.scrollTop + step());
+                this.updateNotesScrollButtons();
+            };
+            bar.onscroll = () => this.updateNotesScrollButtons();
+        }
+        window.addEventListener('resize', () => this.updateNotesScrollButtons());
+        this._setSidebarResizeHook();
+
+        /* перерисовка списков идёт из десятка мест — следим за изменениями DOM,
+           чтобы стрелки появлялись и исчезали сразу после рендера */
+        const targets = this._notesScrollTargets();
+        if (this._notesScrollObserver) this._notesScrollObserver.disconnect();
+        if (typeof MutationObserver === 'function') {
+            this._notesScrollObserver = new MutationObserver(() => this._scheduleNotesScrollUpdate());
+            for (const { bar } of targets) {
+                if (bar) this._notesScrollObserver.observe(bar, { childList: true });
+            }
+        }
+        this.updateNotesScrollButtons();
+    }
+
+    _scheduleNotesScrollUpdate() {
+        if (this._notesScrollRaf) return;
+        const run = () => { this._notesScrollRaf = 0; this.updateNotesScrollButtons(); };
+        this._notesScrollRaf = (typeof requestAnimationFrame === 'function')
+            ? requestAnimationFrame(run)
+            : setTimeout(run, 16);
+    }
+
+    _setSidebarResizeHook() {
+        /* при изменении ширины панели меняется высота списков — пересчитываем стрелки */
+        const resizer = document.getElementById('sidebarResizer');
+        if (!resizer || resizer.dataset.notesScrollBound === '1') return;
+        resizer.dataset.notesScrollBound = '1';
+        resizer.addEventListener('pointerup', () => setTimeout(() => this.updateNotesScrollButtons(), 60));
+    }
+
     applySidebarState() {
         const sb = document.getElementById('notesSidebar');
         const eb = document.getElementById('expandSidebar');
@@ -1101,6 +1180,7 @@ class SpeedDial {
         if (!this._folderScrollBound) {
             this._folderScrollBound = true;
             this._bindFolderScrollButtons();
+        this._bindNotesScrollButtons();
         }
         this.renderFoldersBar();
         this.renderNotesFoldersBar();

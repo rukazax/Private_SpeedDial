@@ -1,0 +1,41 @@
+{
+  "version": "6.12.3",
+  "date": "2026-11-27",
+  "testedOn": "Edge 158.0.4370.45, Windows 10.0.26300",
+  "method": "isolated Edge profile with the unpacked build; checks over the DevTools protocol on the owner's real data",
+  "dataset": { "tiles": 1936, "folders": 44, "notes": 13, "noteFolders": 11 },
+  "checks": {
+    "manifestVersion": "6.12.3",
+    "notesScrollArrows": {
+      "presentInDom": true,
+      "hiddenWithoutOverflow": true,
+      "shownWithOverflow": true,
+      "listClientHeight": 684,
+      "listScrollHeight": 1370,
+      "upDisabledAtStart": true,
+      "scrollAfterOneClick": 547,
+      "scrollAfterThreeClicks": 686,
+      "downDisabledAtEnd": true,
+      "scrollAfterUpClick": 139
+    },
+    "activeBranchHighlight": {
+      "topRowBranch": "Серверы и сети",
+      "bottomRowActive": "Домашняя сеть"
+    },
+    "apkBinding": {
+      "versionSource": "asset label (fallback: release tag)",
+      "stableLink": "https://github.com/rukazax/Private_SpeedDial/releases/latest/download/Private-SpeedDial-Android.apk"
+    }
+  },
+  "repositoryChecks": {
+    "syncShared": "ok",
+    "nodeSyntaxErrors": 0,
+    "unitTests": 20,
+    "unitTestsFailed": 0
+  },
+  "limits": {
+    "apkRebuilt": false,
+    "apkVersionInRelease": "6.10.3",
+    "localization": "новые строки интерфейса на русском"
+  }
+}

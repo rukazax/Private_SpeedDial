@@ -37,8 +37,17 @@
                     </div>
                 </div>
                 <div class="notes-content-wrapper">
-                    <div class="notes-folders-bar" id="notesFoldersBar"></div>
-                    <div class="notes-list" id="notesList"></div>
+                    <!-- v6.12.3: прокрутка папок и заметок стрелками, как у папок закладок -->
+                    <div class="notes-folders-col">
+                        <button type="button" id="notesFoldersScrollPrev" class="notes-scroll-btn" style="display:none" title="Прокрутить папки заметок вверх">▲</button>
+                        <div class="notes-folders-bar" id="notesFoldersBar"></div>
+                        <button type="button" id="notesFoldersScrollNext" class="notes-scroll-btn" style="display:none" title="Прокрутить папки заметок вниз">▼</button>
+                    </div>
+                    <div class="notes-list-col">
+                        <button type="button" id="notesScrollPrev" class="notes-scroll-btn" style="display:none" title="Прокрутить заметки вверх">▲</button>
+                        <div class="notes-list" id="notesList"></div>
+                        <button type="button" id="notesScrollNext" class="notes-scroll-btn" style="display:none" title="Прокрутить заметки вниз">▼</button>
+                    </div>
                 </div>
                 <!-- v6.9.3: ручка изменения ширины панели (захват за край) -->
                 <div class="sidebar-resizer" id="sidebarResizer" aria-hidden="true"></div>

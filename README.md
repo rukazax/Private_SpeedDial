@@ -9,7 +9,7 @@
 **RU** · [English](#english)
 
 [![автор](https://img.shields.io/badge/автор-rukazax-4b6bfb?style=flat-square)](https://github.com/rukazax)
-[![version](https://img.shields.io/badge/version-6.12.2-8a2be2?style=flat-square)](https://github.com/rukazax/Private_SpeedDial/releases/latest)
+[![version](https://img.shields.io/badge/version-6.12.3-8a2be2?style=flat-square)](https://github.com/rukazax/Private_SpeedDial/releases/latest)
 [![статус](https://img.shields.io/badge/статус-stable-8a2be2?style=flat-square)](https://github.com/rukazax/Private_SpeedDial/releases/latest)
 [![Chrome](https://img.shields.io/badge/Chrome-MV3-1f3a6e?style=flat-square)](https://chromewebstore.google.com/detail/private-speeddial/eakakaeklcgnlanmpbndhjdljppehdof)
 [![Android](https://img.shields.io/badge/Android-8.0%2B-1f3a6e?style=flat-square)](https://github.com/rukazax/Private_SpeedDial/releases/latest/download/Private-SpeedDial-Android.apk)
@@ -67,6 +67,7 @@ Private SpeedDial — панель быстрого доступа к сайта
 | Массовые операции: выделение, перемещение, цвет, удаление | Да | Нет |
 | Уборка: дубли по адресу, мусорные заголовки, пустые папки, битые имена | Да | Нет |
 | Полная резервная копия и восстановление JSON | Да | Системный выбор файла |
+| Прокрутка папок и заметок стрелками в боковой панели | Да | Нет |
 | Профили, темы, цвета, фоны | Да | Да |
 | Ручная и автоматическая синхронизация | Да | Пока приложение открыто |
 | Пароли отдельных папок | Да | Да |
@@ -140,8 +141,8 @@ flowchart LR
 - [Обновления, релизы и стабильные ссылки загрузки](docs/UPDATES.md)
 - [Правила публикации релизов: APK и ZIP в одном latest](docs/RELEASING.md)
 - [Приватность, подпись APK и сообщение об ошибке безопасности](docs/SECURITY.md)
-- [Результаты проверки версии 6.12.2](docs/VERIFICATION.md) · [сводка в JSON](docs/verification-6.12.2.json)
-- [Что нового в 6.12.2](docs/RELEASE-6.12.2.md)
+- [Результаты проверки версии 6.12.3](docs/VERIFICATION.md) · [сводка в JSON](docs/verification-6.12.3.json)
+- [Что нового в 6.12.3](docs/RELEASE-6.12.3.md)
 - [Зависимости и их лицензии](THIRD_PARTY.md)
 - [История изменений](CHANGELOG.md)
 
@@ -206,6 +207,7 @@ Full instructions, updating without data loss and troubleshooting: **[Installati
 | Bulk operations: select, move, recolor, delete | Yes | No |
 | Cleanup: duplicate URLs, junk titles, empty folders, broken names | Yes | No |
 | Full JSON backup and restore | Yes | System file picker |
+| Arrow-based scrolling of note folders and notes in the sidebar | Yes | No |
 | Profiles, themes, colors, backgrounds | Yes | Yes |
 | Manual and automatic sync | Yes | While the app is open |
 | Passwords for individual folders | Yes | Yes |
@@ -279,8 +281,8 @@ When a new version is available, an **“Update” / “Skip release”** window
 - [Updates, releases and stable download links](docs/UPDATES.md)
 - [Release rules: APK and ZIP in one latest release](docs/RELEASING.md)
 - [Privacy, APK signature and the security disclosure](docs/SECURITY.md)
-- [Verification results for version 6.12.2](docs/VERIFICATION.md) · [JSON summary](docs/verification-6.12.2.json)
-- [What's new in 6.12.2](docs/RELEASE-6.12.2.md)
+- [Verification results for version 6.12.3](docs/VERIFICATION.md) · [JSON summary](docs/verification-6.12.3.json)
+- [What's new in 6.12.3](docs/RELEASE-6.12.3.md)
 - [Dependencies and their licenses](THIRD_PARTY.md)
 - [Changelog](CHANGELOG.md)
 
