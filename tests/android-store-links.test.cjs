@@ -25,7 +25,7 @@ test('APK menu and all settings installation links open the exact Chrome Web Sto
   });
   const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.goto('https://appassets.androidplatform.net/newtab.html');
-  assert.equal(await page.evaluate(()=>chrome.runtime.getManifest().version),'6.10.3');
+  assert.equal(await page.evaluate(()=>chrome.runtime.getManifest().version),'6.12.1');
   await page.locator('#androidMenuButton').click();
   assert.equal(await page.locator('#androidBrowserExtension').textContent(),'Установить расширение для браузера');
   await page.locator('#androidBrowserExtension').click();assert.equal(await page.evaluate(()=>__openedUrls.at(-1)),store);

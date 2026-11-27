@@ -9,7 +9,7 @@
 **RU** · [English](#english)
 
 [![автор](https://img.shields.io/badge/автор-rukazax-4b6bfb?style=flat-square)](https://github.com/rukazax)
-[![version](https://img.shields.io/badge/version-6.10.3-8a2be2?style=flat-square)](https://github.com/rukazax/Private_SpeedDial/releases/latest)
+[![version](https://img.shields.io/badge/version-6.12.1-8a2be2?style=flat-square)](https://github.com/rukazax/Private_SpeedDial/releases/latest)
 [![статус](https://img.shields.io/badge/статус-stable-8a2be2?style=flat-square)](https://github.com/rukazax/Private_SpeedDial/releases/latest)
 [![Chrome](https://img.shields.io/badge/Chrome-MV3-1f3a6e?style=flat-square)](https://chromewebstore.google.com/detail/private-speeddial/eakakaeklcgnlanmpbndhjdljppehdof)
 [![Android](https://img.shields.io/badge/Android-8.0%2B-1f3a6e?style=flat-square)](https://github.com/rukazax/Private_SpeedDial/releases/latest/download/Private-SpeedDial-Android.apk)
@@ -60,6 +60,11 @@ Private SpeedDial — панель быстрого доступа к сайта
 | Возможность | Расширение браузера | Android |
 |---|---|---|
 | Закладки, вложенные папки, заметки и папки заметок | Да | Да |
+| Две строки папок: сверху группы, ниже закреплённые подпапки открытой папки | Да | Одна строка |
+| Фон плитки — снимок сайта: поштучно, по папке, для выделенных | Да | Нет |
+| Массовые операции: выделение, перемещение, цвет, удаление | Да | Нет |
+| Уборка: дубли по адресу, мусорные заголовки, пустые папки, битые имена | Да | Нет |
+| Полная резервная копия и восстановление JSON | Да | Системный выбор файла |
 | Профили, темы, цвета, фоны | Да | Да |
 | Ручная и автоматическая синхронизация | Да | Пока приложение открыто |
 | Пароли отдельных папок | Да | Да |
@@ -79,6 +84,14 @@ Private SpeedDial — панель быстрого доступа к сайта
 | ![Главный экран](docs/images/android-home.png) | ![Меню](docs/images/android-menu.png) | ![Настройки](docs/images/android-settings.png) |
 
 ![Интерфейс расширения в Chromium](docs/images/browser.png)
+
+Две строки папок: сверху только группы, под ними — закреплённые подпапки открытой папки. При прокрутке обе строки остаются на месте.
+
+![Две строки папок](docs/images/browser-folders.png)
+
+| Фон плитки — снимок сайта | Панель инструментов |
+|---|---|
+| ![Снимок сайта фоном](docs/images/browser-screenshot-bg.png) | ![Инструменты](docs/images/browser-tools.png) |
 
 Скриншоты сделаны на тестовых данных в эмуляторе Android и отдельном профиле Chromium. Данные пользователя в репозиторий не включены. Новое окно первого запуска расширения проверено в отдельном профиле Chromium:
 
@@ -124,7 +137,8 @@ flowchart LR
 - [Сборка APK, расширения и запуск тестов](docs/BUILD.md)
 - [Обновления, релизы и стабильные ссылки загрузки](docs/UPDATES.md)
 - [Приватность, подпись APK и сообщение об ошибке безопасности](docs/SECURITY.md)
-- [Результаты проверки версии 6.10.3](docs/VERIFICATION.md)
+- [Результаты проверки версии 6.12.1](docs/VERIFICATION.md) · [сводка в JSON](docs/verification-6.12.1.json)
+- [Что нового в 6.12.1](docs/RELEASE-6.12.1.md)
 - [Зависимости и их лицензии](THIRD_PARTY.md)
 - [История изменений](CHANGELOG.md)
 
@@ -182,6 +196,11 @@ Full instructions, updating without data loss and troubleshooting: **[Installati
 | Feature | Browser extension | Android |
 |---|---|---|
 | Bookmarks, nested folders, notes and note folders | Yes | Yes |
+| Two folder rows: groups on top, the open folder's subfolders pinned below | Yes | Single row |
+| Tile background from a site screenshot: per tile, per folder, for a selection | Yes | No |
+| Bulk operations: select, move, recolor, delete | Yes | No |
+| Cleanup: duplicate URLs, junk titles, empty folders, broken names | Yes | No |
+| Full JSON backup and restore | Yes | System file picker |
 | Profiles, themes, colors, backgrounds | Yes | Yes |
 | Manual and automatic sync | Yes | While the app is open |
 | Passwords for individual folders | Yes | Yes |
@@ -201,6 +220,14 @@ On Android, folders sit to the right of ☰ in a single horizontally scrollable 
 | ![Main screen](docs/images/android-home.png) | ![Menu](docs/images/android-menu.png) | ![Settings](docs/images/android-settings.png) |
 
 ![Extension UI in Chromium](docs/images/browser.png)
+
+Two folder rows: groups on top, the open folder's subfolders pinned underneath. Both rows stay in place while the tiles scroll.
+
+![Two folder rows](docs/images/browser-folders.png)
+
+| Tile background from a site screenshot | Tools panel |
+|---|---|
+| ![Site screenshot background](docs/images/browser-screenshot-bg.png) | ![Tools](docs/images/browser-tools.png) |
 
 Screenshots were taken on test data in an Android emulator and a separate Chromium profile. No user data is included in the repository. The extension's first-launch window was verified in a separate Chromium profile:
 
@@ -246,7 +273,8 @@ When a new version is available, an **“Update” / “Skip release”** window
 - [Building the APK and extension, running tests](docs/BUILD.md)
 - [Updates, releases and stable download links](docs/UPDATES.md)
 - [Privacy, APK signature and the security disclosure](docs/SECURITY.md)
-- [Verification results for version 6.10.3](docs/VERIFICATION.md)
+- [Verification results for version 6.12.1](docs/VERIFICATION.md) · [JSON summary](docs/verification-6.12.1.json)
+- [What's new in 6.12.1](docs/RELEASE-6.12.1.md)
 - [Dependencies and their licenses](THIRD_PARTY.md)
 - [Changelog](CHANGELOG.md)
 

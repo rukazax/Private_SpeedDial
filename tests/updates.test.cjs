@@ -3,7 +3,7 @@ const assert=require('node:assert/strict');
 const vm=require('node:vm'), fs=require('node:fs');
 const clone=x=>structuredClone(x);
 const repo='https://github.com/rukazax/Private_SpeedDial';
-function metadata(tag='v6.11.0') {
+function metadata(tag='v6.13.0') {
  return {tag_name:tag,html_url:repo+'/releases/tag/'+tag,draft:false,prerelease:false,assets:['Private-SpeedDial-Android.apk','Private-SpeedDial-Extension.zip'].map(name=>({name,state:'uploaded',size:123,browser_download_url:repo+'/releases/download/'+tag+'/'+name}))};
 }
 function setup(options={}) {
@@ -14,10 +14,10 @@ function setup(options={}) {
  return {u:ctx.ProjectUpdates,ctx,local,session,get calls(){return calls},advance:n=>now+=n};
 }
 test('semantic version ordering and rejection of prerelease / malformed versions',()=>{
- const {u}=setup();for(const [a,b,want] of [['6.10.0','6.9.9',true],['v7.0.0','6.99.99',true],['6.10.0','6.10.0',false],['6.9.9','6.10.0',false],['v6.11.0-beta','6.10.0',false],['06.11.0','6.10.0',false],['6.11','6.10.0',false],['9007199254740992.0.0','6.10.0',false]])assert.equal(u.newer(a,b),want,a);
+ const {u}=setup();for(const [a,b,want] of [['6.10.0','6.9.9',true],['v7.0.0','6.99.99',true],['6.10.0','6.10.0',false],['6.9.9','6.10.0',false],['v6.13.0-beta','6.10.0',false],['06.11.0','6.10.0',false],['6.11','6.10.0',false],['9007199254740992.0.0','6.10.0',false]])assert.equal(u.newer(a,b),want,a);
 });
 test('one request for simultaneous pages and weekly boundary',async()=>{
- const t=setup();const result=await Promise.all(Array.from({length:20},()=>t.u.check('android')));assert.equal(t.calls,1);assert.equal(result[0].update.tag,'v6.11.0');assert.match(result[0].update.download,/\.apk$/);
+ const t=setup();const result=await Promise.all(Array.from({length:20},()=>t.u.check('android')));assert.equal(t.calls,1);assert.equal(result[0].update.tag,'v6.13.0');assert.match(result[0].update.download,/\.apk$/);
  t.advance(604800000-1);await t.u.check('extension');assert.equal(t.calls,1);t.advance(1);const b=await t.u.check('extension');assert.equal(t.calls,2);assert.match(b.update.download,/\.zip$/);
 });
 test('throttle persists after process restart, including failures and backwards clock',async()=>{
@@ -42,24 +42,24 @@ test('same or older installed version never prompts',async()=>{
  for(const tag of ['v6.10.3','v6.10.2','v6.10.1','v6.10.0','v6.9.9']){const t=setup({fetch:async()=>({ok:true,text:async()=>JSON.stringify(metadata(tag))})});assert.equal((await t.u.check('android')).update,null);}
 });
 test('prompt is claimed once per session even with concurrent pages',async()=>{
- const t=setup();await t.u.check('android');const results=await Promise.all(Array.from({length:20},()=>t.u.claim('v6.11.0','android')));assert.equal(results.filter(r=>r.claimed).length,1);
- const restart=setup({local:t.local});assert.equal((await restart.u.claim('v6.11.0','android')).claimed,true);assert.equal((await restart.u.claim('v99.0.0','android')).claimed,false);
+ const t=setup();await t.u.check('android');const results=await Promise.all(Array.from({length:20},()=>t.u.claim('v6.13.0','android')));assert.equal(results.filter(r=>r.claimed).length,1);
+ const restart=setup({local:t.local});assert.equal((await restart.u.claim('v6.13.0','android')).claimed,true);assert.equal((await restart.u.claim('v99.0.0','android')).claimed,false);
 });
 test('skip persists exact release but permits the following release',async()=>{
- const t=setup();await t.u.check('android');await t.u.skip('v6.11.0');assert.equal((await t.u.check('android')).update,null);const restart=setup({local:t.local});assert.equal((await restart.u.check('android')).update,null);restart.advance(604800000);restart.ctx.fetch=async()=>({ok:true,text:async()=>JSON.stringify(metadata('v6.12.0'))});assert.equal((await restart.u.check('android')).update.tag,'v6.12.0');
+ const t=setup();await t.u.check('android');await t.u.skip('v6.13.0');assert.equal((await t.u.check('android')).update,null);const restart=setup({local:t.local});assert.equal((await restart.u.check('android')).update,null);restart.advance(604800000);restart.ctx.fetch=async()=>({ok:true,text:async()=>JSON.stringify(metadata('v6.14.0'))});assert.equal((await restart.u.check('android')).update.tag,'v6.14.0');
 });
 test('tampered persisted download metadata cannot open arbitrary URLs',async()=>{
  const t=setup();await t.u.check('android');t.local.projectUpdateState.release.assets['Private-SpeedDial-Android.apk']='https://evil.test/x';assert.equal((await t.u.check('android')).update,null);
 });
 test('cached valid release survives a failed subsequent weekly request',async()=>{
- const t=setup();await t.u.check('android');t.advance(604800000);t.ctx.fetch=async()=>{throw Error('network')};const result=await t.u.check('android');assert.equal(result.update.tag,'v6.11.0');assert.equal(result.error,true);
+ const t=setup();await t.u.check('android');t.advance(604800000);t.ctx.fetch=async()=>{throw Error('network')};const result=await t.u.check('android');assert.equal(result.update.tag,'v6.13.0');assert.equal(result.error,true);
 });
 test('request has no credentials and uses only the public latest-release API',async()=>{
  const t=setup({fetch:async(url,init)=>{assert.equal(url,'https://api.github.com/repos/rukazax/Private_SpeedDial/releases/latest');assert.equal(init.credentials,'omit');assert.equal(init.redirect,'error');assert.equal(init.headers.Authorization,undefined);return {ok:true,text:async()=>JSON.stringify(metadata())}}});await t.u.check('android');
 });
 test('skipping cached release during a slow weekly request is preserved',async()=>{
  const t=setup();await t.u.check('android');t.advance(604800000);let done;const gate=new Promise(r=>done=r);t.ctx.fetch=async()=>{await gate;return {ok:true,text:async()=>JSON.stringify(metadata())}};
- const checking=t.u.check('android');await new Promise(r=>setTimeout(r,5));await t.u.skip('v6.11.0');done();assert.equal((await checking).update,null);assert.equal(t.local.projectUpdateState.skippedTag,'v6.11.0');
+ const checking=t.u.check('android');await new Promise(r=>setTimeout(r,5));await t.u.skip('v6.13.0');done();assert.equal((await checking).update,null);assert.equal(t.local.projectUpdateState.skippedTag,'v6.13.0');
 });
 test('HTTP timeout aborts and remains throttled',async()=>{
  const t=setup({fetch:async(url,{signal})=>new Promise((resolve,reject)=>signal.addEventListener('abort',()=>reject(Error('timeout'))))});

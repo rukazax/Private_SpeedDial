@@ -571,7 +571,7 @@
         ov.id = 'proPanelOverlay';
         ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px;';
         const card = document.createElement('div');
-        card.style.cssText = 'background:var(--modal-bg,#fff);color:inherit;border-radius:16px;max-width:720px;width:100%;max-height:86vh;overflow:auto;padding:18px 20px;box-shadow:0 20px 60px rgba(0,0,0,.4);';
+        card.style.cssText = 'background:var(--modal,#fff);color:var(--text,#172030);border:1px solid var(--border,rgba(0,0,0,.12));border-radius:20px;max-width:720px;width:100%;max-height:86vh;overflow:auto;padding:20px 22px;box-shadow:0 24px 60px rgba(0,0,0,.5);';
         ov.appendChild(card);
         ov.addEventListener('click', e => { if (e.target === ov) ov.style.display = 'none'; });
 
