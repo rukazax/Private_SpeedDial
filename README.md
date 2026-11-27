@@ -12,11 +12,13 @@
 [![version](https://img.shields.io/badge/version-6.12.1-8a2be2?style=flat-square)](https://github.com/rukazax/Private_SpeedDial/releases/latest)
 [![статус](https://img.shields.io/badge/статус-stable-8a2be2?style=flat-square)](https://github.com/rukazax/Private_SpeedDial/releases/latest)
 [![Chrome](https://img.shields.io/badge/Chrome-MV3-1f3a6e?style=flat-square)](https://chromewebstore.google.com/detail/private-speeddial/eakakaeklcgnlanmpbndhjdljppehdof)
-[![Android](https://img.shields.io/badge/Android-8.0%2B-1f3a6e?style=flat-square)](https://github.com/rukazax/Private_SpeedDial/releases/latest/download/Private-SpeedDial-Android.apk)
+[![Android](https://img.shields.io/badge/Android-8.0%2B-1f3a6e?style=flat-square)](https://github.com/rukazax/Private_SpeedDial/releases/download/v6.10.3/Private-SpeedDial-Android.apk)
 
 > **Закладки и заметки для Chrome и Android** — с папками, профилями и синхронизацией через ваше собственное облако (WebDAV/Nextcloud). Без центрального сервера проекта и регистрации: данные остаются у вас.
 
-[**Скачать APK для Android**](https://github.com/rukazax/Private_SpeedDial/releases/latest/download/Private-SpeedDial-Android.apk) · [**Установить расширение Chrome**](https://chromewebstore.google.com/detail/private-speeddial/eakakaeklcgnlanmpbndhjdljppehdof) · [Все релизы](https://github.com/rukazax/Private_SpeedDial/releases)
+[**Скачать APK для Android**](https://github.com/rukazax/Private_SpeedDial/releases/download/v6.10.3/Private-SpeedDial-Android.apk) · [**Установить расширение Chrome**](https://chromewebstore.google.com/detail/private-speeddial/eakakaeklcgnlanmpbndhjdljppehdof) · [Все релизы](https://github.com/rukazax/Private_SpeedDial/releases)
+
+> В выпусках 6.12.x меняется только расширение: APK не пересобирался, ссылка ведёт на последнюю собранную сборку 6.10.3. Исходники Android помечены 6.12.1 и будут собраны в следующем выпуске APK.
 
 | Раздел | О чём |
 |---|---|
@@ -38,7 +40,7 @@ Private SpeedDial — панель быстрого доступа к сайта
 
 ### Android
 
-1. [Скачайте APK](https://github.com/rukazax/Private_SpeedDial/releases/latest/download/Private-SpeedDial-Android.apk) на телефон с Android 8.0 или новее.
+1. [Скачайте APK](https://github.com/rukazax/Private_SpeedDial/releases/download/v6.10.3/Private-SpeedDial-Android.apk) на телефон с Android 8.0 или новее.
 2. Откройте файл. При запросе Android разрешите установку из этого источника для браузера или файлового менеджера.
 3. Установите приложение и откройте Private SpeedDial. Чтобы добавить сайт, нажмите **☰ → Добавить закладку**. Для заметки: **☰ → Заметки → + Заметка**.
 4. При обновлении устанавливайте новый APK поверх старого. Не удаляйте приложение: удаление стирает локальные данные. Официальный APK подписан прежним ключом проекта.
@@ -168,13 +170,15 @@ Private SpeedDial is a quick-access panel for sites with folders, notes, profile
 
 The app author is **Konstantin Yeryomin**. The interface supports 13 languages: Russian, English, German, Spanish, French, Italian, Portuguese, Chinese, Japanese, Korean, Turkish, Hindi and Arabic.
 
-[**Download the Android APK**](https://github.com/rukazax/Private_SpeedDial/releases/latest/download/Private-SpeedDial-Android.apk) · [**Install the Chrome extension**](https://chromewebstore.google.com/detail/private-speeddial/eakakaeklcgnlanmpbndhjdljppehdof) · [All releases](https://github.com/rukazax/Private_SpeedDial/releases)
+[**Download the Android APK**](https://github.com/rukazax/Private_SpeedDial/releases/download/v6.10.3/Private-SpeedDial-Android.apk) · [**Install the Chrome extension**](https://chromewebstore.google.com/detail/private-speeddial/eakakaeklcgnlanmpbndhjdljppehdof) · [All releases](https://github.com/rukazax/Private_SpeedDial/releases)
+
+> Releases 6.12.x ship the extension only: the APK was not rebuilt, and the link points to the last built package, 6.10.3. Android sources are marked 6.12.1 and will be built in the next APK release.
 
 ### Install in minutes
 
 #### Android
 
-1. [Download the APK](https://github.com/rukazax/Private_SpeedDial/releases/latest/download/Private-SpeedDial-Android.apk) to a phone running Android 8.0 or newer.
+1. [Download the APK](https://github.com/rukazax/Private_SpeedDial/releases/download/v6.10.3/Private-SpeedDial-Android.apk) to a phone running Android 8.0 or newer.
 2. Open the file. When Android asks, allow installation from this source for your browser or file manager.
 3. Install the app and open Private SpeedDial. To add a site, tap **☰ → Add bookmark**. For a note: **☰ → Notes → + Note**.
 4. When updating, install the new APK over the old one. Do not uninstall the app: uninstalling wipes local data. The official APK is signed with the project's original key.
