@@ -1494,8 +1494,8 @@ class SpeedDial {
         const si = document.getElementById('searchInput');
         const q = (si?.value || '').trim();
         if (q) {
-            /* v6.11.0: поиск идёт по заголовку, адресу, тегам и имени папки;
-               поддерживаются операторы #тег, папка:…, тип:…, сайт:… */
+            /* v6.12.0: поиск идёт по заголовку, адресу и имени папки;
+               поддерживаются операторы папка:…, тип:…, сайт:… */
             tiles = tiles.filter(t => (window.PSPro
                 ? PSPro.matchQuery(t, q, this)
                 : ((t.title || '').toLowerCase().includes(q.toLowerCase())
@@ -1633,18 +1633,15 @@ class SpeedDial {
 
         el.title = `${tile.title || hostname}\n${hostname}`;
 
-        /* v6.11.0: чипы тегов и режим массового выделения */
-        if (window.PSPro) {
-            PSPro.attachTagChips(el, tile, this);
-            if (PSPro.isSelecting()) {
-                const chk = document.createElement('div');
-                chk.className = 'bulk-check';
-                if (PSPro.bulk.sel.has(tile.id)) {
-                    chk.textContent = '✓';
-                    el.classList.add('bulk-selected');
-                }
-                el.appendChild(chk);
+        /* v6.12.0: режим массового выделения. Теги удалены из функционала. */
+        if (window.PSPro && PSPro.isSelecting()) {
+            const chk = document.createElement('div');
+            chk.className = 'bulk-check';
+            if (PSPro.bulk.sel.has(tile.id)) {
+                chk.textContent = '✓';
+                el.classList.add('bulk-selected');
             }
+            el.appendChild(chk);
         }
 
         this._setupTileDragMouse(el, tile.id);
@@ -2026,6 +2023,9 @@ class SpeedDial {
         this.hideContextMenu();
         if (a === 'edit') this.showEditTileModal(id);
         else if (a === 'moveToFolder') this.moveToFolder(id);
+        else if (a === 'screenshotBg') {
+            if (window.PSPro) PSPro.setScreenshotFor(id);
+        }
         else if (a === 'delete') this.deleteTile(id);
     }
 
@@ -2676,7 +2676,7 @@ class SpeedDial {
         if (urlInput) urlInput.value = url;
         if (titleInput) titleInput.value = title;
 
-        if (window.PSPro) PSPro.mountTagsEditor(this, null);
+        if (window.PSPro) PSPro.mountShotHandlers && PSPro.mountShotHandlers();
         this.showModal('tileModal');
         if (urlInput) urlInput.focus();
 
@@ -2715,7 +2715,6 @@ class SpeedDial {
         bt.value = t.bgImage ? 'image' : 'color';
         this.toggleTileBgType(bt.value);
         this.populateFolderSelect(t.folderId);
-        if (window.PSPro) PSPro.mountTagsEditor(this, t);
         this.showModal('tileModal');
 
         if (isAuto) this._applyAutoColorPreview();
@@ -2841,9 +2840,8 @@ class SpeedDial {
             bgImage: bgType === 'image' ? document.getElementById('tileBgImageUrl').value : '',
             textColor,
             folderId: document.getElementById('tileFolder').value,
-            /* v6.11.0: теги из редактора — раньше здесь жёстко стоял пустой массив
-               и любой edit стирал теги */
-            tags: (window.PSPro ? PSPro.currentTags() : (existing?.tags || [])),
+            /* v6.12.0: теги удалены из функционала, поле остаётся пустым для схемы */
+            tags: [],
             opacity, iconOpacity, showTitle,
             autoColor,
             autoText,

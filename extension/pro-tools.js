@@ -1,22 +1,24 @@
 'use strict';
 
 /* ============================================================
-   pro-tools.js — доработки v6.11.0
-   - теги: редактор, чипы на карточке, фильтр
-   - поиск по тегам, папкам и типам ресурса
+   pro-tools.js — доработки v6.12.0
+   - фон-снимок сайта: поштучно, по папке, для выделенных
+   - поиск по адресу, имени папки и типу ресурса
    - мультивыбор плиток и групповые действия
    - «Уборка»: дубли по нормализованному URL, битые заголовки,
      пустые папки, повреждённые имена
    - полный бэкап и восстановление JSON
    - санитайзер данных при старте
+
+   Теги удалены полностью: поля tags в интерфейсе нет,
+   плитки сохраняются с пустым массивом ради совместимости схемы.
    ============================================================ */
 
 (function () {
-    const PRO = { version: '6.11.0' };
+    const PRO = { version: '6.12.0' };
     window.PSPro = PRO;
 
     const app = () => window._speedDial;
-    let _editorTags = [];
     let _lastScan = null;
 
     /* ---------------- утилиты ---------------- */
@@ -44,12 +46,12 @@
        схема, www, завершающий слэш, трекинг-параметры и якорь не учитываются */
     PRO.normUrl = function (raw) {
         if (!raw) return '';
-        let s = String(raw).trim();
+        const s = String(raw).trim();
         try {
             const u = new URL(s);
             const host = u.hostname.toLowerCase().replace(/^www\./, '');
             const path = ('/' + u.pathname.replace(/^\/+|\/+$/g, '')).replace(/\/$/, '') || '/';
-            const drop = /^(utm_[a-z]+|fbclid|gclid|yclid|_openstat|mc_eid|ref|yclid)$/i;
+            const drop = /^(utm_[a-z]+|fbclid|gclid|yclid|_openstat|mc_eid|ref)$/i;
             const params = [...u.searchParams.entries()]
                 .filter(([k]) => !drop.test(k))
                 .map(([k, v]) => `${k}=${v}`)
@@ -65,9 +67,6 @@
         try { return new URL(url).hostname.replace(/^www\./, ''); } catch (e) { return ''; }
     };
 
-    PRO.tagsOf = t => (Array.isArray(t && t.tags) ? t.tags.filter(Boolean) : []);
-    PRO.currentTags = () => _editorTags.slice();
-
     const esc = s => String(s == null ? '' : s)
         .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
@@ -77,119 +76,123 @@
         return f ? f.name : '';
     };
 
-    /* ---------------- ожидание готовности приложения ---------------- */
-
     function whenReady(cb, tries) {
         tries = tries || 0;
         const a = app();
         if (a && a._initialized && Array.isArray(a.folders) && Array.isArray(a.tiles)) return cb(a);
-        if (tries > 100) return; // ~30 c
+        if (tries > 100) return;
         setTimeout(() => whenReady(cb, tries + 1), 300);
     }
     PRO.whenReady = whenReady;
 
-    /* ---------------- теги ---------------- */
+    /* ---------------- снимок сайта как фон ---------------- */
 
-    function normalizeTags(list) {
-        const out = [];
-        const seen = new Set();
-        (list || []).forEach(t => {
-            const v = String(t || '').trim().replace(/^#/, '');
-            if (!v) return;
-            const key = v.toLowerCase();
-            if (seen.has(key)) return;
-            seen.add(key);
-            out.push(v.slice(0, 40));
-        });
+    /* mShots: без ключа и регистрации. Первый запрос может отдать заглушку,
+       повторный — готовый кадр. Адрес страницы уходит внешнему сервису,
+       поэтому включение всегда осознанное. */
+    PRO.screenshotUrl = function (url, w, h, bust) {
+        const width = w || 600;
+        const height = h || 400;
+        let out = 'https://s0.wp.com/mshots/v1/' + encodeURIComponent(url) + `?w=${width}&h=${height}`;
+        if (bust) out += '&v=' + Date.now();
         return out;
+    };
+
+    PRO.parseShot = function (bgImage) {
+        if (!bgImage || !String(bgImage).includes('mshots')) return null;
+        const m = String(bgImage).match(/[?&]w=(\d+)/);
+        const n = String(bgImage).match(/[?&]h=(\d+)/);
+        return { width: m ? +m[1] : 600, height: n ? +n[1] : 400 };
+    };
+
+    function shotSize() {
+        const w = parseInt(localStorage.getItem('sd_shot_w') || '0', 10) || 600;
+        return { w, h: Math.round(w * 2 / 3) };
     }
-    PRO.normalizeTags = normalizeTags;
-
-    PRO.mountTagsEditor = function (a, tile) {
-        _editorTags = PRO.tagsOf(tile);
-        const host = document.getElementById('tileTagsEditor');
-        if (host) host.remove();
-
-        const wrap = document.createElement('div');
-        wrap.id = 'tileTagsEditor';
-        wrap.className = 'tags-editor';
-
-        const render = () => {
-            wrap.innerHTML = '';
-            _editorTags.forEach((tag, i) => {
-                const chip = document.createElement('span');
-                chip.className = 'tag-edit-chip';
-                chip.textContent = '#' + tag;
-                const x = document.createElement('button');
-                x.type = 'button';
-                x.textContent = '×';
-                x.title = 'Убрать тег';
-                x.onclick = (e) => {
-                    e.preventDefault();
-                    _editorTags.splice(i, 1);
-                    render();
-                };
-                chip.appendChild(x);
-                wrap.appendChild(chip);
-            });
-            const input = document.createElement('input');
-            input.type = 'text';
-            input.placeholder = 'Добавить тег и Enter';
-            input.id = 'tileTagsInput';
-            input.onkeydown = (e) => {
-                if (e.key === 'Enter' || e.key === ',') {
-                    e.preventDefault();
-                    const v = input.value.trim();
-                    if (v) {
-                        _editorTags = normalizeTags(_editorTags.concat(v.split(',')));
-                        input.value = '';
-                        render();
-                        setTimeout(() => document.getElementById('tileTagsInput')?.focus(), 0);
-                    }
-                }
-            };
-            wrap.appendChild(input);
-        };
-        render();
-
-        const anchor = document.getElementById('tileFolder')?.closest('.form-group')
-            || document.getElementById('tileFolder')?.parentElement;
-        if (anchor && anchor.parentElement) anchor.parentElement.insertBefore(wrap, anchor.nextSibling);
-        else document.getElementById('tileModal')?.querySelector('.modal-body')?.appendChild(wrap);
-        return wrap;
+    PRO.setShotSize = function (w) {
+        localStorage.setItem('sd_shot_w', String(w));
     };
+    PRO.getShotSize = shotSize;
 
-    PRO.attachTagChips = function (el, tile, a) {
-        const tags = PRO.tagsOf(tile);
-        if (!tags.length) return;
-        const box = document.createElement('div');
-        box.className = 'tile-tags';
-        tags.slice(0, 3).forEach(tag => {
-            const chip = document.createElement('span');
-            chip.className = 'tag-chip';
-            chip.textContent = '#' + tag;
-            chip.title = 'Показать всё с тегом ' + tag;
-            chip.onclick = (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                PRO.filterByTag(tag);
-            };
-            box.appendChild(chip);
+    PRO.makeShotFor = async function (a, ids, w, h, bust) {
+        const set = new Set(ids);
+        const size = (w && h) ? { w, h } : shotSize();
+        let n = 0;
+        (a.tiles || []).forEach(t => {
+            if (!set.has(t.id)) return;
+            if (!/^https?:\/\//i.test(t.url || '')) return;
+            t.bgImage = PRO.screenshotUrl(t.url, size.w, size.h, bust);
+            if (!t.bgColor) t.bgColor = a.settings?.tileBgDefault || '#4CAF50';
+            t.updatedAt = Date.now();
+            n++;
         });
-        el.appendChild(box);
+        await a.saveData();
+        a.renderTiles();
+        return n;
     };
 
-    PRO.filterByTag = function (tag) {
-        const a = app();
-        const si = document.getElementById('searchInput');
-        if (!si) return;
-        si.value = '#' + tag;
-        si.dispatchEvent(new Event('input', { bubbles: true }));
-        a.currentFolder = 'all';
-        a.tilesLimit = 500;
+    PRO.clearShots = async function (a, ids) {
+        const set = ids && ids.length ? new Set(ids) : null;
+        let n = 0;
+        (a.tiles || []).forEach(t => {
+            if (set && !set.has(t.id)) return;
+            if (t.bgImage && String(t.bgImage).includes('mshots')) {
+                t.bgImage = '';
+                t.updatedAt = Date.now();
+                n++;
+            }
+        });
+        await a.saveData();
         a.renderTiles();
-        if (a.renderFoldersBar) a.renderFoldersBar();
-        si.focus();
+        return n;
+    };
+
+    /* Один клик по плитке: фоном — снимок её сайта.
+       Повторный вызов обновляет кадр (cache-bust). */
+    PRO.setScreenshotFor = async function (tileId) {
+        const a = app();
+        const tile = (a.tiles || []).find(t => t.id === tileId);
+        if (!tile) return;
+        if (!/^https?:\/\//i.test(tile.url || '')) {
+            DialogService.alert('У плитки нет адреса http/https — снимать нечего');
+            return;
+        }
+        const existing = PRO.parseShot(tile.bgImage);
+        const size = existing || shotSize();
+        await PRO.makeShotFor(a, [tile.id], size.width, size.height, !!existing);
+        const msg = existing
+            ? 'Снимок обновлён. Сервис может отдать прежний кадр несколько секунд — повторите, если нужно.'
+            : 'Фоном поставлен снимок сайта. Первый кадр сервис готовит несколько секунд.';
+        logInfo('pro-tools.shot', `${tile.title}: ${tile.bgImage}`);
+        DialogService.alert(msg);
+    };
+
+    PRO.mountShotHandlers = function () {
+        document.addEventListener('click', (e) => {
+            const id = e.target && e.target.id;
+            if (id !== 'tileBgShotBtn' && id !== 'tileBgShotBigBtn' && id !== 'tileBgShotRefreshBtn') return;
+            e.preventDefault();
+            const urlInput = document.getElementById('tileUrl');
+            const raw = (urlInput && urlInput.value || '').trim();
+            if (!/^https?:\/\//i.test(raw)) {
+                DialogService.alert('Сначала укажите адрес сайта (http/https)');
+                return;
+            }
+            let w = 600, h = 400, bust = false;
+            if (id === 'tileBgShotBigBtn') { w = 1200; h = 800; }
+            if (id === 'tileBgShotRefreshBtn') {
+                const field = document.getElementById('tileBgImageUrl');
+                const cur = PRO.parseShot(field && field.value);
+                if (cur) { w = cur.width; h = cur.height; }
+                bust = true;
+            }
+            const field = document.getElementById('tileBgImageUrl');
+            if (field) field.value = PRO.screenshotUrl(raw, w, h, bust);
+            const sel = document.getElementById('tileBgType');
+            if (sel) sel.value = 'image';
+            const a = app();
+            if (a && a.toggleTileBgType) a.toggleTileBgType('image');
+        });
     };
 
     /* ---------------- поиск ---------------- */
@@ -201,15 +204,9 @@
         const fname = folderName(a, tile.folderId).toLowerCase();
         const title = String(tile.title || '').toLowerCase();
         const url = String(tile.url || '').toLowerCase();
-        const tags = PRO.tagsOf(tile).map(t => t.toLowerCase());
-        const tagsStr = tags.join(' ');
 
         return tokens.every(raw => {
             const tok = raw.toLowerCase();
-            if (tok.startsWith('#')) {
-                const want = tok.slice(1);
-                return tags.some(t => t.includes(want));
-            }
             const m = tok.match(/^(папка|folder|тип|type|сайт|site):(.+)$/);
             if (m) {
                 const [, kind, value] = m;
@@ -219,7 +216,7 @@
                 }
                 return url.includes(value);
             }
-            return title.includes(tok) || url.includes(tok) || tagsStr.includes(tok) || fname.includes(tok);
+            return title.includes(tok) || url.includes(tok) || fname.includes(tok);
         });
     };
 
@@ -279,8 +276,8 @@
                 PRO.repaintSelection();
             });
         }
+        mk('Снимок фоном', () => PRO.bulkShot());
         mk('Переместить', () => PRO.bulkMove());
-        mk('Тег', () => PRO.bulkTag());
         mk('Цвет', () => PRO.bulkColor());
         mk('Удалить', () => PRO.bulkDelete(), true);
         mk('Выйти', () => PRO.setBulkMode(false));
@@ -295,12 +292,21 @@
         if (a.renderTiles) a.renderTiles();
     };
 
+    PRO.bulkShot = async function () {
+        const a = app();
+        const ids = [...bulk.sel];
+        if (!ids.length) return;
+        const size = shotSize();
+        const n = await PRO.makeShotFor(a, ids, size.w, size.h, false);
+        DialogService.alert(`Фон-снимок поставлен ${n} плиткам (${size.w}×${size.h}).`);
+    };
+
     PRO.bulkMove = async function () {
         const a = app();
         if (!bulk.sel.size) return;
         const opts = (a.folders || []).map(f => `${f.id} — ${f.name}`).join('\n');
         const raw = await DialogService.prompt(
-            `Куда переместить ${bulk.sel.size} плиток?\nID папки (или пусто — без папки):\n${opts}`, bulk.sel.size === 1 ? '' : '');
+            `Куда переместить ${bulk.sel.size} плиток?\nID папки (или пусто — без папки):\n${opts}`, '');
         if (raw === null) return;
         const id = String(raw).trim().split(/\s/)[0] || '';
         if (id && !(a.folders || []).some(f => f.id === id)) {
@@ -311,21 +317,6 @@
         await a.saveData();
         a.renderTiles();
         if (a.renderFoldersBar) a.renderFoldersBar();
-    };
-
-    PRO.bulkTag = async function () {
-        const a = app();
-        if (!bulk.sel.size) return;
-        const raw = await DialogService.prompt('Теги через запятую (добавятся к существующим):', '');
-        if (!raw) return;
-        const add = normalizeTags(String(raw).split(','));
-        a.tiles.forEach(t => {
-            if (!bulk.sel.has(t.id)) return;
-            t.tags = normalizeTags(PRO.tagsOf(t).concat(add));
-            t.updatedAt = Date.now();
-        });
-        await a.saveData();
-        a.renderTiles();
     };
 
     PRO.bulkColor = async function () {
@@ -377,8 +368,9 @@
         const dups = [];
         byNorm.forEach((list, key) => {
             if (list.length < 2) return;
-            const score = t => (PRO.tagsOf(t).length ? 1 : 0) + (t.folderId ? 1 : 0)
-                + (/^https:/i.test(t.url || '') ? 1 : 0) + (PLACEHOLDER.test(String(t.title || '').trim()) ? -3 : 0);
+            const score = t => (t.folderId ? 1 : 0)
+                + (/^https:/i.test(t.url || '') ? 1 : 0)
+                + (PLACEHOLDER.test(String(t.title || '').trim()) ? -3 : 0);
             const sorted = list.slice().sort((x, y) => {
                 const d = score(y) - score(x);
                 if (d) return d;
@@ -460,12 +452,12 @@
         };
         const blob = new Blob([JSON.stringify(data, null, 1)], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
-        const aEl = document.createElement('a');
-        aEl.href = url;
-        aEl.download = `speeddial-backup-${new Date().toISOString().slice(0, 10)}.json`;
-        document.body.appendChild(aEl);
-        aEl.click();
-        aEl.remove();
+        const el = document.createElement('a');
+        el.href = url;
+        el.download = `speeddial-backup-${new Date().toISOString().slice(0, 10)}.json`;
+        document.body.appendChild(el);
+        el.click();
+        el.remove();
         setTimeout(() => URL.revokeObjectURL(url), 4000);
         return data;
     };
@@ -477,8 +469,10 @@
                 try {
                     const data = JSON.parse(String(reader.result));
                     if (!data || !Array.isArray(data.tiles)) throw new Error('В файле нет массива плиток');
+                    /* теги больше не используются */
+                    const stripTags = list => (list || []).map(t => { t.tags = []; return t; });
                     if (mode === 'replace') {
-                        a.tiles = data.tiles;
+                        a.tiles = stripTags(data.tiles);
                         a.folders = data.folders || [];
                         a.notes = data.notes || [];
                         a.noteFolders = data.noteFolders || [];
@@ -486,13 +480,9 @@
                     } else {
                         const known = new Set(a.tiles.map(t => t.id));
                         const byUrl = new Map(a.tiles.map(t => [PRO.normUrl(t.url), t]));
-                        (data.tiles || []).forEach(t => {
+                        stripTags(data.tiles).forEach(t => {
                             if (known.has(t.id)) return;
-                            const same = byUrl.get(PRO.normUrl(t.url));
-                            if (same) {
-                                same.tags = normalizeTags(PRO.tagsOf(same).concat(PRO.tagsOf(t)));
-                                return;
-                            }
+                            if (byUrl.get(PRO.normUrl(t.url))) return; /* такой адрес уже есть */
                             a.tiles.push(t);
                         });
                         const fKnown = new Set(a.folders.map(f => f.id));
@@ -515,7 +505,6 @@
         const fixes = [];
         const now = Date.now();
 
-        /* 1. повреждённые имена папок */
         (a.folders || []).forEach(f => {
             if (String(f.name || '').includes('\uFFFD')) {
                 const fixed = String(f.name).replace(/\uFFFD+/g, '').trim() || 'Без названия';
@@ -525,7 +514,6 @@
             }
         });
 
-        /* 2. дубли id папок */
         const seen = new Set();
         const before = (a.folders || []).length;
         a.folders = (a.folders || []).filter(f => {
@@ -535,7 +523,6 @@
         });
         if (a.folders.length !== before) fixes.push(`Удалены папки-дубли по id: ${before - a.folders.length}`);
 
-        /* 3. родитель, которого нет */
         const ids = new Set(a.folders.map(f => f.id));
         a.folders.forEach(f => {
             if (f.parentId && !ids.has(f.parentId)) {
@@ -545,20 +532,20 @@
             }
         });
 
-        /* 4. осиротевшие плитки */
         let orphan = 0;
         (a.tiles || []).forEach(t => {
             if (t.folderId && !ids.has(t.folderId)) { t.folderId = ''; orphan++; }
         });
         if (orphan) fixes.push(`Плиток без папки: ${orphan}`);
 
-        /* 5. битые структуры тегов */
+        /* теги удалены из функционала — чистим остатки в данных */
+        let tagCleared = 0;
         (a.tiles || []).forEach(t => {
-            const norm = normalizeTags(PRO.tagsOf(t));
-            if (JSON.stringify(norm) !== JSON.stringify(t.tags || [])) t.tags = norm;
+            if (Array.isArray(t.tags) && t.tags.length) { t.tags = []; tagCleared++; }
+            else if (!Array.isArray(t.tags)) t.tags = [];
         });
+        if (tagCleared) fixes.push(`Очищены теги у плиток: ${tagCleared}`);
 
-        /* 6. циклы в дереве папок */
         a.folders.forEach(f => {
             let cur = f, guard = 0;
             while (cur && cur.parentId && guard++ < 100) {
@@ -574,55 +561,7 @@
         return fixes;
     };
 
-    /* ---------------- снимок сайта как фон ---------------- */
-
-    /* mShots: без ключа и регистрации; первый запрос может отдать заглушку,
-       повторный — готовый кадр. Адрес страницы уходит внешнему сервису,
-       поэтому включение всегда осознанное (кнопка в диалоге плитки). */
-    PRO.screenshotUrl = function (url, w, h) {
-        const width = w || 600;
-        const height = h || 400;
-        return 'https://s0.wp.com/mshots/v1/' + encodeURIComponent(url) + `?w=${width}&h=${height}`;
-    };
-
-    PRO.applyScreenshots = async function (a, ids, w, h) {
-        const set = new Set(ids);
-        let n = 0;
-        (a.tiles || []).forEach(t => {
-            if (set.size && !set.has(t.id)) return;
-            if (!/^https?:\/\//i.test(t.url || '')) return;
-            t.bgImage = PRO.screenshotUrl(t.url, w, h);
-            if (!t.bgColor) t.bgColor = a.settings?.tileBgDefault || '#4CAF50';
-            t.updatedAt = Date.now();
-            n++;
-        });
-        await a.saveData();
-        a.renderTiles();
-        return n;
-    };
-
-    PRO.mountShotHandlers = function () {
-        document.addEventListener('click', (e) => {
-            const id = e.target && e.target.id;
-            if (id !== 'tileBgShotBtn' && id !== 'tileBgShotBigBtn') return;
-            e.preventDefault();
-            const a = app();
-            const urlInput = document.getElementById('tileUrl');
-            const raw = (urlInput && urlInput.value || '').trim();
-            if (!/^https?:\/\//i.test(raw)) {
-                DialogService.alert('Сначала укажите адрес сайта (http/https)');
-                return;
-            }
-            const big = id === 'tileBgShotBigBtn';
-            const field = document.getElementById('tileBgImageUrl');
-            if (field) field.value = PRO.screenshotUrl(raw, big ? 1200 : 600, big ? 800 : 400);
-            const sel = document.getElementById('tileBgType');
-            if (sel) { sel.value = 'image'; }
-            if (a && a.toggleTileBgType) a.toggleTileBgType('image');
-        });
-    };
-
-    /* ---------------- панель инструментов ---------------- */
+    /* ---------------- панель ---------------- */
 
     function panel() {
         let ov = document.getElementById('proPanelOverlay');
@@ -651,7 +590,7 @@
 
         const sub = document.createElement('p');
         sub.style.cssText = 'margin:0 0 14px;font-size:12px;opacity:.65;';
-        sub.textContent = `v${PRO.version} · теги, уборка, бэкап, мультивыбор`;
+        sub.textContent = `v${PRO.version} · снимки сайтов, уборка, бэкап, мультивыбор`;
         card.appendChild(sub);
 
         const body = document.createElement('div');
@@ -697,48 +636,69 @@
         const body = ov.querySelector('.pro-modal-body');
         body.innerHTML = '';
 
-        /* --- теги --- */
-        section(body, 'Теги', 'Клик по тегу — показать все плитки с ним. Всего тегов: ' + (() => {
-            const set = new Set();
-            (a.tiles || []).forEach(t => PRO.tagsOf(t).forEach(x => set.add(x)));
-            return set.size;
-        })());
-        const tagRow = row(body);
-        const tagCount = new Map();
-        (a.tiles || []).forEach(t => PRO.tagsOf(t).forEach(x => tagCount.set(x, (tagCount.get(x) || 0) + 1)));
-        [...tagCount.entries()].sort((x, y) => y[1] - x[1]).slice(0, 40).forEach(([tag, n]) => {
-            const c = document.createElement('button');
-            c.type = 'button';
-            c.className = 'tag-chip';
-            c.style.cssText = 'color:inherit;background:rgba(0,0,0,.08);font-size:12px;padding:3px 9px;';
-            c.textContent = `#${tag} · ${n}`;
-            c.onclick = () => { ov.style.display = 'none'; PRO.filterByTag(tag); };
-            tagRow.appendChild(c);
-        });
-        const tagSearch = document.createElement('input');
-        tagSearch.type = 'text';
-        tagSearch.placeholder = 'Поиск по тегам…';
-        tagSearch.style.cssText = 'flex:1;min-width:160px;padding:5px 8px;border-radius:8px;border:1px solid rgba(0,0,0,.2);';
-        tagSearch.oninput = () => {
-            const q = tagSearch.value.toLowerCase();
-            [...tagRow.querySelectorAll('.tag-chip')].forEach(el => {
-                el.style.display = el.textContent.toLowerCase().includes(q) ? '' : 'none';
-            });
-        };
-        row(body).appendChild(tagSearch);
+        const result = document.createElement('div');
+        result.className = 'pro-list';
 
-        /* --- мультивыбор --- */
+        /* --- снимки сайтов --- */
+        section(body, 'Фон — снимок сайта', 'Превью страницы подставляется как фон плитки. Снимок отдаёт внешний сервис mShots, поэтому адрес страницы уходит на s0.wp.com. Поштучно — правый клик по плитке или кнопки в диалоге.');
+        const sizeRow = row(body);
+        const cur = shotSize();
+        const mkSize = (w, label) => {
+            const b = document.createElement('button');
+            b.type = 'button';
+            b.className = 'action-button' + (cur.w === w ? ' primary' : '');
+            b.textContent = label;
+            b.onclick = () => { PRO.setShotSize(w); ov.style.display = 'none'; PRO.openPanel(); };
+            sizeRow.appendChild(b);
+        };
+        mkSize(480, '480×320');
+        mkSize(600, '600×400');
+        mkSize(1200, '1200×800');
+
+        const shotRow = row(body);
+        btn(shotRow, 'Снимок выделенным', async () => {
+            const ids = [...bulk.sel];
+            if (!ids.length) { result.innerHTML = '<div class="pro-list-item">Сначала включите режим выделения и отметьте плитки</div>'; body.appendChild(result); return; }
+            const s = shotSize();
+            const n = await PRO.makeShotFor(a, ids, s.w, s.h, false);
+            result.innerHTML = `<div class="pro-list-item">Снимок поставлен: ${n} (${s.w}×${s.h})</div>`;
+            body.appendChild(result);
+        });
+        btn(shotRow, 'Снимок плиткам папки', async () => {
+            const folder = a.currentFolder;
+            const ids = (a.tiles || []).filter(t => folder === 'all' || t.folderId === folder).map(t => t.id);
+            if (!ids.length) return;
+            const s = shotSize();
+            if (!await DialogService.confirm(`Поставить фон-снимок ${ids.length} плиткам? Каждый адрес уйдёт на s0.wp.com.`)) return;
+            const n = await PRO.makeShotFor(a, ids, s.w, s.h, false);
+            result.innerHTML = `<div class="pro-list-item">Снимок поставлен: ${n} (${s.w}×${s.h})</div>`;
+            body.appendChild(result);
+        }, true);
+        btn(shotRow, 'Обновить снимки', async () => {
+            const ids = (a.tiles || []).filter(t => PRO.parseShot(t.bgImage)).map(t => t.id);
+            if (!ids.length) return;
+            const n = await PRO.makeShotFor(a, ids, 0, 0, true);
+            result.innerHTML = `<div class="pro-list-item">Обновлено: ${n}</div>`;
+            body.appendChild(result);
+        });
+        btn(shotRow, 'Снять фоны-снимки', async () => {
+            const n = await PRO.clearShots(a);
+            result.innerHTML = `<div class="pro-list-item">Снято: ${n}</div>`;
+            body.appendChild(result);
+        });
+
+        /* --- массовые операции --- */
         section(body, 'Массовые операции', 'Выделите плитки на экране и примените действие ко всем сразу.');
-        row(body);
-        btn(body.lastChild, bulk.on ? 'Выйти из режима выделения' : 'Включить режим выделения', () => {
+        const bRow = row(body);
+        btn(bRow, bulk.on ? 'Выйти из режима выделения' : 'Включить режим выделения', () => {
             ov.style.display = 'none';
             PRO.setBulkMode(!bulk.on);
         }, true);
-        btn(body.lastChild, 'Отметить плитки текущей папки', () => {
+        btn(bRow, 'Отметить плитки текущей папки', () => {
             const ids = new Set();
-            const cur = a.currentFolder;
+            const folder = a.currentFolder;
             (a.tiles || []).forEach(t => {
-                if (cur === 'all' || t.folderId === cur) ids.add(t.id);
+                if (folder === 'all' || t.folderId === folder) ids.add(t.id);
             });
             bulk.sel.clear();
             ids.forEach(id => bulk.sel.add(id));
@@ -750,20 +710,19 @@
         /* --- уборка --- */
         section(body, 'Уборка', 'Дубли определяются по нормализованному адресу: без www, слэша и меток UTM.');
         const scanRow = row(body);
-        const result = document.createElement('div');
-        result.className = 'pro-list';
-        body.appendChild(result);
+        const scanResult = document.createElement('div');
+        scanResult.className = 'pro-list';
+        body.appendChild(scanResult);
 
         btn(scanRow, 'Проверить', () => {
             const s = PRO.scan(a);
             const totalDups = s.dups.reduce((n, g) => n + g.drop.length, 0);
-            result.innerHTML = '';
-            const add = (text) => {
+            scanResult.innerHTML = '';
+            const add = (html) => {
                 const d = document.createElement('div');
                 d.className = 'pro-list-item';
-                d.innerHTML = text;
-                result.appendChild(d);
-                return d;
+                d.innerHTML = html;
+                scanResult.appendChild(d);
             };
             add(`<span class="pro-badge">дубли</span><span class="pro-dup-title">групп: ${s.dups.length}, лишних плиток: ${totalDups}</span>`);
             s.dups.slice(0, 12).forEach(g => add(
@@ -775,32 +734,33 @@
             const actions = row(body);
             btn(actions, `Удалить дубли (${totalDups})`, async () => {
                 const r = await PRO.applyCleanup(a, { dups: true });
-                result.innerHTML = `<div class="pro-list-item">Удалено плиток: ${r.removed}</div>`;
+                scanResult.innerHTML = `<div class="pro-list-item">Удалено плиток: ${r.removed}</div>`;
                 actions.remove();
             }, true);
             btn(actions, `Починить заголовки (${s.broken.length})`, async () => {
                 const r = await PRO.applyCleanup(a, { broken: true });
-                result.innerHTML = `<div class="pro-list-item">Исправлено: ${r.fixed}</div>`;
+                scanResult.innerHTML = `<div class="pro-list-item">Исправлено: ${r.fixed}</div>`;
                 actions.remove();
             });
             btn(actions, `Удалить пустые папки (${s.empty.length})`, async () => {
                 const r = await PRO.applyCleanup(a, { empty: true });
-                result.innerHTML = `<div class="pro-list-item">Удалено папок: ${r.folders}</div>`;
+                scanResult.innerHTML = `<div class="pro-list-item">Удалено папок: ${r.folders}</div>`;
                 actions.remove();
             });
             btn(actions, 'Всё сразу', async () => {
                 const r = await PRO.applyCleanup(a, { dups: true, broken: true, empty: true, corrupt: true, orphan: true });
-                result.innerHTML = `<div class="pro-list-item">Плиток удалено: ${r.removed} · заголовков: ${r.fixed} · папок: ${r.folders}</div>`;
+                scanResult.innerHTML = `<div class="pro-list-item">Плиток удалено: ${r.removed} · заголовков: ${r.fixed} · папок: ${r.folders}</div>`;
                 actions.remove();
             });
         }, true);
 
         /* --- бэкап --- */
-        section(body, 'Резервная копия', 'Полный снимок: плитки, папки, заметки, теги. Восстановление — замена или слияние по адресам.');
-        const bRow = row(body);
-        btn(bRow, 'Скачать JSON', async () => {
+        section(body, 'Резервная копия', 'Полный снимок: плитки, папки, заметки, настройки. Восстановление — замена или слияние по адресам.');
+        const bkRow = row(body);
+        btn(bkRow, 'Скачать JSON', async () => {
             const data = await PRO.exportJson(a);
             result.innerHTML = `<div class="pro-list-item">Сохранено плиток: ${data.tiles.length}, папок: ${data.folders.length}</div>`;
+            body.appendChild(result);
         }, true);
         const fileInput = document.createElement('input');
         fileInput.type = 'file';
@@ -821,27 +781,30 @@
             } catch (e) {
                 result.innerHTML = `<div class="pro-list-item">Ошибка: ${esc(e.message)}</div>`;
             }
+            body.appendChild(result);
         };
         body.appendChild(fileInput);
-        btn(bRow, 'Восстановить из JSON', () => fileInput.click());
+        btn(bkRow, 'Восстановить из JSON', () => fileInput.click());
 
-        /* --- санитайзер --- */
+        /* --- целостность --- */
         section(body, 'Целостность данных', 'Проверка имён, родителей, сирот и циклов в дереве папок.');
         const sRow = row(body);
         btn(sRow, 'Проверить и починить', async () => {
             const fixes = PRO.sanitize(a);
             if (!fixes.length) {
                 result.innerHTML = '<div class="pro-list-item">Проблем не найдено</div>';
+                body.appendChild(result);
                 return;
             }
             await a.saveData();
             a.renderTiles();
             if (a.renderFoldersBar) a.renderFoldersBar();
             result.innerHTML = fixes.map(f => `<div class="pro-list-item">✓ ${esc(f)}</div>`).join('');
+            body.appendChild(result);
         });
 
         /* --- приватность --- */
-        section(body, 'Приватность иконок', 'По умолчанию источник — /favicon.ico самого сайта: домены закладок не уходят во внешние сервисы. Существующие плитки можно перевести на локальные иконки разом.');
+        section(body, 'Приватность иконок', 'По умолчанию источник — /favicon.ico самого сайта: домены закладок не уходят во внешние сервисы. Существующие плитки можно перевести разом.');
         const pRow = row(body);
         btn(pRow, 'Иконки с самих сайтов', async () => {
             let n = 0;
@@ -855,6 +818,7 @@
             await a.saveData();
             a.renderTiles();
             result.innerHTML = `<div class="pro-list-item">Переведено на локальные иконки: ${n}</div>`;
+            body.appendChild(result);
         });
         btn(pRow, 'Иконки Google (быстрее)', async () => {
             let n = 0;
@@ -868,33 +832,7 @@
             await a.saveData();
             a.renderTiles();
             result.innerHTML = `<div class="pro-list-item">Переведено на Google-иконки: ${n}</div>`;
-        });
-
-        /* --- снимки сайтов как фон --- */
-        section(body, 'Фон-снимок сайта', 'Превью страницы подставляется как фон плитки. Снимок отдаёт внешний сервис mShots — адрес страницы уходит на s0.wp.com.');
-        const shotRow = row(body);
-        btn(shotRow, 'Снимок для выделенных', async () => {
-            const ids = [...bulk.sel];
-            if (!ids.length) { result.innerHTML = '<div class="pro-list-item">Сначала включите режим выделения и отметьте плитки</div>'; return; }
-            const n = await PRO.applyScreenshots(a, ids, 600, 400);
-            result.innerHTML = `<div class="pro-list-item">Снимков поставлено: ${n}</div>`;
-        });
-        btn(shotRow, 'Снимок для плиток папки', async () => {
-            const cur = a.currentFolder;
-            const ids = (a.tiles || []).filter(t => cur === 'all' || t.folderId === cur).map(t => t.id);
-            if (!ids.length) return;
-            if (!await DialogService.confirm(`Поставить фон-снимок ${ids.length} плиткам? Каждый адрес уйдёт на s0.wp.com.`)) return;
-            const n = await PRO.applyScreenshots(a, ids, 600, 400);
-            result.innerHTML = `<div class="pro-list-item">Снимков поставлено: ${n}</div>`;
-        }, true);
-        btn(shotRow, 'Снять фоны-снимки', async () => {
-            let n = 0;
-            (a.tiles || []).forEach(t => {
-                if (t.bgImage && t.bgImage.includes('mshots')) { t.bgImage = ''; t.updatedAt = Date.now(); n++; }
-            });
-            await a.saveData();
-            a.renderTiles();
-            result.innerHTML = `<div class="pro-list-item">Снято: ${n}</div>`;
+            body.appendChild(result);
         });
 
         ov.style.display = 'flex';
@@ -907,7 +845,7 @@
         const fab = document.createElement('button');
         fab.type = 'button';
         fab.id = 'proToolsFab';
-        fab.title = 'Инструменты SpeedDial: теги, уборка, бэкап';
+        fab.title = 'Инструменты SpeedDial: снимки сайтов, уборка, бэкап';
         fab.textContent = '🧰';
         fab.style.cssText = 'position:fixed;right:14px;bottom:14px;z-index:9000;width:42px;height:42px;'
             + 'border-radius:50%;border:0;cursor:pointer;font-size:19px;line-height:1;'

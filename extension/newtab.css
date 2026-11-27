@@ -644,18 +644,6 @@ body.sidebar-resizing * { cursor: col-resize !important; }
 .folders-bar.folders-subbar .add-folder-button { display: none; }
 .content-area.folder-bar-left .folders-subbar-wrap { display: none !important; }
 
-/* Чипы тегов на карточке плитки */
-.tile-tags {
-    display: flex; flex-wrap: wrap; gap: 3px; margin-top: 3px;
-    justify-content: center; max-height: 32px; overflow: hidden;
-}
-.tag-chip {
-    font-size: 9px; line-height: 1.4; padding: 1px 5px; border-radius: 999px;
-    background: rgba(255, 255, 255, .22); color: #fff; white-space: nowrap;
-    max-width: 90px; overflow: hidden; text-overflow: ellipsis; cursor: pointer;
-}
-.tag-chip:hover { background: rgba(255, 255, 255, .38); }
-
 /* Мультивыбор плиток */
 .tile { position: relative; }
 .tile.bulk-selected { outline: 3px solid #ffd166; outline-offset: 2px; }
@@ -679,10 +667,3 @@ body.sidebar-resizing * { cursor: col-resize !important; }
 .pro-list-item:nth-child(odd) { background: rgba(0, 0, 0, .04); }
 .pro-list-item .pro-dup-title { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .pro-badge { font-size: 11px; padding: 1px 6px; border-radius: 999px; background: rgba(0, 0, 0, .08); }
-.tags-editor { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 6px; }
-.tags-editor .tag-edit-chip {
-    display: inline-flex; align-items: center; gap: 4px; font-size: 12px;
-    padding: 2px 8px; border-radius: 999px; background: rgba(0, 0, 0, .08);
-}
-.tags-editor .tag-edit-chip button { border: 0; background: none; cursor: pointer; font-size: 13px; opacity: .6; }
-.tags-editor input { flex: 1; min-width: 140px; }
