@@ -1202,6 +1202,16 @@ class SpeedDial {
         if (!bar) return;
         bar.innerHTML = '';
 
+        const subWrap = document.getElementById('subfoldersBarWrap');
+        const subBar = document.getElementById('subfoldersBar');
+        if (subBar) subBar.innerHTML = '';
+        if (subWrap) subWrap.style.display = 'none';
+        /* v6.11.0: вторая строка живёт только вместе с первой */
+        const foldersVisible = this.settings.showFolders !== false;
+
+        const pos = this.settings.folderBarPosition || 'top';
+        const vertical = pos === 'left' || pos === 'right';
+
         const allBtn = document.createElement('button');
         allBtn.type = 'button';
         allBtn.className = 'folder-tab' + (this.currentFolder === 'all' ? ' active' : '');
@@ -1213,57 +1223,86 @@ class SpeedDial {
 
         const maxDepth = Math.max(1, parseInt(this.settings.folderMaxDepth) || 5);
         const showEmpty = this.settings.folderShowEmpty !== false;
+        const sortMode = this.settings.folderSortMode || 'manual';
+        const collator = this._getCollator();
 
-        const buildTree = (parentId = '', level = 0) => {
-            let children = this.folders.filter(f => (f.parentId || '') === parentId);
-
-            const sortMode = this.settings.folderSortMode || 'manual';
-            if (sortMode !== 'manual') {
-                const collator = this._getCollator();
-                children = children.slice().sort((a, b) => {
-                    const cmp = collator.compare(a.name || '', b.name || '');
-                    return sortMode === 'name-desc' ? -cmp : cmp;
-                });
-            }
-
-            children.forEach(f => {
-                if (!showEmpty && !this._folderHasAnyContent(f.id)) return;
-
-                const isActive = this.currentFolder === f.id;
-                const b = document.createElement('button');
-                b.type = 'button';
-                b.className = 'folder-tab' + (isActive ? ' active' : '');
-                b.textContent = (f.password ? '🔒 ' : '') + f.name;
-                b.dataset.folderId = f.id;
-                if (isActive) b.dataset.active = '1';
-
-                b.style.color = f.autoText ? this._pickContrastColor(f.color || '#667eea') : (f.textColor || '#ffffff');
-                b.style.background = f.color;
-                b.style.opacity = (f.opacity || 100) / 100;
-
-                const _pos = this.settings.folderBarPosition || 'top';
-                if (_pos === 'left' || _pos === 'right') {
-                    b.style.width = '100%';
-                    b.style.textAlign = 'left';
-                    b.style.marginLeft = `${level * 12}px`;
-                } else {
-                    b.style.marginLeft = `${level * 10}px`;
-                }
-                b.onclick = () => {
-                    if (f.password && !this.checkFolderPassword(f.id, 'tile')) return;
-                    this.switchFolder(f.id);
-                };
-                b.oncontextmenu = (e) => {
-                    e.preventDefault();
-                    this.showFolderContextMenu(e.clientX, e.clientY, f.id);
-                };
-                this._setupFolderDragMouse(b, f.id);
-                bar.appendChild(b);
-
-                if (level + 1 < maxDepth) buildTree(f.id, level + 1);
+        const sortChildren = (arr) => {
+            if (sortMode === 'manual') return arr;
+            return arr.slice().sort((a, b) => {
+                const cmp = collator.compare(a.name || '', b.name || '');
+                return sortMode === 'name-desc' ? -cmp : cmp;
             });
         };
-        buildTree();
+
+        const makeButton = (f, level) => {
+            const isActive = this.currentFolder === f.id;
+            const b = document.createElement('button');
+            b.type = 'button';
+            b.className = 'folder-tab' + (isActive ? ' active' : '');
+            b.textContent = (f.password ? '🔒 ' : '') + f.name;
+            b.dataset.folderId = f.id;
+            if (isActive) b.dataset.active = '1';
+
+            b.style.color = f.autoText ? this._pickContrastColor(f.color || '#667eea') : (f.textColor || '#ffffff');
+            b.style.background = f.color;
+            b.style.opacity = (f.opacity || 100) / 100;
+
+            if (vertical) {
+                b.style.width = '100%';
+                b.style.textAlign = 'left';
+                b.style.marginLeft = `${level * 12}px`;
+            }
+            b.onclick = () => {
+                if (f.password && !this.checkFolderPassword(f.id, 'tile')) return;
+                this.switchFolder(f.id);
+            };
+            b.oncontextmenu = (e) => {
+                e.preventDefault();
+                this.showFolderContextMenu(e.clientX, e.clientY, f.id);
+            };
+            this._setupFolderDragMouse(b, f.id);
+            return b;
+        };
+
+        const childrenOf = (id) => sortChildren(this.folders.filter(f => (f.parentId || '') === id))
+            .filter(f => showEmpty || this._folderHasAnyContent(f.id));
+
+        if (vertical) {
+            /* v6.11.0: в вертикальной панели остаётся вложенный список —
+               вторая строка нужна только для горизонтальной полосы */
+            const buildTree = (parentId = '', level = 0) => {
+                childrenOf(parentId).forEach(f => {
+                    bar.appendChild(makeButton(f, level));
+                    if (level + 1 < maxDepth) buildTree(f.id, level + 1);
+                });
+            };
+            buildTree();
+        } else {
+            /* строка 1: только папки верхнего уровня */
+            childrenOf('').forEach(f => bar.appendChild(makeButton(f, 0)));
+
+            /* строка 2: подпапки открытой папки — появляются только тогда,
+               когда открыта папка, у которой они есть; при открытии подпапки
+               показываем соседей по родителю, чтобы не терять навигацию */
+            const cur = this.currentFolder !== 'all'
+                ? this.folders.find(f => f.id === this.currentFolder)
+                : null;
+            let branch = null;
+            if (cur) {
+                if (childrenOf(cur.id).length) branch = cur;
+                else if (cur.parentId) {
+                    const parent = this.folders.find(f => f.id === cur.parentId);
+                    if (parent && childrenOf(parent.id).length) branch = parent;
+                }
+            }
+            if (branch && subBar && subWrap && foldersVisible) {
+                const kids = childrenOf(branch.id);
+                kids.forEach(f => subBar.appendChild(makeButton(f, 0)));
+                const lbl = document.getElementById('subfoldersBarLabel');
+                if (lbl) lbl.title = `Подпапки папки «${branch.name}»`;
+                subWrap.style.display = 'flex';
+            }
+        }
 
         const addBtn = document.createElement('button');
         addBtn.type = 'button';
@@ -1455,12 +1494,12 @@ class SpeedDial {
         const si = document.getElementById('searchInput');
         const q = (si?.value || '').trim();
         if (q) {
-            const query = q.toLowerCase();
-            tiles = tiles.filter(t =>
-                (t.title || '').toLowerCase().includes(query)
-                || (t.url || '').toLowerCase().includes(query)
-
-            );
+            /* v6.11.0: поиск идёт по заголовку, адресу, тегам и имени папки;
+               поддерживаются операторы #тег, папка:…, тип:…, сайт:… */
+            tiles = tiles.filter(t => (window.PSPro
+                ? PSPro.matchQuery(t, q, this)
+                : ((t.title || '').toLowerCase().includes(q.toLowerCase())
+                    || (t.url || '').toLowerCase().includes(q.toLowerCase()))));
             this.tilesLimit = 500;
         }
 
@@ -1565,6 +1604,12 @@ class SpeedDial {
         }
 
         el.onclick = (e) => {
+            /* v6.11.0: в режиме выделения клик отмечает плитку, а не открывает её */
+            if (window.PSPro && PSPro.isSelecting()) {
+                e.preventDefault();
+                PSPro.toggleTile(tile.id);
+                return;
+            }
             /* v6.8.0: открываем только http(s) — data:/blob:/file:/javascript:
                через плитки не проходят */
             if (!/^https?:\/\//i.test(tile.url || '')) return;
@@ -1587,6 +1632,20 @@ class SpeedDial {
         };
 
         el.title = `${tile.title || hostname}\n${hostname}`;
+
+        /* v6.11.0: чипы тегов и режим массового выделения */
+        if (window.PSPro) {
+            PSPro.attachTagChips(el, tile, this);
+            if (PSPro.isSelecting()) {
+                const chk = document.createElement('div');
+                chk.className = 'bulk-check';
+                if (PSPro.bulk.sel.has(tile.id)) {
+                    chk.textContent = '✓';
+                    el.classList.add('bulk-selected');
+                }
+                el.appendChild(chk);
+            }
+        }
 
         this._setupTileDragMouse(el, tile.id);
         return el;
@@ -2569,7 +2628,11 @@ class SpeedDial {
         if (w) w.style.display = this.settings.showFolders ? 'flex' : 'none';
         if (!this.settings.showFolders) {
             this.currentFolder = 'all';
+            const sw = document.getElementById('subfoldersBarWrap');
+            if (sw) sw.style.display = 'none';
             this.renderTiles();
+        } else {
+            this.renderFoldersBar();
         }
     }
 
@@ -2613,6 +2676,7 @@ class SpeedDial {
         if (urlInput) urlInput.value = url;
         if (titleInput) titleInput.value = title;
 
+        if (window.PSPro) PSPro.mountTagsEditor(this, null);
         this.showModal('tileModal');
         if (urlInput) urlInput.focus();
 
@@ -2651,6 +2715,7 @@ class SpeedDial {
         bt.value = t.bgImage ? 'image' : 'color';
         this.toggleTileBgType(bt.value);
         this.populateFolderSelect(t.folderId);
+        if (window.PSPro) PSPro.mountTagsEditor(this, t);
         this.showModal('tileModal');
 
         if (isAuto) this._applyAutoColorPreview();
@@ -2776,7 +2841,10 @@ class SpeedDial {
             bgImage: bgType === 'image' ? document.getElementById('tileBgImageUrl').value : '',
             textColor,
             folderId: document.getElementById('tileFolder').value,
-            tags: [], opacity, iconOpacity, showTitle,
+            /* v6.11.0: теги из редактора — раньше здесь жёстко стоял пустой массив
+               и любой edit стирал теги */
+            tags: (window.PSPro ? PSPro.currentTags() : (existing?.tags || [])),
+            opacity, iconOpacity, showTitle,
             autoColor,
             autoText,
             reminder: existing?.reminder || null,

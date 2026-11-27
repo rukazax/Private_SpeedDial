@@ -52,6 +52,11 @@
                     <div class="folders-bar" id="foldersBar"></div>
                     <button type="button" id="foldersScrollNext" class="folder-scroll-btn folder-scroll-next" style="display:none">▶</button>
                 </div>
+                <!-- v6.11.0: подпапки открытой папки — отдельной зависимой строкой -->
+                <div class="folders-subbar-wrap" id="subfoldersBarWrap" style="display:none">
+                    <span class="subbar-label" id="subfoldersBarLabel" aria-hidden="true">↳</span>
+                    <div class="folders-bar folders-subbar" id="subfoldersBar"></div>
+                </div>
                 <main class="speed-dial-grid" id="speedDialGrid"></main>
                 <div id="scrollSentinel" class="scroll-sentinel"></div>
             </div>
@@ -145,6 +150,15 @@
                     <div class="form-group" id="tileBgImageGroup" style="display:none">
                         <label data-i18n="bgImageUrl">URL изображения:</label>
                         <input type="url" id="tileBgImageUrl">
+                        <!-- v6.11.0: снимок сайта как фон плитки -->
+                        <div class="pro-row" style="margin-top:8px">
+                            <button type="button" id="tileBgShotBtn" class="action-button">📷 Снимок сайта 600×400</button>
+                            <button type="button" id="tileBgShotBigBtn" class="action-button">1200×800</button>
+                        </div>
+                        <div style="font-size:11px;opacity:.65;margin-top:4px">
+                            Снимок отдаёт внешний сервис mShots: адрес страницы уходит на s0.wp.com.
+                            Включайте только тем плиткам, где превью действительно нужно.
+                        </div>
                         <!-- v6.9.3: авто-контраст текста — на форме плиток только при фоне «изображение» -->
                         <label class="checkbox-inline" style="margin-top:8px">
                             <input type="checkbox" id="tileAutoText">
@@ -325,6 +339,7 @@
     <script src="favicon-cache.js"></script>
     <script src="dialog.js"></script>
     <script src="newtab.js"></script>
+<script src="pro-tools.js"></script>
 <script src="project.js"></script>
     <script src="project-ui.js"></script>
 </body>

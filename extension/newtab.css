@@ -626,3 +626,63 @@ body.sidebar-resizing * { cursor: col-resize !important; }
     .bg-item { width: 110px; height: 72px; }
     .expand-sidebar-button { width: 34px; min-height: 84px; font-size: 12px; }
 }
+
+/* ===== v6.11.0 ===== */
+/* Вторая, зависимая строка папок — подпапки открытой папки */
+.folders-subbar-wrap {
+    display: flex; align-items: center; gap: 6px; width: 100%;
+    margin: -2px 0 8px; padding-left: 2px;
+}
+.subbar-label { flex: 0 0 auto; font-size: 12px; opacity: .55; padding: 0 2px; transform: rotate(90deg); }
+.folders-bar.folders-subbar {
+    padding: 2px 6px 4px 6px;
+    border-left: 2px solid var(--accent, #26856f);
+    border-radius: 0 var(--r-md) var(--r-md) 0;
+    margin-left: 2px;
+}
+.folders-bar.folders-subbar .folder-tab { font-size: .86em; opacity: .96; }
+.folders-bar.folders-subbar .add-folder-button { display: none; }
+.content-area.folder-bar-left .folders-subbar-wrap { display: none !important; }
+
+/* Чипы тегов на карточке плитки */
+.tile-tags {
+    display: flex; flex-wrap: wrap; gap: 3px; margin-top: 3px;
+    justify-content: center; max-height: 32px; overflow: hidden;
+}
+.tag-chip {
+    font-size: 9px; line-height: 1.4; padding: 1px 5px; border-radius: 999px;
+    background: rgba(255, 255, 255, .22); color: #fff; white-space: nowrap;
+    max-width: 90px; overflow: hidden; text-overflow: ellipsis; cursor: pointer;
+}
+.tag-chip:hover { background: rgba(255, 255, 255, .38); }
+
+/* Мультивыбор плиток */
+.tile { position: relative; }
+.tile.bulk-selected { outline: 3px solid #ffd166; outline-offset: 2px; }
+.bulk-check {
+    position: absolute; top: 4px; left: 4px; width: 18px; height: 18px;
+    border-radius: 5px; background: rgba(0, 0, 0, .45); border: 1.5px solid #fff;
+    display: flex; align-items: center; justify-content: center; font-size: 12px;
+    color: #fff; z-index: 3;
+}
+.tile.bulk-selected .bulk-check { background: #ffd166; color: #222; }
+.bulk-toolbar {
+    position: sticky; bottom: 10px; z-index: 40; display: flex; flex-wrap: wrap;
+    align-items: center; gap: 8px; padding: 8px 12px; margin: 10px 0;
+    border-radius: var(--r-md, 12px); background: var(--header-bg, #fff);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, .28);
+}
+.bulk-toolbar .bulk-count { font-weight: 600; margin-right: auto; }
+.pro-modal-body .pro-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin: 6px 0; }
+.pro-list { max-height: 260px; overflow: auto; margin: 8px 0; }
+.pro-list-item { display: flex; gap: 8px; align-items: baseline; padding: 4px 6px; border-radius: 8px; font-size: 13px; }
+.pro-list-item:nth-child(odd) { background: rgba(0, 0, 0, .04); }
+.pro-list-item .pro-dup-title { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pro-badge { font-size: 11px; padding: 1px 6px; border-radius: 999px; background: rgba(0, 0, 0, .08); }
+.tags-editor { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 6px; }
+.tags-editor .tag-edit-chip {
+    display: inline-flex; align-items: center; gap: 4px; font-size: 12px;
+    padding: 2px 8px; border-radius: 999px; background: rgba(0, 0, 0, .08);
+}
+.tags-editor .tag-edit-chip button { border: 0; background: none; cursor: pointer; font-size: 13px; opacity: .6; }
+.tags-editor input { flex: 1; min-width: 140px; }

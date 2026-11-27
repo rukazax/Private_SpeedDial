@@ -48,7 +48,7 @@ const DEFAULT_SETTINGS = {
     headerOpacity: 55,
     sidebarOpacity: 55,
     modalOpacity: 75,
-    faviconSource: 'google',
+    faviconSource: 'local',
     showNotes: true,
     showFolders: false,
     /* v6.9.3: ширина панели заметок (px, 200–600) */
