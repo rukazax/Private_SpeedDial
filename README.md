@@ -1,15 +1,15 @@
 **← [Все проекты · All projects](https://github.com/rukazax?tab=repositories)**
 
 <div align="center">
-  <img src="assets/banner.svg" width="100%" alt="Private SpeedDial"/>
+  <img src="assets/banner.svg" width="100%" alt="Private Speed Dial"/>
 </div>
 
-# Private SpeedDial
+# Private Speed Dial
 
 **RU** · [English](#english)
 
 [![автор](https://img.shields.io/badge/автор-rukazax-4b6bfb?style=flat-square)](https://github.com/rukazax)
-[![version](https://img.shields.io/badge/version-6.12.3-8a2be2?style=flat-square)](https://github.com/rukazax/Private_SpeedDial/releases/latest)
+[![version](https://img.shields.io/badge/version-6.12.4-8a2be2?style=flat-square)](https://github.com/rukazax/Private_SpeedDial/releases/latest)
 [![статус](https://img.shields.io/badge/статус-stable-8a2be2?style=flat-square)](https://github.com/rukazax/Private_SpeedDial/releases/latest)
 [![Chrome](https://img.shields.io/badge/Chrome-MV3-1f3a6e?style=flat-square)](https://chromewebstore.google.com/detail/private-speeddial/eakakaeklcgnlanmpbndhjdljppehdof)
 [![Android](https://img.shields.io/badge/Android-8.0%2B-1f3a6e?style=flat-square)](https://github.com/rukazax/Private_SpeedDial/releases/latest/download/Private-SpeedDial-Android.apk)
@@ -30,9 +30,9 @@
 | 📚 [Документация и разработка](#документация-и-разработка) | гайды, архитектура, сборка, приватность |
 | 💬 [Обратная связь](#обратная-связь) | как сообщить об ошибке |
 
-![Две версии Private SpeedDial и общая синхронизация](docs/images/overview.svg)
+![Две версии Private Speed Dial и общая синхронизация](docs/images/overview.svg)
 
-Private SpeedDial — панель быстрого доступа к сайтам с папками, заметками, профилями, темами, фонами и импортом закладок. В этом репозитории находятся исходники расширения Manifest V3, адаптированного приложения Android, общие модули распространения и обновлений, сценарии сборки и проверки.
+Private Speed Dial — панель быстрого доступа к сайтам с папками, заметками, профилями, темами, фонами и импортом закладок. В этом репозитории находятся исходники расширения Manifest V3, адаптированного приложения Android, общие модули распространения и обновлений, сценарии сборки и проверки.
 
 Автор приложения — **Константин Ерёмин**. Интерфейс поддерживает 13 языков: русский, английский, немецкий, испанский, французский, итальянский, португальский, китайский, японский, корейский, турецкий, хинди и арабский.
 
@@ -42,13 +42,13 @@ Private SpeedDial — панель быстрого доступа к сайта
 
 1. [Скачайте APK](https://github.com/rukazax/Private_SpeedDial/releases/latest/download/Private-SpeedDial-Android.apk) на телефон с Android 8.0 или новее.
 2. Откройте файл. При запросе Android разрешите установку из этого источника для браузера или файлового менеджера.
-3. Установите приложение и откройте Private SpeedDial. Чтобы добавить сайт, нажмите **☰ → Добавить закладку**. Для заметки: **☰ → Заметки → + Заметка**.
+3. Установите приложение и откройте Private Speed Dial. Чтобы добавить сайт, нажмите **☰ → Добавить закладку**. Для заметки: **☰ → Заметки → + Заметка**.
 4. При обновлении устанавливайте новый APK поверх старого. Не удаляйте приложение: удаление стирает локальные данные. Официальный APK подписан прежним ключом проекта.
 
 ### Chrome и другие совместимые браузеры
 
-1. Откройте [Private SpeedDial в Chrome Web Store](https://chromewebstore.google.com/detail/private-speeddial/eakakaeklcgnlanmpbndhjdljppehdof) на компьютере и нажмите **«Установить» / «Добавить в Chrome»**.
-2. Подтвердите разрешения браузера, закрепите значок Private SpeedDial на панели и откройте его → **Открыть Private SpeedDial**. Также доступно `Ctrl+Shift+Y` (`Command+Shift+Y` на macOS).
+1. Откройте [Private Speed Dial в Chrome Web Store](https://chromewebstore.google.com/detail/private-speeddial/eakakaeklcgnlanmpbndhjdljppehdof) на компьютере и нажмите **«Установить» / «Добавить в Chrome»**.
+2. Подтвердите разрешения браузера, закрепите значок Private Speed Dial на панели и откройте его → **Открыть Private Speed Dial**. Также доступно `Ctrl+Shift+Y` (`Command+Shift+Y` на macOS).
 3. В Android откройте **☰ → Установить расширение для браузера** — откроется эта же страница магазина. Для установки расширения используйте совместимый настольный браузер.
 
 Альтернатива для ручной установки: [скачать ZIP из GitHub Releases](https://github.com/rukazax/Private_SpeedDial/releases/latest/download/Private-SpeedDial-Extension.zip), распаковать, открыть `chrome://extensions`, включить режим разработчика и выбрать папку с `manifest.json` через «Загрузить распакованное расширение».
@@ -141,8 +141,8 @@ flowchart LR
 - [Обновления, релизы и стабильные ссылки загрузки](docs/UPDATES.md)
 - [Правила публикации релизов: APK и ZIP в одном latest](docs/RELEASING.md)
 - [Приватность, подпись APK и сообщение об ошибке безопасности](docs/SECURITY.md)
-- [Результаты проверки версии 6.12.3](docs/VERIFICATION.md) · [сводка в JSON](docs/verification-6.12.3.json)
-- [Что нового в 6.12.3](docs/RELEASE-6.12.3.md)
+- [Результаты проверки версии 6.12.4](docs/VERIFICATION.md) · [сводка в JSON](docs/verification-6.12.4.json)
+- [Что нового в 6.12.4](docs/RELEASE-6.12.4.md)
 - [Зависимости и их лицензии](THIRD_PARTY.md)
 - [История изменений](CHANGELOG.md)
 
@@ -168,7 +168,7 @@ docs/            инструкции, схемы, скриншоты и отч�
 
 > **Bookmarks and notes for Chrome and Android** — with folders, profiles and sync through your own cloud (WebDAV/Nextcloud). No project-owned central server and no registration: your data stays with you.
 
-Private SpeedDial is a quick-access panel for sites with folders, notes, profiles, themes, backgrounds and bookmark import. This repository contains the sources of the Manifest V3 extension, the adapted Android app, shared distribution and update modules, and build and verification scripts.
+Private Speed Dial is a quick-access panel for sites with folders, notes, profiles, themes, backgrounds and bookmark import. This repository contains the sources of the Manifest V3 extension, the adapted Android app, shared distribution and update modules, and build and verification scripts.
 
 The app author is **Konstantin Yeryomin**. The interface supports 13 languages: Russian, English, German, Spanish, French, Italian, Portuguese, Chinese, Japanese, Korean, Turkish, Hindi and Arabic.
 
@@ -182,13 +182,13 @@ The app author is **Konstantin Yeryomin**. The interface supports 13 languages: 
 
 1. [Download the APK](https://github.com/rukazax/Private_SpeedDial/releases/latest/download/Private-SpeedDial-Android.apk) to a phone running Android 8.0 or newer.
 2. Open the file. When Android asks, allow installation from this source for your browser or file manager.
-3. Install the app and open Private SpeedDial. To add a site, tap **☰ → Add bookmark**. For a note: **☰ → Notes → + Note**.
+3. Install the app and open Private Speed Dial. To add a site, tap **☰ → Add bookmark**. For a note: **☰ → Notes → + Note**.
 4. When updating, install the new APK over the old one. Do not uninstall the app: uninstalling wipes local data. The official APK is signed with the project's original key.
 
 #### Chrome and other compatible browsers
 
-1. Open [Private SpeedDial in the Chrome Web Store](https://chromewebstore.google.com/detail/private-speeddial/eakakaeklcgnlanmpbndhjdljppehdof) on a computer and click **“Install” / “Add to Chrome”**.
-2. Confirm the browser permissions, pin the Private SpeedDial icon to the toolbar and open it → **Open Private SpeedDial**. `Ctrl+Shift+Y` (`Command+Shift+Y` on macOS) also works.
+1. Open [Private Speed Dial in the Chrome Web Store](https://chromewebstore.google.com/detail/private-speeddial/eakakaeklcgnlanmpbndhjdljppehdof) on a computer and click **“Install” / “Add to Chrome”**.
+2. Confirm the browser permissions, pin the Private Speed Dial icon to the toolbar and open it → **Open Private Speed Dial**. `Ctrl+Shift+Y` (`Command+Shift+Y` on macOS) also works.
 3. On Android, open **☰ → Install browser extension** — the same store page opens. Use a compatible desktop browser to install the extension.
 
 An alternative for manual installation: [download the ZIP from GitHub Releases](https://github.com/rukazax/Private_SpeedDial/releases/latest/download/Private-SpeedDial-Extension.zip), unpack it, open `chrome://extensions`, enable developer mode and pick the folder with `manifest.json` via “Load unpacked”.
@@ -281,8 +281,8 @@ When a new version is available, an **“Update” / “Skip release”** window
 - [Updates, releases and stable download links](docs/UPDATES.md)
 - [Release rules: APK and ZIP in one latest release](docs/RELEASING.md)
 - [Privacy, APK signature and the security disclosure](docs/SECURITY.md)
-- [Verification results for version 6.12.3](docs/VERIFICATION.md) · [JSON summary](docs/verification-6.12.3.json)
-- [What's new in 6.12.3](docs/RELEASE-6.12.3.md)
+- [Verification results for version 6.12.4](docs/VERIFICATION.md) · [JSON summary](docs/verification-6.12.4.json)
+- [What's new in 6.12.4](docs/RELEASE-6.12.4.md)
 - [Dependencies and their licenses](THIRD_PARTY.md)
 - [Changelog](CHANGELOG.md)
 

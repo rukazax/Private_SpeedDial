@@ -10,7 +10,7 @@ if (typeof SpeedDial !== 'undefined') {
     const shade=document.createElement('div');shade.id='androidDrawerShade';shade.className='android-drawer-shade';shade.hidden=true;
     const drawer=document.createElement('nav');drawer.id='androidDrawer';drawer.className='android-drawer';drawer.hidden=true;
     drawer.dataset.i18nAria='appMenu';
-    const heading=document.createElement('div');heading.className='android-drawer-heading';heading.textContent='Private SpeedDial';
+    const heading=document.createElement('div');heading.className='android-drawer-heading';heading.textContent='Private Speed Dial';
     const close=document.createElement('button');close.type='button';close.className='android-drawer-close';close.textContent='✕';close.dataset.i18nAria='closeMenu';heading.append(close);drawer.append(heading);
     const search=document.querySelector('.search-container');
     const searchLabel=document.createElement('label');searchLabel.htmlFor='searchInput';searchLabel.dataset.i18n='localSearchLabel';searchLabel.className='android-search-label';drawer.append(searchLabel,search);

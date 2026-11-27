@@ -69,7 +69,7 @@ en: {
     /* v6.9.0: context menu */
     
     /* v6.9.0: options */
-    settingsTitle: 'Private SpeedDial Settings',
+    settingsTitle: 'Private Speed Dial Settings',
     secSync: 'Synchronization settings', chooseService: 'Choose a service:',
     loginLabel: 'Login:', encKeyLabel: 'Sync encryption key:',
     encKeyHint: 'Use the same key on all devices. If you change it, data must be uploaded again.',
@@ -202,7 +202,7 @@ ru: {
     
     
     
-    settingsTitle: 'Настройки Private SpeedDial',
+    settingsTitle: 'Настройки Private Speed Dial',
     secSync: 'Настройки синхронизации', chooseService: 'Выберите сервис:',
     loginLabel: 'Логин:', encKeyLabel: 'Ключ шифрования синхронизации:',
     encKeyHint: 'Используйте тот же ключ на всех устройствах. При смене ключа данные нужно будет загрузить заново.',
@@ -335,7 +335,7 @@ de: {
     
     
     
-    settingsTitle: 'Private SpeedDial Einstellungen',
+    settingsTitle: 'Private Speed Dial Einstellungen',
     secSync: 'Synchronisierungseinstellungen', chooseService: 'Dienst auswählen:',
     loginLabel: 'Benutzername:', encKeyLabel: 'Verschlüsselungsschlüssel für Sync:',
     encKeyHint: 'Verwenden Sie auf allen Geräten denselben Schlüssel. Nach einer Änderung müssen die Daten erneut hochgeladen werden.',
@@ -468,7 +468,7 @@ es: {
     
     
     
-    settingsTitle: 'Configuración de Private SpeedDial',
+    settingsTitle: 'Configuración de Private Speed Dial',
     secSync: 'Configuración de sincronización', chooseService: 'Elija un servicio:',
     loginLabel: 'Usuario:', encKeyLabel: 'Clave de cifrado de sincronización:',
     encKeyHint: 'Use la misma clave en todos los dispositivos. Si la cambia, los datos deberán subirse de nuevo.',
@@ -601,7 +601,7 @@ fr: {
     
     
     
-    settingsTitle: 'Paramètres de Private SpeedDial',
+    settingsTitle: 'Paramètres de Private Speed Dial',
     secSync: 'Paramètres de synchronisation', chooseService: 'Choisissez un service :',
     loginLabel: 'Identifiant :', encKeyLabel: 'Clé de chiffrement de synchronisation :',
     encKeyHint: 'Utilisez la même clé sur tous les appareils. En cas de changement, les données devront être renvoyées.',
@@ -734,7 +734,7 @@ it: {
     
     
     
-    settingsTitle: 'Impostazioni di Private SpeedDial',
+    settingsTitle: 'Impostazioni di Private Speed Dial',
     secSync: 'Impostazioni di sincronizzazione', chooseService: 'Scegli un servizio:',
     loginLabel: 'Nome utente:', encKeyLabel: 'Chiave di crittografia della sincronizzazione:',
     encKeyHint: 'Usa la stessa chiave su tutti i dispositivi. Se la cambi, i dati dovranno essere caricati di nuovo.',
@@ -867,7 +867,7 @@ pt: {
     
     
     
-    settingsTitle: 'Configurações do Private SpeedDial',
+    settingsTitle: 'Configurações do Private Speed Dial',
     secSync: 'Configurações de sincronização', chooseService: 'Escolha um serviço:',
     loginLabel: 'Usuário:', encKeyLabel: 'Chave de criptografia da sincronização:',
     encKeyHint: 'Use a mesma chave em todos os dispositivos. Se alterá-la, os dados precisarão ser enviados novamente.',
@@ -1000,7 +1000,7 @@ zh: {
     
     
     
-    settingsTitle: 'Private SpeedDial 设置',
+    settingsTitle: 'Private Speed Dial 设置',
     secSync: '同步设置', chooseService: '选择服务：',
     loginLabel: '用户名：', encKeyLabel: '同步加密密钥：',
     encKeyHint: '请在所有设备上使用相同的密钥。更改密钥后需重新上传数据。',
@@ -1133,7 +1133,7 @@ ja: {
     
     
     
-    settingsTitle: 'Private SpeedDial 設定',
+    settingsTitle: 'Private Speed Dial 設定',
     secSync: '同期設定', chooseService: 'サービスを選択:',
     loginLabel: 'ユーザー名:', encKeyLabel: '同期の暗号化キー:',
     encKeyHint: 'すべてのデバイスで同じキーを使用してください。キーを変更した場合はデータを再アップロードする必要があります。',
@@ -1266,7 +1266,7 @@ ko: {
     
     
     
-    settingsTitle: 'Private SpeedDial 설정',
+    settingsTitle: 'Private Speed Dial 설정',
     secSync: '동기화 설정', chooseService: '서비스 선택:',
     loginLabel: '사용자 이름:', encKeyLabel: '동기화 암호화 키:',
     encKeyHint: '모든 기기에서 동일한 키를 사용하세요. 키를 변경하면 데이터를 다시 업로드해야 합니다.',
@@ -1399,7 +1399,7 @@ tr: {
     
     
     
-    settingsTitle: 'Private SpeedDial Ayarları',
+    settingsTitle: 'Private Speed Dial Ayarları',
     secSync: 'Senkronizasyon ayarları', chooseService: 'Bir hizmet seçin:',
     loginLabel: 'Kullanıcı adı:', encKeyLabel: 'Senkronizasyon şifreleme anahtarı:',
     encKeyHint: 'Tüm cihazlarda aynı anahtarı kullanın. Anahtarı değiştirirseniz veriler yeniden yüklenmelidir.',
@@ -1532,7 +1532,7 @@ hi: {
     
     
     
-    settingsTitle: 'Private SpeedDial सेटिंग्स',
+    settingsTitle: 'Private Speed Dial सेटिंग्स',
     secSync: 'सिंक सेटिंग्स', chooseService: 'सेवा चुनें:',
     loginLabel: 'उपयोगकर्ता नाम:', encKeyLabel: 'सिंक एन्क्रिप्शन कुंजी:',
     encKeyHint: 'सभी डिवाइस पर एक ही कुंजी उपयोग करें। कुंजी बदलने पर डेटा फिर से अपलोड करना होगा।',
@@ -1665,7 +1665,7 @@ ar: {
     
     
     
-    settingsTitle: 'إعدادات Private SpeedDial',
+    settingsTitle: 'إعدادات Private Speed Dial',
     secSync: 'إعدادات المزامنة', chooseService: ':اختر خدمة',
     loginLabel: ':اسم المستخدم', encKeyLabel: ':مفتاح تشفير المزامنة',
     encKeyHint: 'استخدم المفتاح نفسه على جميع الأجهزة. عند تغييره يجب إعادة رفع البيانات.',
@@ -1950,7 +1950,7 @@ hi: {
     folderNoteColor: 'नोट रंग:',
     sortByNameAscP: 'नाम से (A→Z)',
     sortByNameDescP: 'नाम से (Z→A)',
-    footerAuthor: 'Private SpeedDial © 2026',
+    footerAuthor: 'Private Speed Dial © 2026',
     supportLink: 'प्रोजेक्ट को समर्थन दें',
     privacyPolicy: 'गोपनीयता नीति'},
 ar: {
@@ -1973,7 +1973,7 @@ ar: {
     folderNoteColor: ':لون الملاحظة',
     sortByNameAscP: 'حسب الاسم (A→Z)',
     sortByNameDescP: 'حسب الاسم (Z→A)',
-    footerAuthor: 'Private SpeedDial © 2026',
+    footerAuthor: 'Private Speed Dial © 2026',
     supportLink: 'ادعم المشروع',
     privacyPolicy: 'سياسة الخصوصية'}
 };

@@ -187,7 +187,7 @@ api.runtime.onInstalled.addListener(async (details) => {
                     tiles: [
                         {
                             id: 'tile_econa_default',
-                            title: 'Private SpeedDial',
+                            title: 'Private Speed Dial',
                             url: 'https://github.com/rukazax/Private_SpeedDial',
                             icon: getFaviconUrl('https://github.com/rukazax/Private_SpeedDial'),
                             bgColor: '#667eea',
@@ -230,7 +230,7 @@ api.runtime.onInstalled.addListener(async (details) => {
                     headerHidden: false,
                     sidebarCollapsed: false
                 });
-                logInfo('background.onInstalled', 'Созданы 2 преднастроенных диала (Private SpeedDial, YouTube)');
+                logInfo('background.onInstalled', 'Созданы 2 преднастроенных диала (Private Speed Dial, YouTube)');
             }
             await _seedBundledBackground();
             api.tabs.create({ url: speedDialUrl });
@@ -425,7 +425,7 @@ async function exportToHTMLImpl() {
         let html = '<!DOCTYPE NETSCAPE-Bookmark-file-1>\n';
         html += '<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">\n';
         html += '<TITLE>Bookmarks</TITLE>\n';
-        html += '<H1>Private SpeedDial</H1>\n';
+        html += '<H1>Private Speed Dial</H1>\n';
         html += '<DL><p>\n';
 
         const renderFolder = (folder, indent) => {

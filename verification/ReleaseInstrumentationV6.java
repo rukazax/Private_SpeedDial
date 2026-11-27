@@ -81,7 +81,7 @@ public class ReleaseInstrumentationV6 extends Instrumentation {
             if(chooser==null)throw new Exception("Share chooser not opened");
             Intent share=(Intent)chooser.getParcelableExtra(Intent.EXTRA_INTENT);
             if(share==null || !Intent.ACTION_SEND.equals(share.getAction()) || !"text/plain".equals(share.getType()) ||
-                !"Private SpeedDial\nhttps://github.com/rukazax/Private_SpeedDial".equals(share.getStringExtra(Intent.EXTRA_TEXT)))throw new Exception("Invalid public share payload");
+                !"Private Speed Dial\nhttps://github.com/rukazax/Private_SpeedDial".equals(share.getStringExtra(Intent.EXTRA_TEXT)))throw new Exception("Invalid public share payload");
             checks.put("shareUsesNativeChooserAndPublicRepositoryOnly",true);removeMonitor(shareMonitor);
             if(!"\"6.10.0\"".equals(evaluate("chrome.runtime.getManifest().version")))throw new Exception("Wrong APK version");
             checks.put("releaseVersion6100",true);

@@ -51,7 +51,7 @@ public class MainActivity extends Activity {
         root.addView(ui, new LinearLayout.LayoutParams(-1, -1));
         // Detached background engine lives for this activity; no perpetual background service.
         bg.loadUrl(ORIGIN + "android-background.html");
-        ui.loadDataWithBaseURL(ORIGIN, "<body style='background:#101720;color:#eee;font:18px sans-serif;padding:24px'>Private SpeedDial…</body>", "text/html", "UTF-8", null);
+        ui.loadDataWithBaseURL(ORIGIN, "<body style='background:#101720;color:#eee;font:18px sans-serif;padding:24px'>Private Speed Dial…</body>", "text/html", "UTF-8", null);
         readShare(getIntent());
         WebView.setWebContentsDebuggingEnabled(DEBUG_WEBVIEW);
     }
@@ -237,8 +237,8 @@ public class MainActivity extends Activity {
             runOnUiThread(() -> {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_SUBJECT, "Private SpeedDial");
-                intent.putExtra(Intent.EXTRA_TEXT, "Private SpeedDial\nhttps://github.com/rukazax/Private_SpeedDial");
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Private Speed Dial");
+                intent.putExtra(Intent.EXTRA_TEXT, "Private Speed Dial\nhttps://github.com/rukazax/Private_SpeedDial");
                 startActivity(Intent.createChooser(intent, title));
             });
         }

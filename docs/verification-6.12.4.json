@@ -1,0 +1,35 @@
+{
+  "version": "6.12.4",
+  "date": "2026-11-27",
+  "change": "renamed application to \"Private Speed Dial\" (space between words)",
+  "nameChecks": {
+    "manifestName": "Private Speed Dial",
+    "manifestNameLength": 18,
+    "oldNameOccurrencesInCode": 0,
+    "identifiersUnchanged": {
+      "extensionId": "eakakaeklcgnlanmpbndhjdljppehdof",
+      "repository": "rukazax/Private_SpeedDial",
+      "androidPackage": "su.econa.speeddial",
+      "releaseFileNames": "unchanged"
+    }
+  },
+  "checks": {
+    "manifestVersion": "6.12.4",
+    "manifestVersionHigherThanStore": "6.10.3 → принимается как обновление",
+    "syncShared": "ok",
+    "nodeSyntaxFiles": "extension/newtab.js, extension/pro-tools.js, shared/project-updates.js, extension/project-i18n.js, extension/translations.js — ok",
+    "unitTests": 20,
+    "unitTestsFailed": 0,
+    "storePackage": {
+      "manifestAtRoot": true,
+      "files": 42,
+      "icons": "16x16, 48x48, 128x128",
+      "remoteCode": "нет"
+    }
+  },
+  "limits": {
+    "apkRebuilt": false,
+    "apkVersionInRelease": "6.10.3",
+    "storeReview": "переименование проходит проверку магазина как обычное обновление"
+  }
+}

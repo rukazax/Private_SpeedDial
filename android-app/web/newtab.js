@@ -541,7 +541,7 @@ class SpeedDial {
             for (const tile of this.tiles) {
                 if (tile.id === 'tile_econa_default' && tile.title === 'Econa' &&
                     /^https?:\/\/(?:www\.)?econa\.su\/?$/i.test(tile.url)) {
-                    tile.title = 'Private SpeedDial';
+                    tile.title = 'Private Speed Dial';
                     tile.url = 'https://github.com/rukazax/Private_SpeedDial';
                     tile.icon = getFaviconUrl(tile.url);
                     tile.updatedAt = Date.now();
@@ -568,7 +568,7 @@ class SpeedDial {
         return [
             {
                 id: 'tile_econa_default',
-                title: 'Private SpeedDial',
+                title: 'Private Speed Dial',
                 url: 'https://github.com/rukazax/Private_SpeedDial',
                 icon: getFaviconUrl('https://github.com/rukazax/Private_SpeedDial'),
                 bgColor: '#667eea',

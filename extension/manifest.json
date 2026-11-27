@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "Private SpeedDial",
-  "version": "6.12.3",
+  "name": "Private Speed Dial",
+  "version": "6.12.4",
   "description": "Приватный быстрый набор закладок с мульти-девайс синхронизацией, шифрованием и вложенными папками",
   "icons": {
     "16": "icons/icon16.png",
@@ -31,7 +31,7 @@
   "options_page": "options.html",
   "action": {
     "default_icon": "icons/icon48.png",
-    "default_title": "Private SpeedDial",
+    "default_title": "Private Speed Dial",
     "default_popup": "popup.html"
   },
   "commands": {
@@ -40,7 +40,7 @@
         "default": "Ctrl+Shift+Y",
         "mac": "Command+Shift+Y"
       },
-      "description": "Открыть Private SpeedDial"
+      "description": "Открыть Private Speed Dial"
     },
     "sync-now": {
       "suggested_key": {

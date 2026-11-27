@@ -194,7 +194,7 @@ api.runtime.onInstalled.addListener(async (details) => {
                     tiles: [
                         {
                             id: 'tile_econa_default',
-                            title: 'Private SpeedDial',
+                            title: 'Private Speed Dial',
                             url: 'https://github.com/rukazax/Private_SpeedDial',
                             icon: getFaviconUrl('https://github.com/rukazax/Private_SpeedDial'),
                             bgColor: '#667eea',
@@ -237,7 +237,7 @@ api.runtime.onInstalled.addListener(async (details) => {
                     headerHidden: false,
                     sidebarCollapsed: false
                 });
-                logInfo('background.onInstalled', 'Созданы 2 преднастроенных диала (Private SpeedDial, YouTube)');
+                logInfo('background.onInstalled', 'Созданы 2 преднастроенных диала (Private Speed Dial, YouTube)');
             }
             await _seedBundledBackground();
             api.tabs.create({ url: speedDialUrl });
@@ -585,15 +585,15 @@ async function exportToBrowserBookmarksImpl(tiles, folders) {
 
     try {
         /* Повторный экспорт не должен плодить дубли:
-           удаляем прежнюю корневую папку Private SpeedDial */
-        const existing = await promisify(api.bookmarks.search, api.bookmarks, { title: 'Private SpeedDial' });
+           удаляем прежнюю корневую папку Private Speed Dial */
+        const existing = await promisify(api.bookmarks.search, api.bookmarks, { title: 'Private Speed Dial' });
         for (const node of (existing || [])) {
             if (!node.url) {
                 await promisify(api.bookmarks.removeTree, api.bookmarks, node.id).catch(() => {});
             }
         }
 
-        const main = await promisify(api.bookmarks.create, api.bookmarks, { title: 'Private SpeedDial' });
+        const main = await promisify(api.bookmarks.create, api.bookmarks, { title: 'Private Speed Dial' });
         const folderMap = {};
 
         const childrenMap = {};
@@ -653,7 +653,7 @@ async function exportToHTMLImpl() {
         let html = '<!DOCTYPE NETSCAPE-Bookmark-file-1>\n';
         html += '<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">\n';
         html += '<TITLE>Bookmarks</TITLE>\n';
-        html += '<H1>Private SpeedDial</H1>\n';
+        html += '<H1>Private Speed Dial</H1>\n';
         html += '<DL><p>\n';
 
         const renderFolder = (folder, indent) => {

@@ -9,7 +9,7 @@
         else chrome.tabs.create({ url });
     };
     async function share(button) {
-        const data = { title: 'Private SpeedDial', text: 'Private SpeedDial', url: P.repository };
+        const data = { title: 'Private Speed Dial', text: 'Private Speed Dial', url: P.repository };
         if (platform === 'android') { AndroidHost.shareApp(tr('projectShare')); return; }
         if (navigator.share) {
             try { await navigator.share(data); return; }
