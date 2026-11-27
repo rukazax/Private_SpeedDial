@@ -1301,6 +1301,16 @@ class SpeedDial {
                 const lbl = document.getElementById('subfoldersBarLabel');
                 if (lbl) lbl.title = `Подпапки папки «${branch.name}»`;
                 subWrap.style.display = 'flex';
+                /* v6.12.1: вторая строка закрепляется ровно под первой */
+                const mainWrap = document.getElementById('foldersBarWrap');
+                const mainH = mainWrap ? mainWrap.offsetHeight : 44;
+                if (pos === 'bottom') {
+                    subWrap.style.top = 'auto';
+                    subWrap.style.bottom = `${mainH}px`;
+                } else {
+                    subWrap.style.bottom = 'auto';
+                    subWrap.style.top = `${mainH}px`;
+                }
             }
         }
 

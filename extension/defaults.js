@@ -50,7 +50,7 @@ const DEFAULT_SETTINGS = {
     modalOpacity: 75,
     faviconSource: 'local',
     showNotes: true,
-    showFolders: false,
+    showFolders: true,
     /* v6.9.3: ширина панели заметок (px, 200–600) */
     sidebarWidth: 320,
 

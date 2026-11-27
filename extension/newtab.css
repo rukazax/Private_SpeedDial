@@ -628,11 +628,18 @@ body.sidebar-resizing * { cursor: col-resize !important; }
 }
 
 /* ===== v6.11.0 ===== */
-/* Вторая, зависимая строка папок — подпапки открытой папки */
+/* Вторая, зависимая строка папок — подпапки открытой папки, закреплена под первой */
 .folders-subbar-wrap {
     display: flex; align-items: center; gap: 6px; width: 100%;
     margin: -2px 0 8px; padding-left: 2px;
+    position: sticky; top: 44px; z-index: 19;
 }
+.folders-subbar-wrap::before {
+    content: ''; position: absolute; inset: 0 -4px; z-index: -1;
+    background: var(--header-bg); opacity: var(--header-opacity);
+    backdrop-filter: blur(14px) saturate(1.2); border-radius: var(--r-md);
+}
+.content-area.folder-bar-bottom .folders-subbar-wrap { top: auto; bottom: 44px; }
 .subbar-label { flex: 0 0 auto; font-size: 12px; opacity: .55; padding: 0 2px; transform: rotate(90deg); }
 .folders-bar.folders-subbar {
     padding: 2px 6px 4px 6px;
